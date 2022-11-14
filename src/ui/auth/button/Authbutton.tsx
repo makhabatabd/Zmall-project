@@ -5,6 +5,7 @@ interface IButton {
   children: ReactNode;
   background: string;
   width: string;
+  type?: string;
   onClick?:
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;

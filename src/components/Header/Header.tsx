@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { signOut, useSession } from 'next-auth/react';
 // import { TopHeader, TopHeaderBody } from './Header.style';
@@ -22,21 +22,54 @@ import {
   User,
   DesktopLink,
 } from './Header.style';
+import { useLogOutMutation } from '@/store/authSlice';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
   const [isNavbar, setIsNavbar] = useState<boolean>(true);
   const [activePage, setActivePage] = useState<string>('Объявления');
   const { data: session } = useSession();
+  const [logOut] = useLogOutMutation();
+  const [userInfo, setUserInfo] = useState({
+    refresh: null,
+    user: null,
+  });
+  function getUser() {
+    const token =
+      localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'));
+    const user =
+      localStorage.getItem('currentUser') &&
+      JSON.parse(localStorage.getItem('currentUser'));
+    if (token && user)
+      setUserInfo({ refresh: token.refresh, user: user.email });
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [router.pathname]);
+
   const mockData = {
-    isAuth: session && session.user?.name,
+    isAuth: userInfo && userInfo?.user,
     location: 'Улькен Нарын (Большенарымское)',
     favites: 3,
     messages: 5,
   };
 
   function userSignOut() {
-    console.log(1);
     signOut();
+  }
+
+  async function userLogOut() {
+    try {
+      await logOut({
+        refresh: userInfo?.refresh,
+      });
+      localStorage.clear();
+      setUserInfo({});
+    } catch (error: typeof error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -54,8 +87,8 @@ const Header = () => {
                   width={30}
                   height={30}
                 />
-                {/* on click for enter plase send him to the Auth Page */}
-                {session ? <Name>{mockData.isAuth}</Name> : <Name>Вход</Name>}
+                {/* on click or enter plase send him to the Auth Page */}
+                {userInfo ? <Name>{userInfo?.user}</Name> : <Name>Вход</Name>}
               </Profile>
               <MobileNavigation>
                 <ul>
@@ -121,7 +154,9 @@ const Header = () => {
                     width={30}
                     height={30}
                   />
-                  <Name desktop>{mockData.isAuth || 'Вход'}</Name>
+                  <Name onClick={() => router.push('/auth')} desktop>
+                    {mockData.isAuth || 'Вход'}
+                  </Name>
                 </Profile>
 
                 <Favorites>
@@ -143,8 +178,8 @@ const Header = () => {
                   />
                   <Name desktop>{mockData.messages || 'Вход'}</Name>
                 </Messages>
-                {session && (
-                  <div onClick={userSignOut}>
+                {userInfo?.user && (
+                  <div onClick={session ? userSignOut : userLogOut}>
                     <Image
                       src="/icons/sign-out.svg"
                       width={30}
@@ -166,7 +201,7 @@ const Header = () => {
       </TopHeader>
       <BottomHedaer>
         <Container>
-          <Logo>Zmall</Logo>
+          <Logo onClick={() => router.push('/')}>Zmall</Logo>
         </Container>
       </BottomHedaer>
     </>

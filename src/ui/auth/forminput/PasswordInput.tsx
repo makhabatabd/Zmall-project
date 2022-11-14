@@ -8,6 +8,8 @@ export const PasswordField = (props: IProps) => {
   return (
     <PasswordWrapper>
       <Input
+        value={props.value}
+        onChange={props.onChange}
         name={props.name}
         placeholder={props.placeholder}
         type={!isShowPassword ? 'password' : 'text'}

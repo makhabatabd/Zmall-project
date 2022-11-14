@@ -8,6 +8,8 @@ export const PasswordConfirmField = (props: IProps) => {
   return (
     <PasswordWrapper>
       <Input
+        value={props.value}
+        onChange={props.onChange}
         name={props.name}
         placeholder={props.placeholder}
         type={!isEyeOpen ? 'password' : 'text'}

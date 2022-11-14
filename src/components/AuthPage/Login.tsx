@@ -1,56 +1,133 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Forminput } from '@/ui/auth/forminput/Forminput';
 import { Authbutton } from '@/ui/auth/button/Authbutton';
 import { AuthLink, Form, LoginForm, Subtitle } from './AuthPage.style';
-import { useSession, signIn } from 'next-auth/react';
-const loginInputData = [
-  {
-    type: 'email',
-    name: 'last_name',
-    placeholder: 'Электронная почта',
-  },
-  {
-    type: 'password',
-    name: 'password',
-    placeholder: 'Пароль',
-  },
-];
-
-async function handleGoogleSignin() {
-  console.log(1);
-  signIn('google', { callbackUrl: 'http://localhost:3000' });
-}
-
-async function handleFacebookSignin() {
-  console.log(2);
-  signIn('facebook', { callbackUrl: 'http://localhost:3000' });
-}
+import { signIn, useSession } from 'next-auth/react';
+import { useFormik } from 'formik';
+import { IValues } from '@/types';
+import { useRouter } from 'next/router';
+import { LogInValidate } from '@/validation';
+import { useGetTokenMutation, useUserLoginMutation } from '@/store/authSlice';
 
 export const Login = () => {
+  const router = useRouter();
   const { data: session } = useSession();
-  console.log(session);
+  const [userLogin] = useUserLoginMutation();
+  const [getToken] = useGetTokenMutation();
+  const [err, setErr] = useState('');
+  async function handleGoogleSignin() {
+    signIn('google', { callbackUrl: 'http://localhost:3000' });
+    session &&
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify({
+          email: session.user?.email,
+        })
+      );
+  }
+
+  async function handleFacebookSignin() {
+    signIn('facebook', { callbackUrl: 'http://localhost:3000' });
+    session &&
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify({
+          email: session.user?.email,
+        })
+      );
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validate: LogInValidate,
+    onSubmit,
+  });
+
+  const handleGetToken = async (values: IValues) => {
+    try {
+      const response = await getToken({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          token: response.access,
+          refresh: response.refresh,
+        })
+      );
+    } catch (error: typeof error) {
+      error?.data?.errors?.error.map((item: string) => setErr(item));
+    }
+  };
+
+  const handleLogIn = async (values: IValues) => {
+    try {
+      await userLogin({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+      await handleGetToken(values);
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify({
+          email: values.email,
+        })
+      );
+      router.push('/');
+    } catch (error: typeof error) {
+      error?.data?.errors?.error.map((item: string) => setErr(item));
+    }
+  };
+
+  async function onSubmit(values: IValues) {
+    handleLogIn(values);
+  }
   return (
     <LoginForm>
-      <Form>
+      <Form
+        onSubmit={formik.handleSubmit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            formik.handleSubmit();
+          }
+        }}
+      >
         <Subtitle>Вход</Subtitle>
-        {loginInputData.map((value, idx) => (
-          <Forminput
-            key={idx}
-            placeholder={value.placeholder}
-            name={value.name}
-            type={value.type}
-          />
-        ))}
-      </Form>
+        {err && <p style={{ color: 'red' }}>{err}</p>}
+        <Forminput
+          placeholder="Электронная почта"
+          name="email"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+        />
+        {formik.errors.email && formik.touched.email && (
+          <span style={{ color: 'red' }}>{formik.errors.email}</span>
+        )}
+        <Forminput
+          placeholder="Пароль"
+          name="password"
+          type="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+        />
 
-      <div>
+        {formik.errors.password && formik.touched.password && (
+          <span style={{ color: 'red' }}>{formik.errors.password}</span>
+        )}
         <p>
-          <AuthLink href="/">Забыли пароль?</AuthLink>
+          <AuthLink href="/recovery-password">Забыли пароль?</AuthLink>
         </p>
-        <Authbutton background={'#2a2349'} width={'50%'}>
+        <Authbutton type="submit" background={'#2a2349'} width={'50%'}>
           Войти
         </Authbutton>
+      </Form>
+      <div>
         <p>или сделайте вход используя социальные сети</p>
         <Authbutton
           onClick={handleFacebookSignin}

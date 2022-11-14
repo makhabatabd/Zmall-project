@@ -113,7 +113,7 @@ export const Agreement = styled.div`
   display: flex;
   gap: 16px;
   align-items: start;
-  padding: 20px 0;
+  padding: 10px 0;
 
   p {
     font-family: "Inter";
@@ -148,6 +148,7 @@ export const RecoverWrapper = styled.div`
   max-width: 648px;
   height: 153px;
   margin: 0 auto;
+  min-height: 33vh;
 
   h4 {
     font-family: 'Inter';
@@ -227,4 +228,62 @@ export const ConfirmWrapper = styled.div`
     }
     }
   } 
+`;
+
+export const ModalOutter = styled.div`
+  position: fixed;
+  background-color: #00000097;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+`;
+
+export const ModalInner = styled.div`
+  position: relative;
+  z-index: 110;
+  max-width: 400px;
+  background-color: white;
+  padding: 40px;
+  text-align: center;
+  display: block;
+  margin: 0px auto;
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+  animation: fade 2s linear;
+
+  @keyframes fade {
+    0%,
+    30% {
+      opacity: 0.5;
+    }
+
+    30%,
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
+export const ModalText = styled.h3`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+
+export const ModalButton = styled.button`
+  width: 90px;
+  padding: 11px 0;
+  color: white;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: black;
+  margin-left: auto;
 `;
