@@ -1,8 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customFetchBase } from './refreshToken';
-// const token =
-//   localStorage.getItem('token') &&
-//   JSON.parse(localStorage.getItem('token') || '');
 
 export const authSlice = createApi({
   reducerPath: 'authSlice',

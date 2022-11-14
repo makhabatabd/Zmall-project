@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { authSlice } from './authSlice';
+import { favoriteSlice } from './favoritesSlice';
 import { mainSlice } from './mainSlice';
 
 const makeStore = () =>
@@ -7,9 +8,13 @@ const makeStore = () =>
     reducer: {
       [mainSlice.name]: mainSlice.reducer,
       [authSlice.reducerPath]: authSlice.reducer,
+      [favoriteSlice.reducerPath]: favoriteSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(authSlice.middleware),
+      getDefaultMiddleware().concat([
+        authSlice.middleware,
+        favoriteSlice.middleware,
+      ]),
   });
 
 export const store = makeStore();

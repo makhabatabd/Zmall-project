@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Title,
   Card,
@@ -9,6 +9,10 @@ import {
 } from './Good.style';
 import Image from 'next/image';
 import { IResult } from '../../types';
+import {
+  useAddFavoritesMutation,
+  useDeleteFavoritesMutation,
+} from '@/store/favoritesSlice';
 
 interface IProps {
   item: IResult;
@@ -16,6 +20,10 @@ interface IProps {
 
 const Good = ({ item }: IProps) => {
   const [fav, setFav] = useState<boolean>(false);
+  const [addFavorites] = useAddFavoritesMutation();
+  const [deleteFavorites] = useDeleteFavoritesMutation();
+  // const { data } = useGetFavoritesQuery();
+
   return (
     <>
       <Card>
@@ -26,11 +34,19 @@ const Good = ({ item }: IProps) => {
           <Category>{item.child_category}</Category>
         </Description>
         {fav ? (
-          <Iconwrap onClick={() => setFav(!fav)}>
+          <Iconwrap
+            onClick={() => {
+              addFavorites(item.id);
+            }}
+          >
             <Image width={32} height={32} src="/fromfav.svg" alt="fav" />
           </Iconwrap>
         ) : (
-          <Iconwrap onClick={() => setFav(!fav)}>
+          <Iconwrap
+            onClick={() => {
+              deleteFavorites(item.id);
+            }}
+          >
             <Image width={40} height={40} src="/tofav.svg" alt="fav" />
           </Iconwrap>
         )}
