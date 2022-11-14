@@ -8,7 +8,7 @@ import {
   Iconwrap,
 } from './Good.style';
 import Image from 'next/image';
-import { IResult } from '../../types';
+import { IResult } from '@/types';
 
 interface IProps {
   item: IResult;
@@ -19,7 +19,7 @@ const Good = ({ item }: IProps) => {
   return (
     <>
       <Card>
-        <Image width={248} height={186} src="/good.png" alt="goodimage" />
+        <Image width={248} height={186} src="/main/good.png" alt="goodimage" />
         <Description>
           <Price>{item.price} ₸</Price>
           <Title>{item.name}</Title>
@@ -27,11 +27,11 @@ const Good = ({ item }: IProps) => {
         </Description>
         {fav ? (
           <Iconwrap onClick={() => setFav(!fav)}>
-            <Image width={32} height={32} src="/fromfav.svg" alt="fav" />
+            <Image width={32} height={32} src="/main/fromfav.svg" alt="fav" />
           </Iconwrap>
         ) : (
           <Iconwrap onClick={() => setFav(!fav)}>
-            <Image width={40} height={40} src="/tofav.svg" alt="fav" />
+            <Image width={40} height={40} src="/main/tofav.svg" alt="fav" />
           </Iconwrap>
         )}
       </Card>
