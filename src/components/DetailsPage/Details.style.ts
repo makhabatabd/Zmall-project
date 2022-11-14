@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { device } from '../Theme/Theme';
+import { device } from '../Theme/Theme'; 
 
 export const Wrapper = styled.div`
   background-color: #e5e5e5;
@@ -116,6 +116,7 @@ export const SmallBlock = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const BlockTitle = styled.h5`
@@ -141,7 +142,7 @@ export const FavWrapper = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   margin-right: 12px;
 `;
 

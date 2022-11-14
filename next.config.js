@@ -5,6 +5,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
