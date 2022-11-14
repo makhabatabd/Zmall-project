@@ -55,8 +55,8 @@ export const LoginForm = styled.div`
   }
 
   p {
-    font - size: 400;
-    font-family: "Inter";
+    font-size: 400;
+    font-family: 'Inter';
     font-weight: 400;
     line-height: 110%;
     text-align: center;
@@ -117,9 +117,9 @@ export const Agreement = styled.div`
   padding: 10px 0;
 
   p {
-    font-family: "Inter";
+    font-family: 'Inter';
     font-weight: 400;
-    font - size: ${(props) => `${props.theme.fontSizes.small}`};
+    font-size: ${(props) => `${props.theme.fontSizes.small}`};
     line-height: 110%;
     color: #444444;
     padding: 0;
@@ -131,9 +131,9 @@ export const Agreement = styled.div`
 `;
 
 export const AuthLink = styled.a`
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 400;
-  font - size: ${(props) => `${props.theme.fontSizes.small}`};
+  font-size: ${(props) => `${props.theme.fontSizes.small}`};
   line-height: 110%;
   text-align: center;
   color: #00ccdb;
@@ -192,9 +192,8 @@ export const ConfirmWrapper = styled.div`
   height: 153px;
   margin: 0 auto;
 
-
   h4 {
-    font-family: "Inter";
+    font-family: 'Inter';
     font-weight: 700;
     font-size: 20px;
     line-height: 100%;
@@ -209,26 +208,27 @@ export const ConfirmWrapper = styled.div`
     gap: 8px;
     margin: 0 auto;
 
-     @media ${device.mobileL} {
-    flex-wrap:wrap;
-    margin:0 auto;
-  }
+    @media ${device.mobileL} {
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
 
     button {
       padding: 14px 48px;
 
- @media ${device.mobileL} {
-    width:100% !important;
-    margin:0 auto;
+      @media ${device.mobileL} {
+        width: 100% !important;
+        margin: 0 auto;
+      }
+      input {
+        width: 70%;
+        @media ${device.mobileL} {
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
     }
-    input {
-      width: 70%;
-   @media ${device.mobileL} {
-    width:100%;
-    margin:0 auto;
-    }
-    }
-  } 
+  }
 `;
 
 export const ModalOutter = styled.div`
@@ -249,7 +249,7 @@ export const ModalOutter = styled.div`
 
 const fadeIn = keyframes`
 0% {opacity: 0}
-60% {opacity 1}
+60% {opacity: 1}
 `;
 
 export const ModalInner = styled.div`
@@ -281,4 +281,3 @@ export const ModalButton = styled.button`
   background-color: black;
   margin-left: auto;
 `;
-
