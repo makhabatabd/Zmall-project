@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { device } from '../Theme/Theme';
+import { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   max-width: 1336px;
@@ -148,7 +149,7 @@ export const RecoverWrapper = styled.div`
   max-width: 648px;
   height: 153px;
   margin: 0 auto;
-  min-height: 33vh;
+  min-height: 33.55vh;
 
   h4 {
     font-family: 'Inter';
@@ -246,6 +247,11 @@ export const ModalOutter = styled.div`
   overflow-y: auto;
 `;
 
+const fadeIn = keyframes`
+0% {opacity: 0}
+60% {opacity 1}
+`;
+
 export const ModalInner = styled.div`
   position: relative;
   z-index: 110;
@@ -255,21 +261,9 @@ export const ModalInner = styled.div`
   text-align: center;
   display: block;
   margin: 0px auto;
-  transition: all 0.5s ease-in-out;
   opacity: 1;
-  animation: fade 2s linear;
-
-  @keyframes fade {
-    0%,
-    30% {
-      opacity: 0.5;
-    }
-
-    30%,
-    100% {
-      opacity: 1;
-    }
-  }
+  animation-name: ${fadeIn};
+  animation-duration: 2s;
 `;
 
 export const ModalText = styled.h3`
@@ -287,3 +281,4 @@ export const ModalButton = styled.button`
   background-color: black;
   margin-left: auto;
 `;
+

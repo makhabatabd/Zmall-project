@@ -11,3 +11,5 @@ export async function fetchData() {
   );
   return await response.json();
 }
+
+export const BASE_URL = 'http://188.225.83.42:8001/api/v1/';
