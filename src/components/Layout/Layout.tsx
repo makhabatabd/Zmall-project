@@ -1,5 +1,4 @@
 import React from 'react';
-// import DetailsPage from '../DetailsPage/DetailsPage';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
@@ -8,7 +7,6 @@ const Layout = ({ children }: React.PropsWithChildren) => {
     <div>
       <Header />
       {children}
-      {/* <DetailsPage /> */}
       <Footer />
     </div>
   );

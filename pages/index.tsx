@@ -1,20 +1,38 @@
 import React from 'react';
-import Statistics from '@/components/StatisticModal/Statistics';
+import {getCategories, getData} from '@/api';
+import {IServerResponse} from '@/types';
+import {CategoryList} from '@/components/Categories/CategoryList';
+import {MainPage} from '@/components/MainPage/MainPage';
+import {GetServerSideProps} from "next";
 
-const Home = ({result}) => {
-
-  return <Statistics result={result} />;
-
-};
-
-
-export async function getServerSideProps(){
-  const resp = await fetch(`http://188.225.83.42:8001/api/v1/advertisement/statistic/60/`)
-  const result = await resp.json()
-
-  return {
-    props: { result },
-  }
+export interface IProps {
+    result: IServerResponse;
+    page: number;
+    limit: number;
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const response = await getData(context.query.offset, context.query.limit);
+    const categories = await getCategories();
+    
+    return {
+        props: {
+            result: response,
+            data: categories,
+            page: context.query.offset || 10,
+            limit: context.query.limit || 10,
+        },
+    };
+};
+
+const Home = ({result, page, limit}: IProps) => {
+    return (
+        <>
+            <CategoryList/>
+            <MainPage result={result} page={page} limit={limit}/>
+        </>
+    );
+};
+
 export default Home;
+
