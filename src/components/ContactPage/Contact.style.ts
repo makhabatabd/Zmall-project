@@ -23,6 +23,13 @@ export const Title = styled.h1`
   margin: 0;
 `;
 
+export const ErrorText = styled.p`
+  color: red;
+  font-size: ${(props) => `${props.theme.fontSizes.small}`}
+  line-height: 140%;
+  margin: 5px;
+`
+
 export const Text = styled.p`
   font-weight: ${(props) => `${props.theme.fontWeights.normal}`};
   line-height: 140%;
@@ -47,7 +54,7 @@ export const InputField = styled.input`
   &:focus {
     outline: none;
   }
-  &:placeholder {
+  &::placeholder {
     color: #706d7a;
   }
   @media ${device.laptop} {
@@ -65,13 +72,17 @@ export const Select = styled.select`
   height: 48px;
   background: ${(props) => `${props.theme.colors.white}`};
   padding-left: 15px;
+  padding-right: 15px;
   border: 1px solid #e0e0e0;
   margin-bottom: 16px;
   border-radius: 8px;
   color: #706d7a;
-
+  cursor: pointer;
   &:focus {
     outline: none;
+  }
+  > * {
+    cursor: pointer;
   }
 
   @media ${device.laptop} {
@@ -89,6 +100,8 @@ export const Select = styled.select`
     white-space: pre;
     min-height: 20px;
     padding: 0px 2px 1px;
+    cursor: pointer;
+    
   }
 `;
 
