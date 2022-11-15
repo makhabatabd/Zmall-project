@@ -1,12 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
-import {
-  BlockOne,
-  IconWrapper,
-  LeftBlock,
-  LeftInner,
-  Title,
-} from './Details.style';
+import React, { useEffect, useState } from 'react';
 import { Slider } from './Slider';
 import { DetailsPageProps } from '@/../pages/detail/[id]';
 import { DetailSaleSpeed } from './DetailSaleSpeed';
@@ -22,6 +15,15 @@ import {
   DetailStatisticList,
   DetailWarningText,
 } from './DetailInformation';
+import {
+  BlockOne,
+  IconWrapper,
+  LeftBlock,
+  LeftInner,
+  Title,
+} from './Details.style';
+import { useRouter } from 'next/router';
+import { useLocalStorage } from '@/utils';
 
 const networksImg = [
   { logo: '/details/wa.svg', url: 'whatsapp://send?text=' },
@@ -39,19 +41,54 @@ const networksImg = [
 
 export const DetailDescription = ({ data }: DetailsPageProps) => {
   const [isComplainActive, setIsComplainActive] = useState(false);
+  const currentUser = useLocalStorage('currentUser', {});
+
+  const router = useRouter();
+
+  const openReportModal = () => {
+    if (currentUser[0].email) {
+      setIsComplainActive(true);
+    } else {
+      router.push('/auth');
+    }
+  };
+
+  const vip = data?.subscribers
+    .sort()
+    .filter((item) => item.subscription === 'VIP')[0];
+
+  const urgent = data?.subscribers
+    .sort()
+    .filter((item) => item.subscription === 'URGENTLY')[0];
+
+  const special = data?.subscribers
+    .sort()
+    .filter((item) => item.subscription === 'SPECIAL')[0];
+
   return (
     <>
       <LeftBlock>
-        <Title>{data.slug}</Title>
+        <Title>{data?.slug}</Title>
         <IconWrapper>
-          <Image src="/icons/urgent.svg" width={94} height={32} alt="urgent" />
-          <Image
-            src="/icons/selected.svg"
-            width={120}
-            height={32}
-            alt="urgent"
-          />
-          <Image src="/icons/vip.svg" width={70} height={32} alt="urgent" />
+          {urgent && (
+            <Image
+              src="/icons/urgent.svg"
+              width={94}
+              height={32}
+              alt="urgent"
+            />
+          )}
+          {special && (
+            <Image
+              src="/icons/selected.svg"
+              width={120}
+              height={32}
+              alt="urgent"
+            />
+          )}
+          {vip && (
+            <Image src="/icons/vip.svg" width={70} height={32} alt="urgent" />
+          )}
         </IconWrapper>
         <LeftInner>
           <BlockOne>
@@ -59,14 +96,14 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
             <DetailInformation>
               <DetailStatistic>
                 <DetailStatisticList>
-                  <p>{data.created_at}</p>
+                  <p>{data?.created_at}</p>
                   <p>№ 098603</p>
-                  <p> просмотров: {data.views_count}</p>
+                  <p> просмотров: {data?.views_count}</p>
                 </DetailStatisticList>
                 <DetailGeolocation>Бишкек</DetailGeolocation>
               </DetailStatistic>
               <DetailWarningText>
-                <p>{data.description}</p>
+                <p>{data?.description}</p>
                 <div>
                   <Image
                     src="/details/warn.svg"
@@ -104,7 +141,7 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
                     })}
                   </DetailNetworks>
                 </div>
-                <DetailReport onClick={() => setIsComplainActive((el) => !el)}>
+                <DetailReport onClick={openReportModal}>
                   <Image
                     src="/details/dislike.svg"
                     width={16}
@@ -121,7 +158,7 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
               </DetailShare>
             </DetailInformation>
           </BlockOne>
-          <DetailSaleSpeed />
+          {data?.owner.email === currentUser?.email && <DetailSaleSpeed />}
         </LeftInner>
       </LeftBlock>
     </>

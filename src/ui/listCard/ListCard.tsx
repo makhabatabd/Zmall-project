@@ -16,13 +16,14 @@ import {
 } from './ListCard.style';
 
 interface IProps {
-  price: string;
-  title: string;
+  price: string | number;
+  title?: string;
   description: string;
-  date: string;
-  location: string;
+  date?: string;
+  location?: string;
   category: string;
-  image: string;
+  image?: string;
+  is_favorite: boolean;
 }
 
 export const ListCard = ({
@@ -33,6 +34,7 @@ export const ListCard = ({
   location,
   category,
   image,
+  is_favorite,
 }: IProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -57,7 +59,7 @@ export const ListCard = ({
             <ItemLocation>{location}</ItemLocation>
           </ListItemRightBlock>
           <FavoriteBlock>
-            {isFavorite && (
+            {is_favorite && (
               <Image
                 src="/icons/card/favorite.svg"
                 alt="favorite"
@@ -66,7 +68,7 @@ export const ListCard = ({
                 onClick={favoriteHandler}
               />
             )}
-            {!isFavorite && (
+            {!is_favorite && (
               <Image
                 src="/icons/card/unfavorite.svg"
                 alt="favorite"

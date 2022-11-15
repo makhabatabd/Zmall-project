@@ -21,7 +21,7 @@ export const Slider = ({ data }: DetailsPageProps) => {
 
   return (
     <div className="swiper-wrap">
-      <div className="swiper-price">{data.price} ₸</div>
+      <div className="swiper-price">{data?.price} ₸</div>
       <Swiper
         modules={[FreeMode, Thumbs, Navigation]}
         thumbs={{

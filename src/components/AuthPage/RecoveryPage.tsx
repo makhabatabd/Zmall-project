@@ -1,10 +1,20 @@
-import React from 'react';
-import { Close, Container, RecoverWrapper, Title } from './AuthPage.style';
+import React, { useState } from 'react';
+import {
+  Close,
+  Container,
+  ModalButton,
+  ModalInner,
+  ModalOutter,
+  ModalText,
+  RecoverWrapper,
+  Title,
+} from './AuthPage.style';
 import Image from 'next/image';
 import { Authbutton } from '../../ui/auth/button/Authbutton';
 import { Forminput } from '../../ui/auth/forminput/Forminput';
 
 export const RecoveryPage = () => {
+  const [restoreError, setRestoreError] = useState(false);
   return (
     <Container>
       <Close>
@@ -22,11 +32,27 @@ export const RecoveryPage = () => {
             type="email"
             name="email"
           />
-          <Authbutton width={'50%'} background={'#2A2349'}>
+          <Authbutton
+            onClick={() => setRestoreError(true)}
+            width={'50%'}
+            background={'#2A2349'}
+          >
             восстановить пароль
           </Authbutton>
         </div>
       </RecoverWrapper>
+      {restoreError && (
+        <ModalOutter onClick={() => setRestoreError(false)}>
+          <ModalInner>
+            <ModalText>
+              Unfortunately, now, we cannot help you to restore your password!
+              Please, try again later! К сожалению, сейчас мы не можем помочь
+              вам восстановить пароль! Пожалуйста, попробуйте позже!
+            </ModalText>
+            <ModalButton onClick={() => setRestoreError(false)}>OK</ModalButton>
+          </ModalInner>
+        </ModalOutter>
+      )}
     </Container>
   );
 };

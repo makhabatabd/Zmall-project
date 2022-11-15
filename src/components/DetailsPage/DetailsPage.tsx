@@ -1,5 +1,5 @@
 import { DetailsPageProps } from '@/../pages/detail/[id]';
-// import { ListCard } from '@/ui/listCard/ListCard';
+import { ListCard } from '@/ui/listCard/ListCard';
 import React from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { DetailContact } from './DetailContact';
@@ -11,7 +11,7 @@ import {
   Wrapper,
 } from './Details.style';
 
-const DetailsPage = ({ data }: DetailsPageProps) => {
+const DetailsPage = ({ data, similar }: DetailsPageProps) => {
   return (
     <>
       <Wrapper>
@@ -22,18 +22,18 @@ const DetailsPage = ({ data }: DetailsPageProps) => {
           </DetailInner>
           <SimiliarWrapper>
             <Similiar>Похожие объявления</Similiar>
-            {/* {data?.map((item) => (
+            {similar?.results?.map((item) => (
               <ListCard
                 key={item.id}
-                image={item.image}
+                image="/good.png"
                 price={item.price}
-                title={item.title}
                 description={item.description}
-                date={item.date}
+                date={item.modified_at}
                 category={item.category}
-                location={item.location}
+                is_favorite={item.is_favorite}
+                // location={item.location}
               />
-            ))} */}
+            ))}
           </SimiliarWrapper>
         </Container>
       </Wrapper>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ConfirmModal.module.css';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,29 +23,27 @@ type Props = {
 };
 
 export interface Obj {
-  advertisement: number;
+  advertisement: unknown;
   subscription: number | undefined;
   start_date: string;
   end_date: string;
 }
 
+export interface Auth {
+  token: string;
+  refresh: string;
+}
+
 export const ConfirmModal = ({ setIsOpen, subscription }: Props) => {
-  const [orderPayment, { data }] = useOrderPaymentMutation();
+  const [orderPayment, data] = useOrderPaymentMutation();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const router = useRouter();
   const { id } = router.query;
-  console.log(id, 'id');
 
-  const obj: Obj = {
-    advertisement: 65,
-    subscription: subscription,
-    start_date: formatDate(startDate),
-    end_date: formatDate(endDate),
-  };
+  const URL = data?.data?.redirect_url;
 
   const handleCalendarStart = (date: Date) => {
-    console.log(date, 'date');
     setStartDate(date);
   };
 
@@ -53,9 +51,29 @@ export const ConfirmModal = ({ setIsOpen, subscription }: Props) => {
     setEndDate(date);
   };
 
+  useEffect(() => {
+    if (data.isSuccess) {
+      window.open(URL);
+    }
+  }, [data.isSuccess]);
+
   const onPaywithPaybox = async () => {
-    await orderPayment(obj);
-    window.open(data?.redirect_url);
+    let token: Auth = {
+      token: '',
+      refresh: '',
+    };
+
+    if (typeof window !== 'undefined') {
+      token = JSON.parse(localStorage.getItem('auth') || '');
+    }
+
+    const Obj: Obj = {
+      advertisement: id,
+      subscription: subscription,
+      start_date: formatDate(startDate),
+      end_date: formatDate(endDate),
+    };
+    await orderPayment({ Obj, token });
     setIsOpen(false);
   };
 

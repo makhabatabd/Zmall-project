@@ -69,3 +69,17 @@ name: string;
 price: number;
 icon: string;
 }
+export interface IValues {
+  email?: string;
+  password?: string;
+}
+
+export interface ISignUp {
+  email?: string;
+  password?: string;
+  password_confirm?: string;
+  username?: string;
+  lastName?: string;
+  phone?: string;
+  checked?: string;
+}

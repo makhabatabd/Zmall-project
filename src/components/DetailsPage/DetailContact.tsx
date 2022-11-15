@@ -33,7 +33,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
   };
 
   const hideNumber = (num: string) => {
-    return num.slice(0, -6) + 'xxxxxx';
+    return num?.slice(0, -6) + 'xxxxxx';
   };
 
   return (
@@ -41,7 +41,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
       <RightBlock>
         <FavoriteWrapper>
           <FavWrapper>
-            {isFavorite ? (
+            {data?.is_favorite ? (
               <Image
                 src="/icons/card/favorite.svg"
                 width={32}
@@ -61,7 +61,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
           </FavWrapper>
           <FavText>Добавить в избранное</FavText>
         </FavoriteWrapper>
-        <PriceTitle>{data.price} ₸</PriceTitle>
+        <PriceTitle>{data?.price} ₸</PriceTitle>
         <Client>
           <ClientTop>
             <Image
@@ -71,7 +71,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               height={64}
             />
             <ClientName>
-              {data.owner.first_name} {data.owner.last_name}
+              {data?.owner.first_name} {data?.owner.last_name}
             </ClientName>
           </ClientTop>
           <ClientContacts>Контакты продавца</ClientContacts>
@@ -99,8 +99,8 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
             <ClientNumbers>
               <ClientNumber>
                 {showContacts
-                  ? data.whatsapp_number
-                  : hideNumber(data.whatsapp_number)}
+                  ? data?.whatsapp_number
+                  : hideNumber(data?.whatsapp_number || '')}
               </ClientNumber>
             </ClientNumbers>
           </ClientContact>
@@ -112,7 +112,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               alt="icon"
             />
             <a
-              href={`https://wa.me/${data.whatsapp_number}`}
+              href={`https://wa.me/${data?.whatsapp_number}`}
               target={'_blank'}
               rel="noreferrer"
             >

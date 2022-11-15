@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { useLocalStorage } from '@/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -12,25 +12,28 @@ import {
   SubmitButton,
   TextArea,
 } from './DetailInformation';
+import Swal from 'sweetalert2';
 
 interface reportDataType {
   name: string;
-  rusName: string;
 }
 type Props = {
   setIsComplainActive: (value: boolean) => void;
 };
 
 const reportData = [
-  { name: 'wrong', rusName: 'Неверная рубрика' },
-  { name: 'forbidden', rusName: 'Запрещенный товар/услуги' },
-  { name: 'not_relevant', rusName: 'Обьявление не актуально' },
-  { name: 'wrong_address', rusName: 'Неверный адрес' },
+  { name: 'Неверная рубрика' },
+  { name: 'Запрещенный товар/услуга' },
+  { name: 'Объявление не актуально' },
+  { name: 'Неверный адрес' },
 ];
 
 export const DetailComplain = ({ setIsComplainActive }: Props) => {
   const [activeItem, setActiveItem] = useState('');
+  const [reportText, setReportText] = useState('');
   const [complainText, setComplainText] = useState('');
+  const authUser = useLocalStorage('auth', {});
+  const token = authUser[0];
   const router = useRouter();
   const { id } = router.query;
 
@@ -48,19 +51,42 @@ export const DetailComplain = ({ setIsComplainActive }: Props) => {
 
     const obj = {
       advertisement: id,
-      type: '',
+      type: activeItem,
       text: '',
     };
 
-    axios
-      .post('http://188.225.83.42:8001/api/v1/advertisement/complaining/', obj)
+    if (activeItem === 'Другое') obj['text'] = reportText;
+    else if (activeItem === '') {
+      setComplainText('Чтобы отправить выберите один из вариантов');
+      return;
+    } else obj['type'] = activeItem;
+
+    fetch('http://188.225.83.42:8001/api/v1/advertisement/complaining/', {
+      body: JSON.stringify(obj),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.token}`,
+      },
+    })
       .then(function (response) {
-        closeForm();
-        console.log(response);
+        if (!response.ok) {
+          return Promise.reject(response);
+        } else if (response.ok) {
+          closeForm();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Ваша жалоба принята',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          return response.json();
+        }
       })
-      .catch(function (error) {
-        console.log(error);
-        closeForm();
+      .catch(async (response) => {
+        const error = await response.json();
+        setComplainText(error?.errors?.error[0]);
       });
   };
 
@@ -85,34 +111,35 @@ export const DetailComplain = ({ setIsComplainActive }: Props) => {
             <ReportItem key={index}>
               <input
                 onChange={() => setActiveItem(el.name)}
+                checked={activeItem === el.name}
                 type="radio"
                 id={el.name}
                 name={'report'}
               />
-              <label htmlFor={el.name}>{el.rusName}</label>
+              <label htmlFor={el.name}>{el.name}</label>
             </ReportItem>
           );
         })}
         <ReportItem>
           <input
-            checked={activeItem === 'other'}
+            checked={activeItem === 'Другое'}
             name={'report'}
             type="radio"
             id="other"
             onChange={() => {
-              setActiveItem('other');
+              setActiveItem('Другое');
             }}
           />
           <label htmlFor="other">Другое</label>
         </ReportItem>
-        {activeItem === 'other' && (
+        {activeItem === 'Другое' && (
           <ReportItem>
             <TextArea
               rows={3}
               autoCapitalize="off"
               placeholder="Опишите причину"
               onChange={(e) => {
-                console.log(e);
+                setReportText(e.target.value);
               }}
             />
           </ReportItem>
