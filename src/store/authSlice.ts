@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { customFetchBase } from './refreshToken';
 
 export const authSlice = createApi({
   reducerPath: 'authSlice',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://188.225.83.42:8001/api/v1/',
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({

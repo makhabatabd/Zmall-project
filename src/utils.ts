@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
                 
+
+
 const getStorageData = (keyName:string, defaultValue:object) =>{
   if(typeof window !== "undefined"){
-     const savedItem = localStorage.getItem(keyName);
+     const savedItem:any = localStorage.getItem(keyName);
      const parsedItem = JSON.parse(savedItem);
      return parsedItem || defaultValue;
   }

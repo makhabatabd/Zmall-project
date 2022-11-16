@@ -1,6 +1,12 @@
 import { DetailsPageProps } from '@/../pages/detail/[id]';
+import {
+  useAddFavoritesMutation,
+  useDeleteFavoritesMutation,
+  useLazyGetFavoritesQuery,
+} from '@/store/favoritesSlice';
+import { IResult } from '@/types';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Client,
   ClientContact,
@@ -14,6 +20,8 @@ import {
   FavoriteWrapper,
   FavText,
   FavWrapper,
+  IconLoading,
+  IconwrapStyle,
   PriceTitle,
   RightBlock,
   TextButton,
@@ -21,12 +29,25 @@ import {
 } from './Details.style';
 
 export const DetailContact = ({ data }: DetailsPageProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
+  const [addFavorites, { isLoading }] = useAddFavoritesMutation();
+  const [deleteFavorites, { isLoading: gui }] = useDeleteFavoritesMutation();
+  const [trigger, { data: result }] = useLazyGetFavoritesQuery();
+  console.log(result);
 
-  const onAddToFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  const [isProdFav, setIsProdFav] = useState(false);
+
+  useEffect(() => {
+    trigger();
+  }, []);
+
+  useEffect(() => {
+    if (result?.results) {
+      setIsProdFav(
+        result.results.some((elem: IResult) => elem.id === data?.id)
+      );
+    }
+  }, [result?.count]);
 
   const toggleShowContacts = () => {
     setShowContacts(!showContacts);
@@ -41,22 +62,57 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
       <RightBlock>
         <FavoriteWrapper>
           <FavWrapper>
-            {data?.is_favorite ? (
-              <Image
-                src="/icons/card/favorite.svg"
-                width={32}
-                height={32}
-                alt="heart-icon"
-                onClick={onAddToFavorite}
-              />
+            {isProdFav ? (
+              gui ? (
+                <IconLoading>
+                  <Image
+                    width={32}
+                    height={32}
+                    src="/icons/card/favorite.svg"
+                    alt="fav"
+                  />
+                </IconLoading>
+              ) : (
+                <IconwrapStyle
+                  onClick={async () => {
+                    await deleteFavorites(data?.id);
+                    // trigger();
+                    const isFav = isProdFav;
+                    setIsProdFav(!isFav);
+                  }}
+                >
+                  <Image
+                    width={32}
+                    height={32}
+                    src="/icons/card/favorite.svg"
+                    alt="fav"
+                  />
+                </IconwrapStyle>
+              )
+            ) : isLoading ? (
+              <IconLoading>
+                <Image
+                  width={40}
+                  height={40}
+                  src="/icons/card/unfavorite.svg"
+                  alt="fav"
+                />
+              </IconLoading>
             ) : (
-              <Image
-                src="/icons/card/unfavorite.svg"
-                width={32}
-                height={36}
-                alt="heart-icon"
-                onClick={onAddToFavorite}
-              />
+              <IconwrapStyle
+                onClick={async () => {
+                  await addFavorites(data?.id);
+                  const isFav = isProdFav;
+                  setIsProdFav(!isFav);
+                }}
+              >
+                <Image
+                  width={40}
+                  height={40}
+                  src="/icons/card/unfavorite.svg"
+                  alt="fav"
+                />
+              </IconwrapStyle>
             )}
           </FavWrapper>
           <FavText>Добавить в избранное</FavText>
@@ -127,7 +183,7 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               alt="icon"
             />
             <a
-              href="https://api.whatsapp.com/send?phone=15551234567"
+              href={`https://wa.me/${data?.whatsapp_number}`}
               target={'_blank'}
               rel="noreferrer"
             >

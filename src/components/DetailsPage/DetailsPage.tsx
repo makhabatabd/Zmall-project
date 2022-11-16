@@ -24,14 +24,14 @@ const DetailsPage = ({ data, similar }: DetailsPageProps) => {
             <Similiar>Похожие объявления</Similiar>
             {similar?.results?.map((item) => (
               <ListCard
+                id={item.id}
                 key={item.id}
-                image="/good.png"
+                image="/main/good.png"
                 price={item.price}
                 description={item.description}
                 date={item.modified_at}
                 category={item.category}
                 is_favorite={item.is_favorite}
-                // location={item.location}
               />
             ))}
           </SimiliarWrapper>

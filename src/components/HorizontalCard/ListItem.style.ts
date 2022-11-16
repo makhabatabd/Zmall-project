@@ -2,10 +2,6 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import { device } from '../Theme/Theme';
 
-export const Container = styled.div`
-  max-width: 1064px;
-`;
-
 export const ListTitle = styled.h1`
   display: flex;
   flex-wrap: wrap;

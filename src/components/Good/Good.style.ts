@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { keyframes } from 'styled-components';
 
 export const Card = styled.div`
   width: 248px;
@@ -11,8 +12,21 @@ export const Card = styled.div`
 
 export const Iconwrap = styled.div`
   position: absolute;
-  bottom: 119px;
+  top: 165px;
   right: 20px;
+`;
+
+const shake = keyframes`
+0%, 100% {transform: translateX(0);}
+	10%, 30%, 50%, 70%, 90% {transform: translateY(-10px);}
+	20%, 40%, 60%, 80% {transform: translateY(10px);}
+`;
+
+export const IconwrapLoading = styled.div`
+  position: absolute;
+  top: 165px;
+  right: 20px;
+  animation: ${shake} 2s ease infinite;
 `;
 
 export const Description = styled.div`

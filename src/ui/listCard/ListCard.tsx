@@ -1,5 +1,11 @@
+import {
+  useAddFavoritesMutation,
+  useDeleteFavoritesMutation,
+  useLazyGetFavoritesQuery,
+} from '@/store/favoritesSlice';
+import { IResult } from '@/types';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   FavoriteBlock,
@@ -16,6 +22,7 @@ import {
 } from './ListCard.style';
 
 interface IProps {
+  id: number;
   price: string | number;
   title?: string;
   description: string;
@@ -27,6 +34,7 @@ interface IProps {
 }
 
 export const ListCard = ({
+  id,
   price,
   title,
   description,
@@ -36,11 +44,22 @@ export const ListCard = ({
   image,
   is_favorite,
 }: IProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [addFavorites] = useAddFavoritesMutation();
+  const [deleteFavorites] = useDeleteFavoritesMutation();
+  const [trigger, { data: result }] = useLazyGetFavoritesQuery();
 
-  const favoriteHandler = () => {
-    setIsFavorite(!isFavorite);
-  };
+  const [isProdFav, setIsProdFav] = useState(is_favorite);
+
+  useEffect(() => {
+    trigger();
+  }, []);
+
+  useEffect(() => {
+    if (result?.results) {
+      setIsProdFav(result.results.some((elem: IResult) => elem.id === id));
+    }
+  }, [result?.count]);
+
   return (
     <Container>
       <ListWrapper>
@@ -59,22 +78,30 @@ export const ListCard = ({
             <ItemLocation>{location}</ItemLocation>
           </ListItemRightBlock>
           <FavoriteBlock>
-            {is_favorite && (
+            {isProdFav && (
               <Image
                 src="/icons/card/favorite.svg"
                 alt="favorite"
                 width={32}
                 height={32}
-                onClick={favoriteHandler}
+                onClick={async () => {
+                  await deleteFavorites(id);
+                  const isFav = isProdFav;
+                  setIsProdFav(!isFav);
+                }}
               />
             )}
-            {!is_favorite && (
+            {!isProdFav && (
               <Image
                 src="/icons/card/unfavorite.svg"
                 alt="favorite"
                 width={32}
                 height={32}
-                onClick={favoriteHandler}
+                onClick={async () => {
+                  await addFavorites(id);
+                  const isFav = isProdFav;
+                  setIsProdFav(!isFav);
+                }}
               />
             )}
           </FavoriteBlock>

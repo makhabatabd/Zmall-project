@@ -15,6 +15,8 @@ import { Forminput } from '../../ui/auth/forminput/Forminput';
 
 export const RecoveryPage = () => {
   const [restoreError, setRestoreError] = useState(false);
+  const [restoreEmail, setRestoreEmail] = useState('');
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return (
     <Container>
       <Close>
@@ -31,11 +33,13 @@ export const RecoveryPage = () => {
             placeholder="Электронная почта"
             type="email"
             name="email"
+            onChange={(e) => setRestoreEmail(e.target.value)}
           />
           <Authbutton
+            disabled={emailValid.test(restoreEmail) ? false : true}
             onClick={() => setRestoreError(true)}
             width={'50%'}
-            background={'#2A2349'}
+            background={emailValid.test(restoreEmail) ? '#2A2349' : '#D3D3D3'}
           >
             восстановить пароль
           </Authbutton>

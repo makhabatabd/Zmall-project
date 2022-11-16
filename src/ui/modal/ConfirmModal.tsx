@@ -75,6 +75,7 @@ export const ConfirmModal = ({ setIsOpen, subscription }: Props) => {
     };
     await orderPayment({ Obj, token });
     setIsOpen(false);
+    document.location.reload();
   };
 
   return (

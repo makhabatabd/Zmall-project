@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Slider } from './Slider';
 import { DetailsPageProps } from '@/../pages/detail/[id]';
 import { DetailSaleSpeed } from './DetailSaleSpeed';
@@ -42,6 +42,7 @@ const networksImg = [
 export const DetailDescription = ({ data }: DetailsPageProps) => {
   const [isComplainActive, setIsComplainActive] = useState(false);
   const currentUser = useLocalStorage('currentUser', {});
+  const currentUserEmail = currentUser.map((item) => item?.email);
 
   const router = useRouter();
 
@@ -53,17 +54,15 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
     }
   };
 
-  const vip = data?.subscribers
-    .sort()
-    .filter((item) => item.subscription === 'VIP')[0];
+  const vip = data?.subscribers.some((item) => item.subscription === 'VIP'); //fix
 
-  const urgent = data?.subscribers
-    .sort()
-    .filter((item) => item.subscription === 'URGENTLY')[0];
+  const urgent = data?.subscribers.some(
+    (item) => item.subscription === 'URGENTLY'
+  );
 
-  const special = data?.subscribers
-    .sort()
-    .filter((item) => item.subscription === 'SPECIAL')[0];
+  const special = data?.subscribers.some(
+    (item) => item.subscription === 'SPECIAL'
+  );
 
   return (
     <>
@@ -158,7 +157,7 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
               </DetailShare>
             </DetailInformation>
           </BlockOne>
-          {data?.owner.email === currentUser?.email && <DetailSaleSpeed />}
+          {data?.owner.email === currentUserEmail[0] && <DetailSaleSpeed />}
         </LeftInner>
       </LeftBlock>
     </>
