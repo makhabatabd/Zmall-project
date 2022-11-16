@@ -16,13 +16,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-
       data: detailData,
       category: helpCategory
-
     },
   };
 };
+
+
+
 
 const HelpDetail = ({ data, category}: IProps) => {
 
