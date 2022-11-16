@@ -1,20 +1,22 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { authSlice } from './authSlice';
 import { favoriteSlice } from './favoritesSlice';
+
 import { mainSlice } from './mainSlice';
+import { orderApi } from './order.api';
+
 
 const makeStore = () =>
   configureStore({
     reducer: {
-      [mainSlice.name]: mainSlice.reducer,
-      [authSlice.reducerPath]: authSlice.reducer,
-      [favoriteSlice.reducerPath]: favoriteSlice.reducer,
+    [mainSlice.name]: mainSlice.reducer,
+    [authSlice.reducerPath]: authSlice.reducer,
+    [orderApi.reducerPath] : orderApi.reducer,
+    [favoriteSlice.reducerPath]: favoriteSlice.reducer,
+
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat([
-        authSlice.middleware,
-        favoriteSlice.middleware,
-      ]),
+      getDefaultMiddleware().concat([authSlice.middleware, orderApi.middleware,  favoriteSlice.middleware,]),
   });
 
 export const store = makeStore();

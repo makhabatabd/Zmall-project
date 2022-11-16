@@ -9,13 +9,17 @@ import { IValues } from '@/types';
 import { useRouter } from 'next/router';
 import { LogInValidate } from '@/validation';
 import { useGetTokenMutation, useUserLoginMutation } from '@/store/authSlice';
+import { useAppSelector } from '@/hooks';
 
 export const Login = () => {
+  const set = useAppSelector((state) => state.localStorage);
+  console.log(set);
   const router = useRouter();
   const { data: session } = useSession();
   const [userLogin] = useUserLoginMutation();
   const [getToken] = useGetTokenMutation();
   const [err, setErr] = useState('');
+
   async function handleGoogleSignin() {
     signIn('google', { callbackUrl: 'http://localhost:3000' });
     session &&
@@ -72,6 +76,7 @@ export const Login = () => {
         password: values.password,
       }).unwrap();
       await handleGetToken(values);
+
       localStorage.setItem(
         'currentUser',
         JSON.stringify({

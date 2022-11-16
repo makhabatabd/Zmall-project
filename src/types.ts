@@ -1,3 +1,5 @@
+import { IImages } from "../pages/detail/[id]";
+
 interface imageType {
   image: string;
 }
@@ -16,11 +18,6 @@ export interface IOwner {
   phone_number: string;
   first_name: string;
   last_name: string;
-}
-
-export interface IImage {
-  id: number;
-  image: string;
 }
 
 export interface IResult {
@@ -44,7 +41,7 @@ export interface IResult {
   subscribers?: string[];
   is_favorite: boolean;
   owner: IOwner;
-  images: IImage[];
+  images: IImages[];
   comments: string[];
 }
 
@@ -59,6 +56,19 @@ export interface IProps {
   goods: IServerResponse;
 }
 
+export interface ISubscriptions {
+  count: number;
+  next?:null;
+  previous?:null;
+  results: ISubscription[]
+}
+
+export interface ISubscription {
+  id: number;
+name: string;
+price: number;
+icon: string;
+}
 export interface IValues {
   email?: string;
   password?: string;

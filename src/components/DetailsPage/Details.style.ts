@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { device } from '../Theme/Theme';
+import styled, { keyframes } from 'styled-components';
+import { device } from '../Theme/Theme'; 
 
 export const Wrapper = styled.div`
   background-color: #e5e5e5;
@@ -34,6 +34,7 @@ export const LeftInner = styled.div`
 `;
 
 export const RightBlock = styled.div`
+position:relative;
   max-width: 360px;
   margin-left: auto;
   margin-top: 24px;
@@ -116,6 +117,7 @@ export const SmallBlock = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const BlockTitle = styled.h5`
@@ -141,7 +143,7 @@ export const FavWrapper = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   margin-right: 12px;
 `;
 
@@ -264,3 +266,22 @@ export const Similiar = styled.h3`
 export const SimiliarWrapper = styled.div`
   margin-bottom: 50px;
 `;
+
+const shake = keyframes`
+0%, 100% {transform: translateX(0);}
+	10%, 30%, 50%, 70%, 90% {transform: translateY(-10px);}
+	20%, 40%, 60%, 80% {transform: translateY(10px);}
+`;
+
+export const IconLoading = styled.div`
+  position: absolute;
+  top: 0;
+  animation: ${shake} 2s ease infinite;
+`;
+
+
+export const IconwrapStyle = styled.div`
+  position: absolute;
+  top: 0px;
+`
+

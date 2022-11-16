@@ -59,7 +59,6 @@ const Good = ({ item }: IProps) => {
             <Iconwrap
               onClick={async () => {
                 await deleteFavorites(item.id);
-                // trigger();
                 const isFav = isProdFav;
                 setIsProdFav(!isFav);
               }}

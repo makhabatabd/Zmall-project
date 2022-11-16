@@ -1,3 +1,4 @@
+import { BASE_URL } from './../api';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import type {
   BaseQueryFn,
@@ -5,7 +6,6 @@ import type {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
-import { BASE_URL } from '@/api';
 const mutex = new Mutex();
 const baseUrl = BASE_URL;
 const baseQuery = fetchBaseQuery({ baseUrl });
