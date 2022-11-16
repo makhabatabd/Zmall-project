@@ -40,7 +40,7 @@ export const HelpFlexBox = styled.div`
 
 export const HelpItem = styled.div`
   margin-bottom: 42px;
-  width: 320px;
+  width: 340px;
   @media (max-width: 768px) {
     width: 100%;
   }

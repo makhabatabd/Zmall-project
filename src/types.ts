@@ -73,3 +73,30 @@ export interface ISignUp {
   phone?: string;
   checked?: string;
 }
+
+export interface IHelpItem {
+  id: number,
+  text: string,
+  title: string,
+  category: number
+}
+
+export interface IHelpDateResults {
+  id: number,
+  name: string,
+  help:IHelpItem[]
+}
+
+export interface IHelpData {
+  count: number,
+  next: string | null,
+  previous: string | null,
+  results: IHelpDateResults[]
+}
+
+export interface IHelpDetail {
+  category: number,
+  id:number,
+  text:string,
+  title:string
+}
