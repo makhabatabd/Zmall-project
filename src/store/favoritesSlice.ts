@@ -17,6 +17,7 @@ if (typeof window !== 'undefined') {
   const auth = JSON.parse(localStorage.getItem('auth') || '');
   info = auth;
 }
+
 export const favoriteSlice = createApi({
   reducerPath: 'favoriteSlice',
   baseQuery: customFetchBase,
