@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { signOut, useSession } from 'next-auth/react';
 // import { TopHeader, TopHeaderBody } from './Header.style';
 import {
   BottomHedaer,
+  BottomHeaderBody,
   Burger,
   BurgerClose,
   Logo,
@@ -22,21 +23,84 @@ import {
   User,
   DesktopLink,
 } from './Header.style';
+import icon from '../../../public/icons/aircraft.svg';
+import arrow from '../../../public/icons/arrow.png';
+import {
+  AddAdvertBtn,
+  AddAdvertBox,
+  AddAdvertBtnSubtitle,
+  AddAdvertBtnTitle,
+  AddAdvertInputBox,
+  AddAdvertInputTitle,
+  AddAdvertSection,
+  AddAdvertTitle,
+  CategoryItem,
+  CategoryItemInfo,
+  ListCategory,
+  ListCategoryItem,
+  ListSubCategoryItem,
+  ListSubCategoryItemText,
+  AddAdvertInput,
+  PriceInputBox,
+  AddAdvertNameHint,
+  AddAdvertTextArea,
+  AddAdvertTextNameHint,
+  AddAdvertTextAreaBox,
+  AddAdvertForm,
+  AddAdvertInputSubtitle,
+  AddAdvertAddBtn,
+  AddAdvertAddBtnBox,
+  AddAdvertAddPhotoInput,
+} from '@/components/AddAdvertPage/AddAdverPage.style';
+import { useLogOutMutation } from '@/store/authSlice';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
   const [isNavbar, setIsNavbar] = useState<boolean>(true);
   const [activePage, setActivePage] = useState<string>('Объявления');
+  const [showCategory, setShowCategory] = useState(false);
   const { data: session } = useSession();
+  const [logOut] = useLogOutMutation();
+  const [userInfo, setUserInfo] = useState({
+    refresh: null,
+    user: null,
+  });
+  function getUser() {
+    const token =
+      localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'));
+    const user =
+      localStorage.getItem('currentUser') &&
+      JSON.parse(localStorage.getItem('currentUser'));
+    if (token && user)
+      setUserInfo({ refresh: token.refresh, user: user.email });
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [router.pathname]);
+
   const mockData = {
-    isAuth: session && session.user?.name,
+    isAuth: userInfo && userInfo?.user,
     location: 'Улькен Нарын (Большенарымское)',
     favites: 3,
     messages: 5,
   };
 
   function userSignOut() {
-    console.log(1);
     signOut();
+  }
+
+  async function userLogOut() {
+    try {
+      await logOut({
+        refresh: userInfo?.refresh,
+      });
+      localStorage.clear();
+      setUserInfo({});
+    } catch (error: typeof error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -54,8 +118,8 @@ const Header = () => {
                   width={30}
                   height={30}
                 />
-                {/* on click for enter plase send him to the Auth Page */}
-                {session ? <Name>{mockData.isAuth}</Name> : <Name>Вход</Name>}
+                {/* on click or enter plase send him to the Auth Page */}
+                {userInfo ? <Name>{userInfo?.user}</Name> : <Name>Вход</Name>}
               </Profile>
               <MobileNavigation>
                 <ul>
@@ -121,7 +185,9 @@ const Header = () => {
                     width={30}
                     height={30}
                   />
-                  <Name desktop>{mockData.isAuth || 'Вход'}</Name>
+                  <Name onClick={() => router.push('/auth')} desktop>
+                    {mockData.isAuth || 'Вход'}
+                  </Name>
                 </Profile>
 
                 <Favorites>
@@ -143,8 +209,8 @@ const Header = () => {
                   />
                   <Name desktop>{mockData.messages || 'Вход'}</Name>
                 </Messages>
-                {session && (
-                  <div onClick={userSignOut}>
+                {userInfo?.user && (
+                  <div onClick={session ? userSignOut : userLogOut}>
                     <Image
                       src="/icons/sign-out.svg"
                       width={30}
@@ -166,7 +232,106 @@ const Header = () => {
       </TopHeader>
       <BottomHedaer>
         <Container>
-          <Logo>Zmall</Logo>
+          <BottomHeaderBody>
+            <Logo desktop onClick={() => router.push('/')}>
+              Zmall
+            </Logo>
+
+            <AddAdvertInputBox>
+              <AddAdvertBox>
+                <AddAdvertBtn
+                  type="button"
+                  onClick={() => setShowCategory(!showCategory)}
+                >
+                  <CategoryItem>
+                    <CategoryItemInfo>
+                      <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
+                    </CategoryItemInfo>
+                  </CategoryItem>
+                  <img
+                    style={
+                      showCategory
+                        ? { transform: 'rotate(3.142rad)', transition: '0.2s' }
+                        : {
+                            transform: 'rotate(0)',
+                            transition: '0.2s',
+                          }
+                    }
+                    src={arrow.src}
+                    alt=""
+                  />
+                </AddAdvertBtn>
+                {showCategory && (
+                  <ListCategory>
+                    <ListCategoryItem>
+                      <CategoryItem>
+                        <Image
+                          src="/icons/aircraft.svg"
+                          alt="Category"
+                          width={50}
+                          height={44}
+                        />
+                        <CategoryItemInfo>
+                          <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
+                          <AddAdvertBtnSubtitle>
+                            5 084 объявления
+                          </AddAdvertBtnSubtitle>
+                        </CategoryItemInfo>
+                      </CategoryItem>
+                    </ListCategoryItem>
+                    <ListCategoryItem>
+                      <CategoryItem>
+                        <Image
+                          src="/icons/aircraft.svg"
+                          alt="Category"
+                          width={50}
+                          height={44}
+                        />
+                        <CategoryItemInfo>
+                          <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
+                          <AddAdvertBtnSubtitle>
+                            5 084 объявления
+                          </AddAdvertBtnSubtitle>
+                        </CategoryItemInfo>
+                      </CategoryItem>
+                    </ListCategoryItem>
+                    <ListCategoryItem>
+                      <CategoryItem>
+                        <Image
+                          src="/icons/aircraft.svg"
+                          alt="Category"
+                          width={50}
+                          height={44}
+                        />
+                        <CategoryItemInfo>
+                          <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
+                          <AddAdvertBtnSubtitle>
+                            5 084 объявления
+                          </AddAdvertBtnSubtitle>
+                        </CategoryItemInfo>
+                      </CategoryItem>
+                    </ListCategoryItem>
+                    <ListCategoryItem>
+                      <CategoryItem>
+                        <Image
+                          src="/icons/aircraft.svg"
+                          alt="Category"
+                          width={50}
+                          height={44}
+                        />
+                        <CategoryItemInfo>
+                          <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
+                          <AddAdvertBtnSubtitle>
+                            5 084 объявления
+                          </AddAdvertBtnSubtitle>
+                        </CategoryItemInfo>
+                      </CategoryItem>
+                    </ListCategoryItem>
+                  </ListCategory>
+                )}
+              </AddAdvertBox>
+            </AddAdvertInputBox>
+          </BottomHeaderBody>
         </Container>
       </BottomHedaer>
     </>

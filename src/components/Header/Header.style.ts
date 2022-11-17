@@ -167,7 +167,13 @@ export const TopHeaderBody = styled.div`
 
 export const BottomHedaer = styled.div`
   background-color: white;
+  height: 96px;
 `;
+
+export const BottomHeaderBody = styled.div`
+  display: flex;
+  gap: 1em; 
+`
 
 export const BurgerClose = styled.div`
   position: absolute;
@@ -258,8 +264,8 @@ export const Burger = styled.div`
   }
 `;
 
-export const Logo = styled.div<{ mobile?: boolean }>`
-  display: flex;
+export const Logo = styled.div<{ mobile?: boolean, desktop?: boolean }>`
+  display: ${props=>props.desktop ? "none" : "flex"};
   justify-items: center;
   align-items: center;
   gap: 10px;
@@ -269,11 +275,11 @@ export const Logo = styled.div<{ mobile?: boolean }>`
   top: 23px;
   font-weight: ${(props) => `${props.theme.fontWeights.bolder}`};
   color: ${(props) =>
-    props.mobile ? 'white' : `${props.theme.colors.purple}`};
+  props.mobile ? 'white' : `${props.theme.colors.purple}`};
   font-size: ${(props) => (props.mobile ? '20px' : '50px')};
   line-height: 100%;
 
   @media ${device.tablet} {
-    display: ${(props) => props.mobile && 'none'};
+    display: ${(props) => props.mobile ? 'none' : "flex"};
   }
 `;
