@@ -52,6 +52,7 @@ export const Signup = () => {
       );
       formik.resetForm();
       setInfo(true);
+      values.checked = false;
       setErr('');
       console.log(values, 'eferf');
     } catch (error: typeof error) {
