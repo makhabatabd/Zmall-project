@@ -33,8 +33,6 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
   const [addFavorites, { isLoading }] = useAddFavoritesMutation();
   const [deleteFavorites, { isLoading: gui }] = useDeleteFavoritesMutation();
   const [trigger, { data: result }] = useLazyGetFavoritesQuery();
-  console.log(result);
-
   const [isProdFav, setIsProdFav] = useState(false);
 
   useEffect(() => {

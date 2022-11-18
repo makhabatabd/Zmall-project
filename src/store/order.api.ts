@@ -6,20 +6,6 @@ interface IResponse {
   redirect_url: string
 }
 
-// interface Auth {
-//   token: string,
-//   refresh:string,
-// }
-
-// let token: Auth = {
-//   token:"",
-//   refresh: "",
-// }
-
-// if (typeof window !== 'undefined') {
-//  token = JSON.parse(localStorage.getItem('auth') || '');
-// }
-
 export const orderApi = createApi({
   reducerPath: 'orderApi',
   tagTypes: ['Post'],

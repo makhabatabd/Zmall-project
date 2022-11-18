@@ -13,6 +13,9 @@ import {
 } from './Chat.style';
 
 export const Chat = () => {
+  // add new component my all chats chat-chats
+  // get request to get all chats in rtk query
+  // при клике отправить запрос chat
   return (
     <>
       <Container>

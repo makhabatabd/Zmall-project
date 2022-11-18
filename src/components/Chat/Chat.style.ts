@@ -163,3 +163,16 @@ export const SendButton = styled.button`
   color: #ffffff;
   text-transform: uppercase;
 `;
+
+
+export const MyChatsWrapper = styled.div`
+max-width:1350px;
+display: flex;
+flex-direction:column;
+gap: 24px;
+`
+export const MyChatInner = styled.div`
+background: #FFFFFF;
+border-radius: 8px;
+max-height:120px
+`

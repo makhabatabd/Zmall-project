@@ -9,16 +9,18 @@ import { IValues } from '@/types';
 import { useRouter } from 'next/router';
 import { LogInValidate } from '@/validation';
 import { useGetTokenMutation, useUserLoginMutation } from '@/store/authSlice';
-import { useAppSelector } from '@/hooks';
+import { useLazyGetMyChannelQuery } from '@/store/Chat.api';
+import { useDispatch } from 'react-redux';
+import { getChannel } from '@/store/ChatSlice';
 
 export const Login = () => {
-  const set = useAppSelector((state) => state.localStorage);
-  console.log(set);
   const router = useRouter();
   const { data: session } = useSession();
   const [userLogin] = useUserLoginMutation();
   const [getToken] = useGetTokenMutation();
+  const [getMyChannel, { data: channel }] = useLazyGetMyChannelQuery();
   const [err, setErr] = useState('');
+  const dispatch = useDispatch();
 
   async function handleGoogleSignin() {
     signIn('google', { callbackUrl: 'http://localhost:3000' });
@@ -57,6 +59,14 @@ export const Login = () => {
         email: values.email,
         password: values.password,
       }).unwrap();
+      await getMyChannel(response.access);
+      dispatch(getChannel(channel));
+      localStorage.setItem(
+        'my-channel',
+        JSON.stringify({
+          channel: channel,
+        })
+      );
       localStorage.setItem(
         'auth',
         JSON.stringify({
