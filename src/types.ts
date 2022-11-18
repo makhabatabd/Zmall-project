@@ -1,4 +1,4 @@
-import { IImages } from "../pages/detail/[id]";
+import { IImages } from '../pages/detail/[id]';
 
 interface imageType {
   image: string;
@@ -58,16 +58,16 @@ export interface IProps {
 
 export interface ISubscriptions {
   count: number;
-  next?:null;
-  previous?:null;
-  results: ISubscription[]
+  next?: null;
+  previous?: null;
+  results: ISubscription[];
 }
 
 export interface ISubscription {
   id: number;
-name: string;
-price: number;
-icon: string;
+  name: string;
+  price: number;
+  icon: string;
 }
 export interface IValues {
   email?: string;
@@ -85,28 +85,56 @@ export interface ISignUp {
 }
 
 export interface IHelpItem {
-  id: number,
-  text: string,
-  title: string,
-  category: number
+  id: number;
+  text: string;
+  title: string;
+  category: number;
 }
 
 export interface IHelpDateResults {
-  id: number,
-  name: string,
-  help:IHelpItem[]
+  id: number;
+  name: string;
+  help: IHelpItem[];
 }
 
 export interface IHelpData {
-  count: number,
-  next: string | null,
-  previous: string | null,
-  results: IHelpDateResults[]
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: IHelpDateResults[];
 }
 
 export interface IHelpDetail {
-  category: number,
-  id:number,
-  text:string,
-  title:string
+  category: number;
+  id: number;
+  text: string;
+  title: string;
+}
+
+export interface IAuth {
+  token?: '';
+  access?: '';
+}
+
+export interface IData {
+  chat: IChat;
+  messages_parts: IMessage;
+}
+
+interface IChat {
+  sender_name: string;
+  advertisement_name: string;
+  advertisement_price: number;
+}
+
+interface IMessage {
+  date: IElem[];
+}
+
+export interface IElem {
+  sender?: string;
+  sender_name?: string;
+  chat?: string;
+  message?: string;
+  send_date?: string;
 }

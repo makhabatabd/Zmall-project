@@ -1,11 +1,7 @@
-import { IResult } from '@/types';
+import { IAuth, IResult } from '@/types';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { customFetchBase } from './refreshToken';
 
-interface IAuth {
-  token?: '';
-  access?: '';
-}
 let info: IAuth = {};
 
 interface IData {

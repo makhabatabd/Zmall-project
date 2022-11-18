@@ -5,6 +5,7 @@ export const Container = styled.div`
   max-width: 1336px;
   background: #ffffff;
   border-radius: 8px;
+  margin:0 auto;
 `;
 
 export const UserInfo = styled.div`
@@ -115,6 +116,7 @@ export const CustomerMessage = styled.p`
   text-align: center;
   color: #000000;
   padding: 27px 25px;
+  margin-bottom: 10px;
 `;
 
 export const MyMessage = styled.p`
@@ -134,6 +136,7 @@ export const MyMessage = styled.p`
   padding: 27px 25px;
   margin: 24px 0;
   margin-left: auto;
+  margin-bottom: 10px;
 `;
 
 export const InputMessage = styled.textarea`
@@ -162,6 +165,7 @@ export const SendButton = styled.button`
   border-radius: 8px;
   color: #ffffff;
   text-transform: uppercase;
+  margin-bottom: 30px;
 `;
 
 
