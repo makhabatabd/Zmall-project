@@ -1,4 +1,5 @@
-import { IAuth, IData } from '@/types';
+import { IAuth, IData, IEachMessage } from '@/types';
+import { Auth } from '@/ui/modal/ConfirmModal';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 let info: IAuth = {};
@@ -42,6 +43,17 @@ export const chatApi = createApi({
         },
       }),
     }),
+     sendMessage: builder.mutation<IEachMessage,  {myMessage: IEachMessage, token: Auth}>({
+      query: ({myMessage, token}) => ({
+                url: 'chat/message/',
+                method: "POST",
+                body: JSON.stringify(myMessage),
+                headers: {
+                    "Content-Type": "application/json",
+                     Authorization: `Bearer ${token.token}`,
+                },
+      }),
+  }),
   }),
 });
 
@@ -49,4 +61,5 @@ export const {
   useLazyGetMyChannelQuery,
   useLazyGetMyChatsQuery,
   useLazyGetEachChatQuery,
+  useSendMessageMutation
 } = chatApi;

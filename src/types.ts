@@ -125,6 +125,7 @@ interface IChat {
   sender_name: string;
   advertisement_name: string;
   advertisement_price: number;
+  advertisement?: number;
 }
 
 interface IMessage {
@@ -137,4 +138,10 @@ export interface IElem {
   chat?: string;
   message?: string;
   send_date?: string;
+}
+
+export interface IEachMessage {
+  ads_id: number | undefined,
+  chat_id: string | string[] | undefined,
+  message: string
 }

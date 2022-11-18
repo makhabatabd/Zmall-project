@@ -11,6 +11,7 @@ export const MyChats = () => {
   const token = currentUser.map((elem) => elem?.token)[0];
   const router = useRouter();
 
+  console.log(data, 'sata');
   interface IChat {
     chat_id: number;
     message: IMessage;

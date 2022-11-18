@@ -11,14 +11,14 @@ import { LogInValidate } from '@/validation';
 import { useGetTokenMutation, useUserLoginMutation } from '@/store/authSlice';
 import { useLazyGetMyChannelQuery } from '@/store/Chat.api';
 import { useDispatch } from 'react-redux';
-import { getChannel } from '@/store/ChatSlice';
+import { setChannel } from '@/store/ChatSlice';
 
 export const Login = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [userLogin] = useUserLoginMutation();
   const [getToken] = useGetTokenMutation();
-  const [getMyChannel, { data: channel }] = useLazyGetMyChannelQuery();
+  const [getMyChannel] = useLazyGetMyChannelQuery();
   const [err, setErr] = useState('');
   const dispatch = useDispatch();
 
@@ -59,12 +59,13 @@ export const Login = () => {
         email: values.email,
         password: values.password,
       }).unwrap();
-      await getMyChannel(response.access);
-      dispatch(getChannel(channel));
+      const chat = await getMyChannel(response.access);
+      console.log(chat, 'chhh');
+      dispatch(setChannel(chat?.data?.channel.split('-').at(-1)));
       localStorage.setItem(
         'my-channel',
         JSON.stringify({
-          channel: channel,
+          channel: chat?.data?.channel.split('-').at(-1),
         })
       );
       localStorage.setItem(

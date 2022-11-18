@@ -1,4 +1,6 @@
 import { DetailsPageProps } from '@/../pages/detail/[id]';
+import { useAppSelector } from '@/hooks';
+import { selectChatChannel } from '@/store/ChatSlice';
 import {
   useAddFavoritesMutation,
   useDeleteFavoritesMutation,
@@ -6,6 +8,7 @@ import {
 } from '@/store/favoritesSlice';
 import { IResult } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import {
   Client,
@@ -34,6 +37,8 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
   const [deleteFavorites, { isLoading: gui }] = useDeleteFavoritesMutation();
   const [trigger, { data: result }] = useLazyGetFavoritesQuery();
   const [isProdFav, setIsProdFav] = useState(false);
+  const channel = useAppSelector(selectChatChannel);
+  console.log(channel.channel, 'chhh');
 
   useEffect(() => {
     trigger();
@@ -165,13 +170,10 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               height={32}
               alt="icon"
             />
-            <a
-              href={`https://wa.me/${data?.whatsapp_number}`}
-              target={'_blank'}
-              rel="noreferrer"
-            >
+
+            <Link href={`/chat/${data?.id}-${channel.channel}`}>
               написать продавцу
-            </a>
+            </Link>
           </WriteButton>
           <TextButton>
             <Image

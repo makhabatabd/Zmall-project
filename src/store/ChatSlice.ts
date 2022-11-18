@@ -1,23 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppState } from './store';
 
+// const {channel} = useLocalStorage('my-channel', {})
+
 const initialState = {
   status: 'idle',
   error: null,
-  channel: ""
+  channel: typeof window !== "undefined" ? localStorage.getItem('my-channel') && JSON.parse(localStorage.getItem('my-channel')).channel : ""
 };
 
 export const chatSlice = createSlice({
   name: 'chatPage',
   initialState,
   reducers: {
-    getChannel(state, action) {
+    setChannel(state, action) {
       state.channel = action.payload;
     },
   },
 });
 
-export const { getChannel } = chatSlice.actions;
-export const selectMainState = (state: AppState) => state.mainPage;
+export const { setChannel } = chatSlice.actions;
+export const selectChatChannel = (state: AppState) => state.chatPage;
 
 export default chatSlice.reducer;

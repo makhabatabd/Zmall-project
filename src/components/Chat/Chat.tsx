@@ -1,8 +1,12 @@
-import { useLazyGetEachChatQuery } from '@/store/Chat.api';
-import { IElem } from '@/types';
+import {
+  useLazyGetEachChatQuery,
+  useSendMessageMutation,
+} from '@/store/Chat.api';
+import { IEachMessage, IElem } from '@/types';
+import { Auth } from '@/ui/modal/ConfirmModal';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   CustomerMessage,
@@ -15,17 +19,40 @@ import {
   UserInfo,
 } from './Chat.style';
 
+let token: Auth;
+
 export const Chat = () => {
   const router = useRouter();
   const { id } = router.query;
   const [getEachChat, { data }] = useLazyGetEachChatQuery();
+  const [sendMessage] = useSendMessageMutation();
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     getEachChat(id);
   }, [id]);
 
+  const inputHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue(e.target.value);
+  };
+
+  const myMessage: IEachMessage = {
+    ads_id: data?.chat?.advertisement,
+    chat_id: id,
+    message: value,
+  };
+  if (typeof window !== 'undefined') {
+    token = JSON.parse(localStorage.getItem('auth') || '');
+  }
+
+  const submitHandler = async () => {
+    await sendMessage({ myMessage, token });
+  };
+
   return (
-    <>
+    <form onSubmit={submitHandler}>
       <Container>
         <UserInfo>
           <Image src={'/user/user.jpg'} alt="user" width={42} height={42} />
@@ -55,9 +82,13 @@ export const Chat = () => {
         </MessagesInfo>
         <Divider />
         <MessagesInfo>
-          <InputMessage placeholder="Вашe сообщение" />
+          <InputMessage
+            placeholder="Вашe сообщение"
+            value={value}
+            onChange={inputHandler}
+          />
           <div>
-            <SendButton>отправить сообщение</SendButton>
+            <SendButton type="submit">отправить сообщение</SendButton>
             <input type="file" id="file" />
             <label htmlFor="file">
               <div>
@@ -73,6 +104,6 @@ export const Chat = () => {
           </div>
         </MessagesInfo>
       </Container>
-    </>
+    </form>
   );
 };
