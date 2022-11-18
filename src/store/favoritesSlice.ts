@@ -14,8 +14,11 @@ interface IData {
 }
 
 if (typeof window !== 'undefined') {
-//   const auth = JSON?.parse(localStorage?.getItem('auth') || '');
-//   info = auth;
+  const auth =
+    (localStorage.getItem('auth') &&
+      JSON.parse(localStorage.getItem('auth') || '')) ||
+    {};
+  info = auth;
 }
 
 export const favoriteSlice = createApi({
