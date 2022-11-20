@@ -28,6 +28,11 @@ const GlobalStyle = createGlobalStyle`
   li {
     list-style: none;
   }
+
+  input {
+    border: none;
+    outline: none;
+  }
 `;
 
 export default GlobalStyle;

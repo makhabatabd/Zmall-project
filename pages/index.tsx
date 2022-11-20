@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Home = ({ result, page, limit }: IProps) => {
   return (
     <>
-      <CategoryList />
+      {/* <CategoryList /> */}
       <MainPage result={result} page={page} limit={limit} />
     </>
   );

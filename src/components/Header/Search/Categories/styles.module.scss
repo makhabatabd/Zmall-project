@@ -1,0 +1,134 @@
+.selectCategories {
+    position: absolute;
+    top: 58px;
+    left: 0;
+    height: auto;
+    max-width: 682px;
+    border-radius: 8px;
+    background-color: white;
+    z-index: 1000;
+
+    .text {
+        width: 100%;
+        height: auto;
+        padding: 16px 28px;
+        background-color: #F2F2F2;
+        position: relative;
+
+        .titleBlock {
+            display: flex;
+            align-items: center;
+
+            .title {
+                font: 700 16px/120% 'Inter';
+                color: #444444;
+            }
+
+            .descr {
+                font: 400 16px/110% 'Inter';
+                color: #00CCDB;
+                margin-left: 17px;
+                display: flex;
+                align-items: center;
+
+                .arrow {
+                    margin-left: 8px;
+                    fill: #00CCDB;
+                }
+            }
+        }
+
+        .number {
+            margin-top: 9px;
+            font: 400 14px/120% 'Inter';
+            color: #706D7A;
+        }
+
+        img {
+            right: 14px;
+            top: 12px;
+            cursor: pointer;
+            position: absolute;
+            transition: 0.5s;
+
+            &:hover {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .categories {
+        width: 100%;
+        height: auto;
+        display: flex;
+        padding: 25px 26px 32px 32px;
+        gap: 40px 16px;
+        flex-wrap: wrap;
+
+        .item {
+            cursor: pointer;
+            width: 112px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 8px;
+
+            img {
+                width: 48px;
+                height: 48px;
+            }
+
+            p {
+                font: 400 14px/120% 'Inter';
+                color: #2A2349;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .selectCategories {
+        .text {
+            padding: 15px;
+
+            .titleBlock {
+                .title {
+                    font: 700 15px/120% 'Inter';
+                }
+
+                .descr {
+                    font: 400 15px/110% 'Inter';
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .categories {
+            width: 100%;
+            height: auto;
+            display: flex;
+            padding: 25px;
+            gap: 40px 16px;
+            flex-wrap: wrap;
+
+            .item {
+                cursor: pointer;
+                width: 30%;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: 8px;
+
+                img {
+                    width: 48px;
+                    height: 48px;
+                }
+
+                p {
+                    font: 400 14px/120% 'Inter';
+                    color: #2A2349;
+                }
+            }
+        }
+    }
+}

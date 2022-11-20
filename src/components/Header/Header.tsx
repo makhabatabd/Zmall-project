@@ -21,9 +21,12 @@ import {
   DesktopNavigation,
   User,
   DesktopLink,
+  BottonHeaderBody,
 } from './Header.style';
 import { useLogOutMutation } from '@/store/authSlice';
 import { useRouter } from 'next/router';
+import { SearchBlock } from './Search';
+import { Mobile } from './Mobile';
 
 const Header = () => {
   const router = useRouter();
@@ -201,7 +204,11 @@ const Header = () => {
       </TopHeader>
       <BottomHedaer>
         <Container>
-          <Logo onClick={() => router.push('/')}>Zmall</Logo>
+          <BottonHeaderBody>
+            <Logo onClick={() => router.push('/')}>Zmall</Logo>
+            <SearchBlock />
+            <Mobile />
+          </BottonHeaderBody>
         </Container>
       </BottomHedaer>
     </>
