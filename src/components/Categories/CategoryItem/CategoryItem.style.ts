@@ -9,16 +9,18 @@ export const Title = styled.p`
   color: ${({ theme }) => `${theme.colors.blue}`};
 `;
 
-export const Item = styled.div`
+export const Item = styled.div<{ active: string; currentId: number }>`
   width: 100%;
-  border-top: 4px solid transparent;
   background-color: transparent;
 
   a {
     border-top: 4px solid transparent;
-    background-color: ${(props) => `${props ? '#fff' : 'transparent'}`};
-    //border-color: ${(props) => `${props ? '#00ccdb' : 'transparent'}`};
-    // border-color: ${(props) => `${console.log(props)}`};
+    border-color: ${(props) =>
+      `${
+        Number(props.active) === props.currentId ? '#00ccdb' : 'transparent'
+      }`};
+    background-color: ${(props) =>
+      `${Number(props.active) === props.currentId ? '#fff' : 'transparent'} `};
     position: relative;
     display: flex;
     align-items: center;
@@ -33,17 +35,4 @@ export const Item = styled.div`
   &:hover ${Title} {
     color: #00ccdb;
   }
-
-  //&:hover {
-  //  background-color: #fff;
-  //  border-color: #00ccdb;
-  //}
-`;
-
-export const Subcategory = styled.div`
-  padding: 16px 48px;
-  background-color: #fff;
-`;
-export const SubcategoryItem = styled.div`
-  background-color: #fff;
 `;

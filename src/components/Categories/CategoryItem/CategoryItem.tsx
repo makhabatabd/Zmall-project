@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import React, {useState} from 'react';
+import React from 'react';
 import Image from 'next/image';
 import {Item, Title} from './CategoryItem.style';
 
 interface IProps {
     item: IObject;
+    active: string;
 }
 
 interface IObject {
@@ -12,16 +13,11 @@ interface IObject {
     id: number;
 }
 
-const CategoryItem = ({item}: IProps) => {
-    const [active, setActive] = useState<boolean>(false);
-    const activeHandler = () => {
-        setActive(!active);
-    };
-
+const CategoryItem = ({item, active}: IProps) => {
     return (
         <>
-            <Item onClick={activeHandler}>
-                <Link href={`/category/${item.id}`}>
+            <Item currentId={item.id} active={active}>
+                <Link href={`/categories/${item.id}`}>
                     <Image src="/main/building.svg" alt="icon" width={48} height={48}/>
                     <Title>{item.name}</Title>
                 </Link>
