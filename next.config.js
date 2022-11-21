@@ -23,6 +23,9 @@ const nextConfig = {
     });
     return config;
   },
+  env:{
+    SUPER_ADMIN: process.env.SUPER_ADMIN,
+  }
 };
 
 module.exports = nextConfig;

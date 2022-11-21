@@ -122,9 +122,9 @@ export const DesktopLink = styled.li<{ desktop?: boolean }>`
   height: 48px;
   padding: 10px 20px;
   position: relative;
+  white-space: nowrap; 
 
-  background-color: ${(props) =>
-    props.desktop ? 'white' : props.theme.colors.purple};
+  background-color: ${(props) => (props.desktop ? 'white' : 'transparent')};
   color: ${(props) => (props.desktop ? props.theme.colors.purple : 'white')};
 
   &::before {
@@ -137,13 +137,17 @@ export const DesktopLink = styled.li<{ desktop?: boolean }>`
     width: 100%;
     transition: background-color 0.3s;
     background-color: ${(props) =>
-      props.desktop ? props.theme.colors.cyan : props.theme.colors.purple};
+      props.desktop ? props.theme.colors.cyan : 'transparent'};
   }
 
   &:hover {
     background-color: white;
     color: ${(props) => props.theme.colors.purple};
   }
+`;
+
+export const ProfileLink = styled(DesktopLink)`
+  color: ${(props) => (props.desktop ? props.theme.colors.purple : '#706D7A')};
 `;
 
 export const MobileNavigation = styled.nav`

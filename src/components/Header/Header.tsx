@@ -2,7 +2,6 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { signOut, useSession } from 'next-auth/react';
-// import { TopHeader, TopHeaderBody } from './Header.style';
 import {
   BottomHedaer,
   Burger,
@@ -150,7 +149,11 @@ const Header = () => {
               </DesktopNavigation>
 
               <User>
-                <Profile>
+                <Profile
+                  onClick={() => {
+                    if (userInfo?.user) router.push('/profile');
+                  }}
+                >
                   <Image
                     alt="Profile"
                     src="/header/user.svg"
