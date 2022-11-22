@@ -1,3 +1,4 @@
+import { AnyAaaaRecord } from 'dns';
 import { IImages } from '../pages/detail/[id]';
 
 interface imageType {
@@ -141,7 +142,8 @@ export interface IElem {
 }
 
 export interface IEachMessage {
-  ads_id: number | undefined,
+  ads_id: number | undefined | string,
   chat_id: string | string[] | undefined,
-  message: string
+  message: string,
+  file:any,
 }

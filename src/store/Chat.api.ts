@@ -43,17 +43,20 @@ export const chatApi = createApi({
         },
       }),
     }),
-     sendMessage: builder.mutation<IEachMessage,  {myMessage: IEachMessage, token: Auth}>({
-      query: ({myMessage, token}) => ({
+     sendMessage: builder.mutation<IEachMessage,  any>({
+      query: (formData) => ({
                 url: 'chat/message/',
                 method: "POST",
-                body: JSON.stringify(myMessage),
+                body: JSON.stringify(formData),
                 headers: {
-                    "Content-Type": "application/json",
-                     Authorization: `Bearer ${token.token}`,
+                  Authorization: 'Bearer ' + info.token,
+                  // 'Content-Type': 'application/json',
+                // 'Content-Type': 'multipart/form-data'
+                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
                 },
       }),
   }),
+  
   }),
 });
 
@@ -61,5 +64,6 @@ export const {
   useLazyGetMyChannelQuery,
   useLazyGetMyChatsQuery,
   useLazyGetEachChatQuery,
-  useSendMessageMutation
+  useSendMessageMutation,
+
 } = chatApi;
