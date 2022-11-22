@@ -52,6 +52,23 @@ export interface IServerResponse {
   results: IResult[];
 }
 
+export interface IUsersOrdersResponse {
+  count: number;
+  next: string;
+  previous?: string;
+  results: IUsersOrders[];
+}
+
+export interface IUsersOrders {
+  advertisement: null | string;
+  subscription: number;
+  start_date: string;
+  end_date: string;
+  created_at: string;
+  pg_amount: number;
+  is_paid: boolean;
+}
+
 export interface IProps {
   goods: IServerResponse;
 }

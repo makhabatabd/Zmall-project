@@ -6,21 +6,27 @@ import { favoriteSlice } from './favoritesSlice';
 
 import { mainSlice } from './mainSlice';
 import { orderApi } from './order.api';
-
+import { profileApi } from './profile.api';
 
 const makeStore = () =>
   configureStore({
     reducer: {
-    [mainSlice.name]: mainSlice.reducer,
-    [chatSlice.name]: chatSlice.reducer,
-    [authSlice.reducerPath]: authSlice.reducer,
-    [orderApi.reducerPath] : orderApi.reducer,
-    [favoriteSlice.reducerPath]: favoriteSlice.reducer,
-    [chatApi.reducerPath]: chatApi.reducer,
-
+      [mainSlice.name]: mainSlice.reducer,
+      [chatSlice.name]: chatSlice.reducer,
+      [authSlice.reducerPath]: authSlice.reducer,
+      [orderApi.reducerPath]: orderApi.reducer,
+      [favoriteSlice.reducerPath]: favoriteSlice.reducer,
+      [chatApi.reducerPath]: chatApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat([authSlice.middleware, orderApi.middleware,  favoriteSlice.middleware, chatApi.middleware ]),
+      getDefaultMiddleware().concat([
+        authSlice.middleware,
+        orderApi.middleware,
+        favoriteSlice.middleware,
+        chatApi.middleware,
+        profileApi.middleware,
+      ]),
   });
 
 export const store = makeStore();

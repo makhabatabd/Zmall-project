@@ -79,7 +79,14 @@ const Header = () => {
       <TopHeader>
         <Container>
           <TopHeaderBody>
-            <Logo mobile>Zmall</Logo>
+            <Logo
+              mobile
+              onClick={() => {
+                router.push('/');
+              }}
+            >
+              Zmall
+            </Logo>
 
             <MobileNavbar isNavbar={isNavbar}>
               <Profile onClick={() => setIsNavbar(!isNavbar)}>

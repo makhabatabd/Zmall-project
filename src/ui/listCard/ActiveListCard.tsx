@@ -1,5 +1,6 @@
+import Statistics from '@/components/StatisticModal/Statistics';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ActiveItemCategory,
   ActiveItemPublication,
@@ -16,13 +17,15 @@ import {
 } from './ListCard.style';
 
 interface IProps {
-  price: string;
+  price: number;
   title: string;
   publication_date: string;
-  image: string;
-  contacts: string;
-  views: string;
+  image: any;
+  contacts: number;
+  views: number;
   category: string;
+  statistics: boolean;
+  setStatictics: (statistics: boolean) => void;
 }
 
 export const ActiveListCard = ({
@@ -33,12 +36,23 @@ export const ActiveListCard = ({
   category,
   contacts,
   image,
+  setStatictics,
+  statistics,
 }: IProps) => {
   return (
     <Container>
       <ListWrapper>
         <div>
-          <StyledImage src={image} />
+          {image ? (
+            <StyledImage src={image} />
+          ) : (
+            <Image
+              width={248}
+              height={184}
+              src="/main/good.png"
+              alt="goodimage"
+            />
+          )}
         </div>
         <ListItems>
           <ListItem>
@@ -52,7 +66,9 @@ export const ActiveListCard = ({
               <span>Просмотры: {views}</span>
               <span>Контакты: {contacts}</span>
             </ActiveItemViews>
-            <AdvertiseButton>рекламировать</AdvertiseButton>
+            <AdvertiseButton onClick={() => setStatictics(!statistics)}>
+              рекламировать
+            </AdvertiseButton>
           </ListItem>
           <ActiveItemRightBlock>
             <p>
