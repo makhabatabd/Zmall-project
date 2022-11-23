@@ -1,5 +1,8 @@
+import { useLazyGetEachChatQuery } from '@/store/Chat.api';
+import { IElem } from '@/types';
 import Image from 'next/image';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import {
   Container,
   CustomerMessage,
@@ -13,28 +16,42 @@ import {
 } from './Chat.style';
 
 export const Chat = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [getEachChat, { data }] = useLazyGetEachChatQuery();
+
+  useEffect(() => {
+    getEachChat(id);
+  }, [id]);
+
   return (
     <>
       <Container>
         <UserInfo>
           <Image src={'/user/user.jpg'} alt="user" width={42} height={42} />
-          <p>Alexander Kazantsev</p>
+          <p>{data?.chat.sender_name}</p>
         </UserInfo>
       </Container>
       <Divider />
       <Container>
         <ProductInfo>
           <div>
-            <p>Продаётся новая Toyota RAV4 2018 г.в.</p>
-            <p>23 000 890 ₸</p>
+            <p>{data?.chat.advertisement_name}</p>
+            <p>{data?.chat.advertisement_price} ₸</p>
           </div>
         </ProductInfo>
         <MessagesInfo>
-          <p>Сегодня</p>
-
-          <CustomerMessage>Привет</CustomerMessage>
-
-          <MyMessage>Добрый день</MyMessage>
+          {data?.messages_parts && <p>{Object.keys(data?.messages_parts)}</p>}
+          {data?.messages_parts &&
+            Object.values(data?.messages_parts).map((item: IElem[]) => {
+              return item.map((elem: IElem) => {
+                return elem.sender ? (
+                  <CustomerMessage>{elem.message}</CustomerMessage>
+                ) : (
+                  <MyMessage>{elem.message}</MyMessage>
+                );
+              });
+            })}
         </MessagesInfo>
         <Divider />
         <MessagesInfo>

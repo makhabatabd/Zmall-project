@@ -32,11 +32,11 @@ export function SignUpValidate(values: ISignUp) {
   }
 
   // validation for phone
-  //   if (!values.phone) {
-  //     errors.phone = 'Required';
-  //   } else if (/^\+996(\d{9})$/.test(values.phone)) {
-  //     errors.phone = 'Invalid Phone';
-  //   }
+  if (!values.phone) {
+    errors.phone = 'Required';
+  } else if (!/^\+996(\d{9})$/.test(values.phone)) {
+    errors.phone = 'Invalid Phone! Make sure you write +996 and then 9 digits';
+  }
   // validation for confirm password
   if (!values.password_confirm) {
     errors.password_confirm = 'Required';
