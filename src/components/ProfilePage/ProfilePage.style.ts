@@ -7,9 +7,14 @@ import {
 
 import TransactionsSkeleton from './TransactionsSkeleton';
 
-export const Wrapper = styled.div<{ white?: boolean; last?: boolean }>`
+export const Wrapper = styled.div<{
+  white?: boolean;
+  bottom?: boolean;
+  top?: boolean;
+}>`
   background-color: ${(props) => (props.white ? 'white' : '#f2f2f2')};
-  padding-bottom: ${(props) => (props.last ? '50px' : '0')};
+  padding-bottom: ${(props) => (props.bottom ? '50px' : '0')};
+  padding-top: ${(props) => (props.top ? '50px' : '0')};
 `;
 
 export const Nav = styled.nav`
@@ -49,6 +54,12 @@ export const SearchInput = styled.input`
 
 export const Body = styled.div``;
 
+export const ProfileBody = styled(Body)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Name = styled.div`
   font-weight: bold;
   font-size: 24px;
@@ -74,7 +85,6 @@ export const List = styled.ul`
   overflow-y: auto;
   gap: 1em;
   color: white;
-  padding: 0 0 10px 0;
 
   li + div {
     margin-left: 4em;

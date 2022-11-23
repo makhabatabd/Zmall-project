@@ -59,6 +59,14 @@ export interface IUsersOrdersResponse {
   results: IUsersOrders[];
 }
 
+export interface IUsersData {
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  phone_number: string;
+}
+
 export interface IUsersOrders {
   advertisement: null | string;
   subscription: number;
@@ -99,6 +107,15 @@ export interface ISignUp {
   lastName?: string;
   phone?: string;
   checked?: string;
+}
+
+export interface IProfileSettingsData {
+  email?: string;
+  password?: string;
+  password_confirm?: string;
+  username?: string;
+  lastName?: string;
+  phone?: string;
 }
 
 export interface IHelpItem {

@@ -13,7 +13,6 @@ import { ProfileEmptyData } from './ProfileEmptyAdverts';
 
 export const ProfileOrders = () => {
   const { data } = useGetUsersOrdersQuery();
-  console.log(data, 'orders');
 
   const heading = [
     'Выделение цветом',
@@ -46,8 +45,8 @@ export const ProfileOrders = () => {
                 <Heading>
                   <Cell>{heading[index]}</Cell>
                   <Cell>Продажа</Cell>
-                  <Cell>{item.pg_amount}</Cell>
                   <Cell>{item.start_date}</Cell>
+                  <Cell>{item.pg_amount}</Cell>
                 </Heading>
               ))}
           </Table>

@@ -7,8 +7,11 @@ import { Body, Link, List, Name, Wrapper } from './ProfilePage.style';
 import ProfileCategories from './ProfileCategories';
 import { ProfileOrders } from './ProfileOrders';
 import { ProfilesFavorites } from './ProfilesFavorites';
+import { ProfileSettings } from './ProfileSettings';
+import { useGetUsersDataQuery } from '@/store/profile.api';
 
 const Profile = () => {
+  useGetUsersDataQuery();
   const [activePage, setActivePage] = useState('Мои объявления');
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const { email } =
@@ -62,6 +65,7 @@ const Profile = () => {
       {activePage === 'Мои объявления' && <ProfileCategories />}
       {activePage === 'История транзакций' && <ProfileOrders />}
       {activePage === 'Избранные' && <ProfilesFavorites />}
+      {activePage === 'Настройки' && <ProfileSettings />}
     </>
   );
 };

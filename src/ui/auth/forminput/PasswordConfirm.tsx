@@ -17,15 +17,15 @@ export const PasswordConfirmField = (props: IProps) => {
       />
       {isEyeOpen && props.name === 'password_confirm' ? (
         <StyledImage
-          src="/icons/eyeclosw.svg"
+          src="/icons/eyeopen.svg"
           alt="eyeclose"
           width={24}
           height={24}
-          // onClick={() => setIsEyeOpen(!isEyeOpen)}
+          onClick={() => setIsEyeOpen(!isEyeOpen)}
         />
       ) : (
         <StyledImage
-          src="/icons/eyeopen.svg"
+          src="/icons/eyeclosw.svg"
           alt="eyeopen"
           width={24}
           height={24}

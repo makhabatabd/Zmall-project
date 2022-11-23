@@ -17,7 +17,7 @@ const ProfileCategories = () => {
   const links = ['Все категории', 'Активные', 'На проверке', 'Неактивные'];
 
   return (
-    <Wrapper white last>
+    <Wrapper white bottom>
       {statistics && (
         <Statistics
           setStatictics={setStatictics}
