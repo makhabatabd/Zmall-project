@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AddListContainer = styled.div`
+export const UserListContainer = styled.div`
   padding: 41px 0;
   overflow: auto;
   &::-webkit-scrollbar {
@@ -16,9 +16,10 @@ export const AddListContainer = styled.div`
     background-color: #b3b3b3;
     border-radius: 100px;
   }
+  
 `
 
-export const AddListUlTittles = styled.ul`
+export const UserListUlTittles = styled.ul`
   font-weight:700 ;
   font-size: 16px;
   line-height: 27.6px;
@@ -30,8 +31,9 @@ export const AddListUlTittles = styled.ul`
   border-radius: 8px 8px 0 0;
   display: flex;
   flex-direction: row;
+  
   .id {
-    width: 5%;
+    width: 10%;
   }
 
   .name {
@@ -39,13 +41,13 @@ export const AddListUlTittles = styled.ul`
     padding-right: 15px;
   }
 
-  .plaint {
+  .last-name {
     width: 25%;
     padding-right: 15px;
   }
 
-  .send {
-    width: 15%;
+  .email {
+    width: 25%;
   }
 
   .button {
@@ -55,7 +57,7 @@ export const AddListUlTittles = styled.ul`
   
 `
 
-export const AddListItem = styled.li`
+export const UserListItem = styled.li`
   display: flex;
   align-items: center;
   .icon {
@@ -66,34 +68,9 @@ export const AddListItem = styled.li`
   
 `
 
-export const AddListBtnBox = styled.div`
-  .paginateButtons {
-    display: flex;
-    column-gap: 8px;
-  }
-`
-
-export const AddListBtn = styled.button`
-  background: none;
-  svg{
-    path{
-      transition: .2s;
-      &:hover{
-        fill: #00CCDB;
-      }
-    }
-  }
-  &:hover{
-    svg {
-      path {
-        fill: #00CCDB;
-      }
-    }
-  }
-`
 
 
-export const AddListUlInfo = styled.ul`
+export const UserListUlInfo = styled.ul`
   font-weight:700 ;
   font-size: 16px;
   line-height: 27.6px;
@@ -110,7 +87,7 @@ export const AddListUlInfo = styled.ul`
     border-radius: 0 0 8px 8px;
   }
   .id {
-    width: 5%;
+    width: 10%;
   }
 
   .name {
@@ -118,13 +95,13 @@ export const AddListUlInfo = styled.ul`
     padding-right: 15px;
   }
 
-  .plaint {
+  .last-name {
     width: 25%;
     padding-right: 15px;
   }
 
-  .send {
-    width: 15%;
+  .email {
+    width: 25%;
   }
 
   .button {

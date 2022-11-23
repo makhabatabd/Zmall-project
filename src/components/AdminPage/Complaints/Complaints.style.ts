@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AddListContainer = styled.div`
+export const ComplaintsContainer = styled.div`
   padding: 41px 0;
   overflow: auto;
   &::-webkit-scrollbar {
@@ -18,7 +18,7 @@ export const AddListContainer = styled.div`
   }
 `
 
-export const AddListUlTittles = styled.ul`
+export const ComplaintsUlTittles = styled.ul`
   font-weight:700 ;
   font-size: 16px;
   line-height: 27.6px;
@@ -55,7 +55,7 @@ export const AddListUlTittles = styled.ul`
   
 `
 
-export const AddListItem = styled.li`
+export const ComplaintsItem = styled.li`
   display: flex;
   align-items: center;
   .icon {
@@ -66,17 +66,18 @@ export const AddListItem = styled.li`
   
 `
 
-export const AddListBtnBox = styled.div`
+export const ComplaintsBtnBox = styled.div`
   .paginateButtons {
     display: flex;
     column-gap: 8px;
   }
 `
 
-export const AddListBtn = styled.button`
+export const ComplaintsBtn = styled.button`
   background: none;
   svg{
     path{
+      fill: #2A2349;
       transition: .2s;
       &:hover{
         fill: #00CCDB;
@@ -93,7 +94,7 @@ export const AddListBtn = styled.button`
 `
 
 
-export const AddListUlInfo = styled.ul`
+export const ComplaintsUlInfo = styled.ul`
   font-weight:700 ;
   font-size: 16px;
   line-height: 27.6px;
