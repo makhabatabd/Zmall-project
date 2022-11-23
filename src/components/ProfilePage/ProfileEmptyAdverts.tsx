@@ -1,10 +1,10 @@
 import React from 'react';
 import { EmptyImage, Title } from './ProfilePage.style';
 
-export const ProfileEmptyAdverts = () => {
+export const ProfileEmptyData = ({ title }: { title: string }) => {
   return (
     <>
-      <Title>Список объявлений пустой</Title>
+      <Title>{title}</Title>
       <EmptyImage src="/user/empty.svg" alt="User" width={300} height={350} />
     </>
   );

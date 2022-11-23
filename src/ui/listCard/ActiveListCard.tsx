@@ -66,9 +66,7 @@ export const ActiveListCard = ({
               <span>Просмотры: {views}</span>
               <span>Контакты: {contacts}</span>
             </ActiveItemViews>
-            <AdvertiseButton onClick={() => setStatictics(!statistics)}>
-              рекламировать
-            </AdvertiseButton>
+            <AdvertiseButton>рекламировать</AdvertiseButton>
           </ListItem>
           <ActiveItemRightBlock>
             <p>
@@ -84,7 +82,7 @@ export const ActiveListCard = ({
               />
               <span> Деактивировать</span>
             </p>
-            <p>
+            <p onClick={() => setStatictics(!statistics)}>
               <Image
                 src="/icons/static.svg"
                 alt="edit"

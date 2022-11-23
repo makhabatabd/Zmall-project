@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Statistics from '../StatisticModal/Statistics';
 import { Container } from '../Styles/sharedstyles';
 import { ProfileAdvertsSearch } from './ProfileAdvertsSearch';
-import { ProfileEmptyAdverts } from './ProfileEmptyAdverts';
+import { ProfileEmptyData } from './ProfileEmptyAdverts';
 import { ProfileLink } from './ProfileLink';
 import { List, Nav, Body, Wrapper } from './ProfilePage.style';
 
@@ -97,7 +97,7 @@ const ProfileCategories = () => {
                   />
                 ))
             ) : (
-              <ProfileEmptyAdverts />
+              <ProfileEmptyData title={'Список объявлений пустой'} />
             )
           ) : (
             <GoodSkeleton />

@@ -6,6 +6,7 @@ import { Container } from '../Styles/sharedstyles';
 import { Body, Link, List, Name, Wrapper } from './ProfilePage.style';
 import ProfileCategories from './ProfileCategories';
 import { ProfileOrders } from './ProfileOrders';
+import { ProfilesFavorites } from './ProfilesFavorites';
 
 const Profile = () => {
   const [activePage, setActivePage] = useState('Мои объявления');
@@ -60,6 +61,7 @@ const Profile = () => {
 
       {activePage === 'Мои объявления' && <ProfileCategories />}
       {activePage === 'История транзакций' && <ProfileOrders />}
+      {activePage === 'Избранные' && <ProfilesFavorites />}
     </>
   );
 };

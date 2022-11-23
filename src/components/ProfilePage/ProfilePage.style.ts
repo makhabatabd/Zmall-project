@@ -5,6 +5,8 @@ import {
   device as DesktopFirst,
 } from '../Theme/Theme';
 
+import TransactionsSkeleton from './TransactionsSkeleton';
+
 export const Wrapper = styled.div<{ white?: boolean; last?: boolean }>`
   background-color: ${(props) => (props.white ? 'white' : '#f2f2f2')};
   padding-bottom: ${(props) => (props.last ? '50px' : '0')};
@@ -149,6 +151,30 @@ export const SearchIcon = styled(Image)`
 
 export const Search = styled.div`
   position: relative;
+`;
+
+export const TableWrapper = styled.div<{ onlyBottom?: boolean }>`
+  margin: ${(props) => (props.onlyBottom ? '0 0 41px 0' : '41px 0')};
+  overflow-x: auto;
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  border-radius: 8px;
+  border-spacing: 0;
+`;
+
+export const Heading = styled.tr<{ black?: boolean }>`
+  background-color: ${(props) => (props.black ? '#E0E0E0' : 'white')};
+`;
+
+export const Cell = styled.td`
+  padding: 24px 26px;
+`;
+
+export const SkeletonTable = styled(TransactionsSkeleton)`
+  display: block;
+  margin: 0 auto;
 `;
 
 // export const Link = styled.li`
