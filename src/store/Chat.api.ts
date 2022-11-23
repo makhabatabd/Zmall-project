@@ -1,5 +1,5 @@
-import { IAuth, IData, IEachMessage } from '@/types';
-import { Auth } from '@/ui/modal/ConfirmModal';
+
+import { IAuth, IChatData, IData, IEachMessage, IResponseMessage } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 let info: IAuth = {};
@@ -25,7 +25,7 @@ export const chatApi = createApi({
         },
       }),
     }),
-    getMyChats: builder.query<any, string>({
+    getMyChats: builder.query<IChatData, string>({
       query: (token) => ({
         url: 'chat/chats/',
         headers: {
@@ -43,16 +43,14 @@ export const chatApi = createApi({
         },
       }),
     }),
-     sendMessage: builder.mutation<IEachMessage,  any>({
-      query: (formData) => ({
+     sendMessage: builder.mutation<IResponseMessage,  IEachMessage>({
+      query: (data) => ({
                 url: 'chat/message/',
                 method: "POST",
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
                 headers: {
                   Authorization: 'Bearer ' + info.token,
-                  // 'Content-Type': 'application/json',
-                // 'Content-Type': 'multipart/form-data'
-                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+                  'Content-Type': 'application/json',
                 },
       }),
   }),

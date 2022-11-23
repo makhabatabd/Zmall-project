@@ -1,9 +1,10 @@
+import { useAppSelector } from '@/hooks';
 import {
   useLazyGetEachChatQuery,
   useSendMessageMutation,
 } from '@/store/Chat.api';
-import { IEachMessage, IElem } from '@/types';
-import { useLocalStorage } from '@/utils';
+import { selectChatChannel } from '@/store/ChatSlice';
+import { IEachMessage, IElem, IResponseMessage } from '@/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -24,15 +25,15 @@ export const Chat = () => {
   const { id } = router.query;
   const [getEachChat, { data }] = useLazyGetEachChatQuery();
   const [sendMessage] = useSendMessageMutation();
-  const [value, setValue] = useState('');
-  const [file, setFile] = useState('');
 
-  console.log(data?.chat?.advertisement, 'dddd');
-  console.log(id, 'id');
+  const [value, setValue] = useState('');
+  const channel = useAppSelector(selectChatChannel);
+  const [newMessages, setNewMessages] = useState('');
 
   useEffect(() => {
     getEachChat(id);
-  }, [id]);
+    setNewMessages('');
+  }, [id, channel]);
 
   const inputHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -40,52 +41,22 @@ export const Chat = () => {
     setValue(e.target.value);
   };
 
-  const currentUser = useLocalStorage('auth', {});
-  const token = currentUser.map((item) => item?.token)[0];
+  const myMessage: IEachMessage = {
+    ads_id: data?.chat?.advertisement,
+    chat_id: id,
+    message: value,
+    file: null,
+  };
 
-  // const myMessage: IEachMessage = {
-  //   ads_id: data?.chat?.advertisement,
-  //   chat_id: id,
-  //   message: value,
-  //   file: file,
-  // };\
+  const submitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const result = (await sendMessage(myMessage)) as IResponseMessage;
 
-  console.log(token);
-
-  const onChangeFile = async (e) => {
-    if (e.target.files) {
-      setFile(e.target.files[0]);
+    if (result?.data?.message) {
+      setNewMessages(result.data.message);
+      setValue('');
     }
   };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    // const aidar = 'aidar';
-
-    formData.append('ads_id', data?.chat?.advertisement);
-    formData.append('chat_id', id);
-    // formData.append('message', value);
-    formData.append('file', file);
-
-    // const trash = formData.getAll('chat_id');
-    // console.log(trash, 'ss');
-    // console.log(file);
-    // formData.append('file', file);
-
-    const mockData = {
-      ads_id: data?.chat?.advertisement,
-      chat_id: id,
-      message: value,
-      // file: file,
-    };
-    // await sendMessage(mockData);
-
-    // console.log(formData, 'form');
-    await sendMessage(formData);
-    setValue('');
-  };
-
   return (
     <form onSubmit={submitHandler}>
       <Container>
@@ -106,14 +77,21 @@ export const Chat = () => {
           {data?.messages_parts && <p>{Object.keys(data?.messages_parts)}</p>}
           {data?.messages_parts &&
             Object.values(data?.messages_parts).map((item: IElem[]) => {
-              return item.map((elem: IElem) => {
-                return elem.sender ? (
-                  <CustomerMessage>{elem.message}</CustomerMessage>
-                ) : (
+              return item.map((elem: IElem) =>
+                elem?.sender === channel.channel ? (
                   <MyMessage>{elem.message}</MyMessage>
-                );
-              });
+                ) : (
+                  <CustomerMessage>{elem.message}</CustomerMessage>
+                )
+              );
             })}
+
+          {
+            newMessages && <MyMessage>{newMessages}</MyMessage>
+            // newMessages?.map((item: string, i: number) => (
+            //   c
+            // ))
+          }
         </MessagesInfo>
         <Divider />
         <MessagesInfo>
@@ -124,7 +102,7 @@ export const Chat = () => {
           />
           <div>
             <SendButton type="submit">отправить сообщение</SendButton>
-            <input type="file" id="file" onChange={onChangeFile} />
+            {/* <input type="file" id="file" onChange={onChangeFile} />
             <label htmlFor="file">
               <div>
                 <Image
@@ -135,7 +113,7 @@ export const Chat = () => {
                 />
                 <span> Прикрепить файл (до 5мб)</span>
               </div>
-            </label>
+            </label> */}
           </div>
         </MessagesInfo>
       </Container>

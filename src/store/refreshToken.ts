@@ -38,14 +38,12 @@ export const customFetchBase: BaseQueryFn<
           api,
           extraOptions
         );
-        console.log('REFRESH', refreshResult);
         
         if (refreshResult.data) {
           const data = JSON.stringify(refreshResult.data);
           const { access } = JSON.parse(data);
           auth.token = access;
           localStorage.setItem('auth', JSON.stringify(auth));
-          console.log('dddddddddddfsfsdfsdfsdfdsfsdfsd', access);
           
           const headers = {
             Authorization: 'Bearer ' + String(access),
