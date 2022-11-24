@@ -23,7 +23,7 @@ export const Login = () => {
   const dispatch = useDispatch();
 
   async function handleGoogleSignin() {
-    signIn('google', { callbackUrl: 'http://localhost:3000' });
+    signIn('google', { callbackUrl: 'https://zmall-project.vercel.app/' });
     session &&
       localStorage.setItem(
         'currentUser',
@@ -34,7 +34,7 @@ export const Login = () => {
   }
 
   async function handleFacebookSignin() {
-    signIn('facebook', { callbackUrl: 'http://localhost:3000' });
+    signIn('facebook', { callbackUrl: 'https://zmall-project.vercel.app/' });
     session &&
       localStorage.setItem(
         'currentUser',

@@ -15,14 +15,14 @@ export const mainSlice = createSlice({
       state.goods = action.payload;
     },
     filterStore(state, action) {
-    state.goods =  state.goods.filter((it: any) => it.id !== action.payload)
-    }
+      state.goods = state.goods.filter(
+        (it: { id: number }) => it.id !== action.payload
+      );
+    },
   },
 });
 
-
-
-export const {filterStore, addToStore } = mainSlice.actions;
+export const { filterStore, addToStore } = mainSlice.actions;
 export const selectMainState = (state: AppState) => state.mainPage;
 
 export default mainSlice.reducer;

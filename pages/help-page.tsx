@@ -5,23 +5,20 @@ import { getHelp } from '@/api';
 import { IHelpData } from '@/types';
 
 interface IProps {
-  data :IHelpData
+  data: IHelpData;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const helpData = await getHelp();
 
   return {
     props: {
-
       data: helpData,
-
     },
   };
 };
 
-
-const Help = ({ data }:IProps) => {
+const Help = ({ data }: IProps) => {
   return <HelpPage data={data} />;
 };
 
