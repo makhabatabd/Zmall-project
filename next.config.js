@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
   compiler: {
     styledComponents: true,
   },
@@ -23,9 +28,9 @@ const nextConfig = {
     });
     return config;
   },
-  env:{
+  env: {
     SUPER_ADMIN: process.env.SUPER_ADMIN,
-  }
+  },
 };
 
 module.exports = nextConfig;

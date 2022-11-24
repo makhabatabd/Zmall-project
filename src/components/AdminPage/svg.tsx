@@ -44,7 +44,8 @@ export const Edit = (
 export const Delete = (
   <svg
     id="Layer_1"
-    style={{ enableBackground: 'new 0 0 64 64' }}
+    //please fix it later
+    // style={{ enableBackground: 'new 0 0 64 64' }}
     version="1.1"
     viewBox="0 0 64 64"
     xmlSpace="preserve"

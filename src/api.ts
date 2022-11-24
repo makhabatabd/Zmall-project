@@ -36,7 +36,7 @@ export async function getOneHelp(id: number) {
   return response.data;
 }
 
-export async function getHelpDetail(id: number) {
+export async function getHelpDetail(id: string | number) {
   const response = await axios(
     `http://188.225.83.42:8001/api/v1/site/help/${id}/`
   );

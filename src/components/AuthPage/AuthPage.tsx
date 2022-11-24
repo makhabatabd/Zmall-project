@@ -1,9 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import { Close, Container, Line, Title, Wrapper } from './AuthPage.style';
-import { Login } from './Login';
-import { Signup } from './SignUp';
-
 export const AuthPage = () => {
   return (
     <Container>
@@ -12,9 +9,7 @@ export const AuthPage = () => {
       </Close>
       <Title>Zmall</Title>
       <Wrapper>
-        <Signup />
         <Line />
-        <Login />
       </Wrapper>
     </Container>
   );
