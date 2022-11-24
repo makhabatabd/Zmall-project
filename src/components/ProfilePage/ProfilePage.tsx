@@ -1,6 +1,4 @@
-import { env } from 'process';
-import React, { useState, useEffect, useMemo } from 'react';
-import useSWR from 'swr';
+import React, { useState, useEffect } from 'react';
 import { ProfileLink } from './ProfileLink';
 import { Container } from '../Styles/sharedstyles';
 import { Body, Link, List, Name, Wrapper } from './ProfilePage.style';

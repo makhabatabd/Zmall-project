@@ -89,14 +89,20 @@ const Header = () => {
             </Logo>
 
             <MobileNavbar isNavbar={isNavbar}>
-              <Profile onClick={() => setIsNavbar(!isNavbar)}>
+              <Profile
+                onClick={() => {
+                  setIsNavbar(!isNavbar);
+                  userInfo?.user
+                    ? router.push('/profile')
+                    : router.push('/auth');
+                }}
+              >
                 <Image
                   alt="Profile"
                   src="/header/user.svg"
                   width={30}
                   height={30}
                 />
-                {/* on click or enter plase send him to the Auth Page */}
                 {userInfo ? <Name>{userInfo?.user}</Name> : <Name>Вход</Name>}
               </Profile>
               <MobileNavigation>
@@ -158,7 +164,9 @@ const Header = () => {
               <User>
                 <Profile
                   onClick={() => {
-                    if (userInfo?.user) router.push('/profile');
+                    userInfo?.user
+                      ? router.push('/profile')
+                      : router.push('/auth');
                   }}
                 >
                   <Image
@@ -167,9 +175,7 @@ const Header = () => {
                     width={30}
                     height={30}
                   />
-                  <Name onClick={() => router.push('/auth')} desktop>
-                    {mockData.isAuth || 'Вход'}
-                  </Name>
+                  <Name desktop>{mockData.isAuth || 'Вход'}</Name>
                 </Profile>
 
                 <Favorites>

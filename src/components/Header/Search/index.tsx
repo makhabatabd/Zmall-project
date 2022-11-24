@@ -8,11 +8,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const SearchBlock = () => {
-  const [isActiveCategories, setIsActiveCategories] = useState<boolean>(false);
+  const [isActiveCategories, setIsActiveCategories] = useState(false);
   const [category, setCategory] = useState();
-  const [value, setValue] = useState<string>('');
-  const [isShowSearchResult, setIsShowSearchResult] = useState<boolean>(false);
+  const [value, setValue] = useState('');
+  const [isShowSearchResult, setIsShowSearchResult] = useState(false);
   const categories = [];
+
+  // const getGoodsBySearch = () => {
+  //   console.log('Goods');
+    
+  // }
 
   useEffect(() => {
     value && setIsShowSearchResult(true);
@@ -71,21 +76,31 @@ export const SearchBlock = () => {
               onClick={() => setIsShowSearchResult(true)}
             />
             <div className={css.searchAdvert}>
-              {isShowSearchResult && value
-                ? advertsData?.results.map((item, i) => (
-                    <Link
-                      href={`/detail/${item.id}`}
-                      className={css.item}
-                      key={i}
-                      onClick={() => setValue('')}
-                    >
-                      <div className={css.text}>
-                        <p className={css.title}>{item.name}</p>
-                        <p className={css.number}>{item.start_price} ₸</p>
-                      </div>
-                    </Link>
-                  ))
-                : null}
+              {isShowSearchResult && value ? (
+                <Link
+                  href={`/detail/${72}`}
+                  className={css.item}
+                  onClick={() => setValue('')}
+                >
+                  <div className={css.text}>
+                    <p className={css.title}>{"Aidar"}</p>
+                    <p className={css.number}>{500000} ₸</p>
+                  </div>
+                </Link>
+              ) : // advertsData?.results.map((item, i) => (
+              //     <Link
+              //       href={`/detail/${item.id}`}
+              //       className={css.item}
+              //       key={i}
+              //       onClick={() => setValue('')}
+              //     >
+              //       <div className={css.text}>
+              //         <p className={css.title}>{item.name}</p>
+              //         <p className={css.number}>{item.start_price} ₸</p>
+              //       </div>
+              //     </Link>
+              //   ))
+              null}
             </div>
             <button type="submit" className={css.seacrhBtn}>
               <span>найти</span>
