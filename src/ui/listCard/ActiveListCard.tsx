@@ -1,6 +1,5 @@
-import Statistics from '@/components/StatisticModal/Statistics';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ActiveItemCategory,
   ActiveItemPublication,
@@ -20,7 +19,7 @@ interface IProps {
   price: number;
   title: string;
   publication_date: string;
-  image: any;
+  image: string;
   contacts: number;
   views: number;
   category: string;

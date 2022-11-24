@@ -2,7 +2,7 @@ import { useGetUsersAdvertsQuery } from '@/store/profile.api';
 import { GoodSkeleton } from '@/ui/GoodSkeleton/GoodSkeleton';
 import { ActiveListCard } from '@/ui/listCard/ActiveListCard';
 import React, { useState } from 'react';
-import Statistics from '../StatisticModal/Statistics';
+// import Statistics from '../StatisticModal/Statistics';
 import { Container } from '../Styles/sharedstyles';
 import { ProfileAdvertsSearch } from './ProfileAdvertsSearch';
 import { ProfileEmptyData } from './ProfileEmptyAdverts';
@@ -16,40 +16,40 @@ const ProfileCategories = () => {
   const [value, setValue] = useState('');
   const links = ['Все категории', 'Активные', 'На проверке', 'Неактивные'];
 
-  const results = {
-    '19.09.2022': {
-      phone_views_count: 0,
-      views_count: 0,
-    },
-    phone_views_count: 0,
-    views_count: 4,
-    '26.09.2022': {
-      phone_views_count: 0,
-      views_count: 1,
-    },
-    '30.09.2022': {
-      phone_views_count: 0,
-      views_count: 1,
-    },
-    '14.11.2022': {
-      phone_views_count: 0,
-      views_count: 1,
-    },
-    '21.11.2022': {
-      phone_views_count: 0,
-      views_count: 1,
-    },
-  };
+  // const results = {
+  //   '19.09.2022': {
+  //     phone_views_count: 0,
+  //     views_count: 0,
+  //   },
+  //   phone_views_count: 0,
+  //   views_count: 4,
+  //   '26.09.2022': {
+  //     phone_views_count: 0,
+  //     views_count: 1,
+  //   },
+  //   '30.09.2022': {
+  //     phone_views_count: 0,
+  //     views_count: 1,
+  //   },
+  //   '14.11.2022': {
+  //     phone_views_count: 0,
+  //     views_count: 1,
+  //   },
+  //   '21.11.2022': {
+  //     phone_views_count: 0,
+  //     views_count: 1,
+  //   },
+  // };
 
   return (
     <Wrapper white bottom>
-      {statistics && (
+      {/* {statistics && (
         <Statistics
           setStatictics={setStatictics}
           statistics={statistics}
           result={results}
         />
-      )}
+      )} */}
       <Container>
         <Body>
           <Nav>
@@ -93,7 +93,7 @@ const ProfileCategories = () => {
                     views={item.views_count}
                     category={item.category}
                     contacts={item.phone_view_count}
-                    image={item.images[0]}
+                    image={String(item.images[0])}
                     setStatictics={setStatictics}
                     statistics={statistics}
                   />
