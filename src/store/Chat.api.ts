@@ -10,7 +10,6 @@ if (typeof window !== 'undefined') {
   info = auth;
 }
 
-
 export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://188.225.83.42:8001/api/v1/' }),

@@ -4,7 +4,7 @@ import { AppState } from './store';
 const initialState = {
   status: 'idle',
   error: null,
-  channel: ""
+  channel: '',
 };
 
 export const chatSlice = createSlice({
