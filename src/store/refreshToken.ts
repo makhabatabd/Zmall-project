@@ -1,4 +1,4 @@
-import { BASE_URL } from './../api';
+import { BASE_URL } from '@/api';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import type {
   BaseQueryFn,

@@ -6,6 +6,7 @@ import { favoriteSlice } from './favoritesSlice';
 
 import { mainSlice } from './mainSlice';
 import { orderApi } from './order.api';
+import { adminSlice } from '@/store/adminSlice';
 import { profileApi } from './profile.api';
 
 const makeStore = () =>
@@ -16,6 +17,7 @@ const makeStore = () =>
       [authSlice.reducerPath]: authSlice.reducer,
       [orderApi.reducerPath]: orderApi.reducer,
       [favoriteSlice.reducerPath]: favoriteSlice.reducer,
+      [adminSlice.name]: adminSlice.reducer,
       [chatApi.reducerPath]: chatApi.reducer,
       [profileApi.reducerPath]: profileApi.reducer,
     },

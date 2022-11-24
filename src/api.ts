@@ -7,6 +7,7 @@ const instance = axios.create({
   },
 });
 
+
 export async function getData(
   page?: string | string[] | undefined,
   limit?: string | string[] | undefined
@@ -36,4 +37,32 @@ export async function getOneHelp( id: number) {
 export async function getHelpDetail( id : number | any) {
   const response = await axios(`http://188.225.83.42:8001/api/v1/site/help/${id}/`)
   return response.data
+}
+
+export async function getAdminComplains ( token : object| any){
+  console.log(token, "api");
+ try {
+   const response = await axios.get(`http://188.225.83.42:8001/api/v1/admin/feedback/`, {
+     headers: {
+       'Content-Type': 'application/json',
+       "Authorization": 'Bearer ' + token?.token,
+     },
+   })
+   return response.data
+ }
+ catch (e) {
+   console.log("huy");
+   return {huy: "huy"}
+ }
+}
+export async function getUsersData(
+  token? : object  | any,
+) {
+  const response = await axios.get(`http://188.225.83.42:8001/api/v1/admin/users`,{
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": 'Bearer ' + token?.token,
+    },
+  } );
+  return response.data;
 }
