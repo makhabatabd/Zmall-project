@@ -1,5 +1,10 @@
+import React from 'react';
+
+export const Mobile = () => {
+  <div>Header</div>;
+};
 // // import {Link, NavLink, useNavigate} from "react-router-dom";
-// import React, { useEffect, useRef, useState } from 'react';
+// import React, { useRef, useState } from 'react';
 
 // // import {advertModel} from "@/entities/advert";
 
@@ -22,20 +27,22 @@
 //   const [category, setCategory] = useState<number>();
 //   const [value, setValue] = useState<string>('');
 //   const [isShow, setIsShow] = useState<boolean>(false);
-//   // const {data: advertsData, isLoading} = advertModel.advertApi.useGetAdvertsQuery({
-//   //     categoryId: category,
-//   //     cityId: city,
-//   //     search: value
-//   // },
-//   // {skip: !value}
-//   // );
+//   const { data: advertsData, isLoading } =
+//     advertModel.advertApi.useGetAdvertsQuery(
+//       {
+//         categoryId: category,
+//         cityId: city,
+//         search: value,
+//       },
+//       { skip: !value }
+//     );
 
-//   // const navigate = useNavigate();
-//   // const {data: cities} = commonEntitiesApi.useGetCitiesQuery();
+//   const navigate = useNavigate();
+//   const { data: cities } = commonEntitiesApi.useGetCitiesQuery();
 
-//   // useEffect(() => {
-//   //     value && setIsShow(true);
-//   // }, [value]);
+//   useEffect(() => {
+//     value && setIsShow(true);
+//   }, [value]);
 
 //   const handlerSubmit = () => {
 //     // navigate("/search", {state: {arr: advertsData}});
@@ -49,13 +56,9 @@
 
 //   return (
 //     <div className={css.mobile}>
-
-//       <div className={css.three}>
-
-//       </div>
+//       <div className={css.three}></div>
 //       <div className={css.twoBlock}>
 //         <div className={cn('container', css.container)}>
-
 //           <div className={css.form}>
 //             <input
 //               type="text"

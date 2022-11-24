@@ -13,7 +13,9 @@ export const ProfileAdvertsSearch = ({ setValue, value }: IProps) => {
         placeholder="Найти объявление"
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
       />
       <SearchIcon src="/user/search.svg" alt="search" width={20} height={20} />
     </Search>

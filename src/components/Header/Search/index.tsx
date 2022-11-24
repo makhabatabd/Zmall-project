@@ -1,3 +1,8 @@
+import React from 'react';
+
+export const Mobile = () => {
+  <div>Header</div>;
+};
 // import React, { useState, useEffect, useRef } from 'react';
 // import { useClickOutside } from '@/hooks';
 
