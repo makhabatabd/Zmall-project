@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
                 
 
@@ -21,4 +22,29 @@ useEffect(() => {
   }, [keyName, value]);
  
 return [value, setValue];
+}
+
+
+ const useRouterPath = () => {
+  const router = useRouter()
+  const route = router.asPath
+ 
+ 
+  return route
+}
+
+ const toPascalCase = (string: string) => {
+  return string.replace(/\w+/g, function (w){
+    return w[0].toUpperCase() + w.slice(1).toLowerCase()
+  })
+}
+
+export const useBreadcrumbPath = () => {
+  const route = useRouterPath()
+  const removeQuestionMark = route.replace(/\?/g, '/')
+  const removeEquals = removeQuestionMark.replace(/\=/g,'/')
+  const pathToPascalCase = toPascalCase(removeEquals)
+
+  
+  return pathToPascalCase.slice(1, pathToPascalCase.length).split('/')
 }

@@ -1,6 +1,7 @@
 import { DetailsPageProps } from '@/../pages/detail/[id]';
 import { ListCard } from '@/ui/listCard/ListCard';
 import React from 'react';
+import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
 import { Container } from '../Styles/sharedstyles';
 import { DetailContact } from './DetailContact';
 import { DetailDescription } from './DetailDescription';
@@ -14,6 +15,7 @@ import {
 const DetailsPage = ({ data, similar }: DetailsPageProps) => {
   return (
     <>
+      <BreadCrumbs />
       <Wrapper>
         <Container style={{ width: '100%', padding: '15px' }}>
           <DetailInner>

@@ -15,6 +15,7 @@ import {
 import { ISignUp } from '@/types';
 import { SignUpValidate } from '@/validation';
 import { useRegisterMutation } from '@/store/authSlice';
+import Link from 'next/link';
 
 export const Signup = () => {
   const [register] = useRegisterMutation();
@@ -156,8 +157,9 @@ export const Signup = () => {
             onChange={formik.handleChange}
           />
           <p>
-            Я соглашаюсь с <a href="link">правилами использования сервиса</a>, а
-            также с передачей и обработкой моих данных.
+            Я соглашаюсь с
+            <Link href="link">правилами использования сервиса</Link>, а также с
+            передачей и обработкой моих данных.
           </p>
         </Agreement>
         {formik.errors.checked && formik.touched.checked && (

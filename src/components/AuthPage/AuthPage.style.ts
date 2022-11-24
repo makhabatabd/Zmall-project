@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { device } from '../Theme/Theme';
 import { keyframes } from 'styled-components';
+import Link from 'next/link';
 
 export const Container = styled.div`
   max-width: 1336px;
@@ -130,7 +131,7 @@ export const Agreement = styled.div`
   }
 `;
 
-export const AuthLink = styled.a`
+export const AuthLink = styled(Link)`
   font-family: 'Inter';
   font-weight: 400;
   font-size: ${(props) => `${props.theme.fontSizes.small}`};

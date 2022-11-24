@@ -24,6 +24,7 @@ import {
 } from './Details.style';
 import { useRouter } from 'next/router';
 import { useLocalStorage } from '@/utils';
+import Link from 'next/link';
 
 const networksImg = [
   { logo: '/details/wa.svg', url: 'whatsapp://send?text=' },
@@ -127,14 +128,18 @@ export const DetailDescription = ({ data }: DetailsPageProps) => {
                     {networksImg.map((el, index: number) => {
                       return (
                         <div key={index}>
-                          <a href={el.url} target={'_blank'} rel="noreferrer">
+                          <Link
+                            href={el.url}
+                            target={'_blank'}
+                            rel="noreferrer"
+                          >
                             <Image
                               src={el.logo}
                               alt="el"
                               width={21}
                               height={21}
                             />
-                          </a>
+                          </Link>
                         </div>
                       );
                     })}

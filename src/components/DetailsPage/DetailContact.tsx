@@ -6,6 +6,7 @@ import {
 } from '@/store/favoritesSlice';
 import { IResult } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import {
   Client,
@@ -165,13 +166,13 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               height={32}
               alt="icon"
             />
-            <a
+            <Link
               href={`https://wa.me/${data?.whatsapp_number}`}
               target={'_blank'}
               rel="noreferrer"
             >
               написать продавцу
-            </a>
+            </Link>
           </WriteButton>
           <TextButton>
             <Image

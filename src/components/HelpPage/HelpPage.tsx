@@ -13,16 +13,16 @@ import {
 import { IHelpData } from '@/types';
 import Link from 'next/link';
 import { getHelpDetail } from '@/api';
+import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
 
 interface IProps {
-  data :IHelpData
+  data: IHelpData;
 }
 
-
-const HelpPage = ({ data }:IProps) => {
-
+const HelpPage = ({ data }: IProps) => {
   return (
     <HelpPageSection>
+      <BreadCrumbs />
       <HelpTitle>Помощь по сайту</HelpTitle>
       <HelpFlexBox>
         <HelpContentFlexBox>
@@ -30,13 +30,18 @@ const HelpPage = ({ data }:IProps) => {
             return (
               <HelpItem key={it.id}>
                 <HelpItemTitle>{it.name}</HelpItemTitle>
-                {it.help.map(quest => {
+                {it.help.map((quest) => {
                   return (
-                    <HelpItemSubtitle key={quest.id} onClick={() => getHelpDetail( quest.id )}><Link href={`/help-page/${quest.id}`}>{quest.title}</Link></HelpItemSubtitle>
-                  )
+                    <HelpItemSubtitle
+                      key={quest.id}
+                      onClick={() => getHelpDetail(quest.id)}
+                    >
+                      <Link href={`/help-page/${quest.id}`}>{quest.title}</Link>
+                    </HelpItemSubtitle>
+                  );
                 })}
               </HelpItem>
-            )
+            );
           })}
         </HelpContentFlexBox>
         <HelpOftenQuestion>
