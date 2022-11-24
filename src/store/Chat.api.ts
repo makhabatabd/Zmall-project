@@ -1,4 +1,10 @@
-import { IAuth, IData } from '@/types';
+import {
+  IAuth,
+  IChatData,
+  IData,
+  IEachMessage,
+  IResponseMessage,
+} from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 let info: IAuth = {};
@@ -23,7 +29,7 @@ export const chatApi = createApi({
         },
       }),
     }),
-    getMyChats: builder.query<any, string>({
+    getMyChats: builder.query<IChatData, string>({
       query: (token) => ({
         url: 'chat/chats/',
         headers: {
@@ -41,6 +47,17 @@ export const chatApi = createApi({
         },
       }),
     }),
+    sendMessage: builder.mutation<IResponseMessage, IEachMessage>({
+      query: (data) => ({
+        url: 'chat/message/',
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: 'Bearer ' + info.token,
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
   }),
 });
 
@@ -48,4 +65,5 @@ export const {
   useLazyGetMyChannelQuery,
   useLazyGetMyChatsQuery,
   useLazyGetEachChatQuery,
+  useSendMessageMutation,
 } = chatApi;

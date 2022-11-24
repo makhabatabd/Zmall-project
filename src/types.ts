@@ -159,6 +159,7 @@ interface IChat {
   sender_name: string;
   advertisement_name: string;
   advertisement_price: number;
+  advertisement?: number;
 }
 
 interface IMessage {
@@ -171,4 +172,52 @@ export interface IElem {
   chat?: string;
   message?: string;
   send_date?: string;
+}
+
+export interface IEachMessage {
+  ads_id: number | undefined | string;
+  chat_id: string | string[] | undefined;
+  message: string;
+  file?: null;
+}
+
+export interface IChatData {
+  count: number;
+  next: null;
+  previous: null;
+  results: Result[];
+}
+
+export interface Result {
+  chat_id: string;
+  advertisement: number | null;
+  advertisement_name?: string;
+  message: Message;
+  unread_count: number;
+}
+
+export interface Message {
+  sender?: string;
+  sender_name?: string;
+  message: string;
+  send_date?: string;
+  is_read: boolean;
+  file: null;
+  type?: string;
+}
+
+export interface IResponseMessageData {
+  key?: number;
+  chat?: string;
+  file?: null;
+  is_read?: boolean;
+  message?: string;
+  send_date?: string;
+  sender?: string;
+  sender_name?: string;
+  type?: string;
+}
+
+export interface IResponseMessage {
+  data?: IResponseMessageData;
 }

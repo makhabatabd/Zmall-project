@@ -1,5 +1,6 @@
 import { device } from '../Theme/Theme';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 export const Container = styled.div`
   max-width: 1336px;
@@ -53,6 +54,7 @@ export const ProductInfo = styled.div`
 export const Divider = styled.p`
   max-width: 1335.5px;
   height: 0px;
+  margin: 24px 0 0 0;
   border: 1px solid rgba(224, 224, 224, 0.8);
 `;
 
@@ -134,7 +136,6 @@ export const MyMessage = styled.p`
   text-align: center;
   color: #000000;
   padding: 27px 25px;
-  margin: 24px 0;
   margin-left: auto;
   margin-bottom: 10px;
 `;
@@ -170,13 +171,84 @@ export const SendButton = styled.button`
 
 
 export const MyChatsWrapper = styled.div`
-max-width:1350px;
+max-width: 1350px;
 display: flex;
 flex-direction:column;
 gap: 24px;
+padding: 24px;
 `
 export const MyChatInner = styled.div`
+position: relative;
 background: #FFFFFF;
 border-radius: 8px;
-max-height:120px
+min-height:120px;
+display:flex;
+gap: 24px;
+padding: 24px;
+`
+
+export const ChatDetails = styled.div`
+display: flex;
+justify-content: space-between;
+flex-wrap:wrap;
+gap:12px;
+`
+
+export const SlyledLink = styled(Link)`
+width: 100%;
+`
+
+export const SenderName = styled.p`
+font-family: 'Inter';
+font-weight: 400;
+font-size: 14px;
+line-height: 120%;
+color: #00CCDB;
+`
+
+export const AdvertisementItem = styled.p`
+font-family: 'Inter';
+font-weight: 700;
+font-size: 16px;
+line-height: 120%;
+color: #706D7A;
+margin: 9px 0 15px;
+`
+
+export const Message = styled.p`
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 120%;
+color: #828282;
+`
+
+export const MessageDate = styled.p`
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 120%;
+color: #828282;
+    display: flex;
+    align-items: end;
+`
+export const UnreadMessages = styled.span`
+position: absolute;
+background-color: #e13d68;
+width: 14px;
+height: 14px;
+border-radius:50%;
+top:23px;
+left:55px;
+font-family: 'Source Sans Pro';
+font-weight: 400;
+font-size: 11px;
+line-height: 120%;
+display: flex;
+align-items: center;
+justify-content:center;
+text-align: center;
+color: #FFFFFF;
 `

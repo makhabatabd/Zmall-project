@@ -54,7 +54,6 @@ export const Signup = () => {
       setInfo(true);
       values.checked = false;
       setErr('');
-      console.log(values, 'eferf');
     } catch (error: typeof error) {
       error?.data?.errors &&
         Object.values(error?.data?.errors).map((item) => setErr(item));
@@ -63,7 +62,6 @@ export const Signup = () => {
 
   async function onSubmit(values: ISignUp) {
     registerUser(values);
-    console.log(values, 'submit');
   }
   return (
     <SignupForm>
