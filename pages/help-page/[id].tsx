@@ -5,28 +5,23 @@ import { getHelpDetail, getOneHelp } from '@/api';
 import { IHelpData, IHelpDetail } from '@/types';
 
 interface IProps {
-  data:IHelpDetail
-  category: IHelpData
+  data: IHelpDetail;
+  category: IHelpData;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const detailData = await getHelpDetail( context?.query?.id   );
-  const helpCategory = await getOneHelp(detailData.category - 1)
-
+  const detailData = await getHelpDetail(context?.query?.id as string);
+  const helpCategory = await getOneHelp(detailData.category - 1);
 
   return {
     props: {
       data: detailData,
-      category: helpCategory
+      category: helpCategory,
     },
   };
 };
 
-
-
-
-const HelpDetail = ({ data, category}: IProps) => {
-
+const HelpDetail = ({ data, category }: IProps) => {
   return <HelpDetailPage detailData={data} category={category} />;
 };
 

@@ -22,7 +22,7 @@ import {
   DesktopLink,
   BottonHeaderBody,
 } from './Header.style';
-import { useLogOutMutation } from '@/store/authSlice';
+// import { useLogOutMutation } from '@/store/authSlice';
 import { useRouter } from 'next/router';
 // import { SearchBlock } from './Search';
 // import { Mobile } from './Mobile';
@@ -32,17 +32,18 @@ const Header = () => {
   const [isNavbar, setIsNavbar] = useState<boolean>(true);
   const [activePage, setActivePage] = useState<string>('Объявления');
   const { data: session } = useSession();
-  const [logOut] = useLogOutMutation();
+  // const [logOut] = useLogOutMutation();
   const [userInfo, setUserInfo] = useState({
     refresh: null,
     user: null,
   });
   function getUser() {
     const token =
-      localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'));
+      localStorage.getItem('auth') &&
+      JSON.parse(localStorage.getItem('auth') || '');
     const user =
       localStorage.getItem('currentUser') &&
-      JSON.parse(localStorage.getItem('currentUser'));
+      JSON.parse(localStorage.getItem('currentUser') || '');
     if (token && user)
       setUserInfo({ refresh: token.refresh, user: user.email });
   }
@@ -63,15 +64,16 @@ const Header = () => {
   }
 
   async function userLogOut() {
-    try {
-      await logOut({
-        refresh: userInfo?.refresh,
-      });
-      localStorage.clear();
-      setUserInfo({});
-    } catch (error: typeof error) {
-      console.log(error);
-    }
+    // try {
+    //   await logOut({
+    //     refresh: userInfo?.refresh,
+    //   });
+    //   localStorage.clear();
+    //   setUserInfo({});
+    // } catch (error: typeof error) {
+    //   console.log(error);
+    // }
+    console.log(1);
   }
 
   return (

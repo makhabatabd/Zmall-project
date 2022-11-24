@@ -5,7 +5,7 @@ import { Body, Link, List, Name, Wrapper } from './ProfilePage.style';
 import ProfileCategories from './ProfileCategories';
 import { ProfileOrders } from './ProfileOrders';
 import { ProfilesFavorites } from './ProfilesFavorites';
-import { ProfileSettings } from './ProfileSettings';
+// import { ProfileSettings } from './ProfileSettings';
 import { useGetUsersDataQuery } from '@/store/profile.api';
 
 const Profile = () => {
@@ -63,7 +63,7 @@ const Profile = () => {
       {activePage === 'Мои объявления' && <ProfileCategories />}
       {activePage === 'История транзакций' && <ProfileOrders />}
       {activePage === 'Избранные' && <ProfilesFavorites />}
-      {activePage === 'Настройки' && <ProfileSettings />}
+      {/* {activePage === 'Настройки' && <ProfileSettings />} */}
     </>
   );
 };
