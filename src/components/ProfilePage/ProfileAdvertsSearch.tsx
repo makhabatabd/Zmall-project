@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import { Search, SearchIcon, SearchInput } from './ProfilePage.style';
 

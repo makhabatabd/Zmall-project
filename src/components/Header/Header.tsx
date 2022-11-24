@@ -24,8 +24,8 @@ import {
 } from './Header.style';
 import { useLogOutMutation } from '@/store/authSlice';
 import { useRouter } from 'next/router';
-import { SearchBlock } from './Search';
-import { Mobile } from './Mobile';
+// import { SearchBlock } from './Search';
+// import { Mobile } from './Mobile';
 
 const Header = () => {
   const router = useRouter();
@@ -222,8 +222,8 @@ const Header = () => {
         <Container>
           <BottonHeaderBody>
             <Logo onClick={() => router.push('/')}>Zmall</Logo>
-            <SearchBlock />
-            <Mobile />
+            {/* <SearchBlock /> */}
+            {/* <Mobile /> */}
           </BottonHeaderBody>
         </Container>
       </BottomHedaer>

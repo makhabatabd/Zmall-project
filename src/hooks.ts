@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from 'react';
+import React, { useEffect, RefObject } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from './store/store';
 
@@ -11,14 +11,19 @@ export const useClickOutside = (
   callback: () => void
 ) => {
   useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (ref.current !== e.target) callback();
-      if (ref.current && !ref.current.contains(e.target)) callback?.();
-    };
+    function handleClickOutside(e: React.MouseEvent<HTMLButtonElement>) {
+      e.preventDefault();
+      if (ref.current !== e.currentTarget) callback();
+      if (ref.current && !ref.current.contains(e.currentTarget)) callback?.();
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', function (e) {
+      handleClickOutside(e as never);
+    });
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', function (e) {
+        handleClickOutside(e as never);
+      });
     };
   }, [ref]);
 };

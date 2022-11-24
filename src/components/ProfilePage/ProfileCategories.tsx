@@ -1,7 +1,7 @@
 import { useGetUsersAdvertsQuery } from '@/store/profile.api';
 import { GoodSkeleton } from '@/ui/GoodSkeleton/GoodSkeleton';
 import { ActiveListCard } from '@/ui/listCard/ActiveListCard';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Statistics from '../StatisticModal/Statistics';
 import { Container } from '../Styles/sharedstyles';
 import { ProfileAdvertsSearch } from './ProfileAdvertsSearch';
@@ -16,36 +16,38 @@ const ProfileCategories = () => {
   const [value, setValue] = useState('');
   const links = ['Все категории', 'Активные', 'На проверке', 'Неактивные'];
 
+  const results = {
+    '19.09.2022': {
+      phone_views_count: 0,
+      views_count: 0,
+    },
+    phone_views_count: 0,
+    views_count: 4,
+    '26.09.2022': {
+      phone_views_count: 0,
+      views_count: 1,
+    },
+    '30.09.2022': {
+      phone_views_count: 0,
+      views_count: 1,
+    },
+    '14.11.2022': {
+      phone_views_count: 0,
+      views_count: 1,
+    },
+    '21.11.2022': {
+      phone_views_count: 0,
+      views_count: 1,
+    },
+  };
+
   return (
     <Wrapper white bottom>
       {statistics && (
         <Statistics
           setStatictics={setStatictics}
           statistics={statistics}
-          result={{
-            '19.09.2022': {
-              phone_views_count: 0,
-              views_count: 0,
-            },
-            phone_views_count: 0,
-            views_count: 4,
-            '26.09.2022': {
-              phone_views_count: 0,
-              views_count: 1,
-            },
-            '30.09.2022': {
-              phone_views_count: 0,
-              views_count: 1,
-            },
-            '14.11.2022': {
-              phone_views_count: 0,
-              views_count: 1,
-            },
-            '21.11.2022': {
-              phone_views_count: 0,
-              views_count: 1,
-            },
-          }}
+          result={results}
         />
       )}
       <Container>

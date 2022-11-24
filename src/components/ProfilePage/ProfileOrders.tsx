@@ -1,5 +1,4 @@
 import { useGetUsersOrdersQuery } from '@/store/profile.api';
-import TransactionsSkeleton from '@/components/ProfilePage/TransactionsSkeleton';
 import React from 'react';
 import { Container } from '../Styles/sharedstyles';
 import {
@@ -42,7 +41,7 @@ export const ProfileOrders = () => {
             </Heading>
             {data &&
               data?.results.map((item, index) => (
-                <Heading>
+                <Heading key={index}>
                   <Cell>{heading[index]}</Cell>
                   <Cell>Продажа</Cell>
                   <Cell>{item.start_date}</Cell>

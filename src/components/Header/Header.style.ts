@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {
   deviceMobileFirst as device,
-  device as DesktopFirst,
+  // device as DesktopFirst,
 } from '../Theme/Theme';
 
 export const TopHeader = styled.div`
@@ -122,7 +122,7 @@ export const DesktopLink = styled.li<{ desktop?: boolean }>`
   height: 48px;
   padding: 10px 20px;
   position: relative;
-  white-space: nowrap; 
+  white-space: nowrap;
 
   background-color: ${(props) => (props.desktop ? 'white' : 'transparent')};
   color: ${(props) => (props.desktop ? props.theme.colors.purple : 'white')};

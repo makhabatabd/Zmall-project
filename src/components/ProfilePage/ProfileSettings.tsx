@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { ProfileBody, Wrapper } from './ProfilePage.style';
 import { useFormik } from 'formik';
@@ -7,7 +7,6 @@ import { Authbutton } from '@/ui/auth/button/Authbutton';
 import { ProfileDataValidate } from '@/validation';
 import { ISignUp } from '@/types';
 import {
-  Agreement,
   Form,
   ModalButton,
   ModalInner,
@@ -47,7 +46,7 @@ export const ProfileSettings = () => {
 
   const editUser = async (values: ISignUp) => {
     try {
-      const response = await editUsersData({
+      await editUsersData({
         email: values.email,
         first_name: values.username,
         last_name: values.lastName,

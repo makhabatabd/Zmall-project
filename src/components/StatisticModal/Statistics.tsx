@@ -37,18 +37,41 @@ interface DataType {
 }
 
 interface ResultType {
-  phone_views_count: number;
-  views_count: number;
+  // phone_views_count: number;
+  // views_count: number;
+  result: IResult[];
   statistics: boolean;
   setStatictics: (statistics: boolean) => void;
 
+  // [key: string]:
+  //   | {
+  //       phone_views_count: number;
+  //       views_count: number;
+  //     }
+  //   | number;
+}
+
+// interface IResType {
+//   [key: string]:
+//     | {
+//         name: string;
+//         phone_views_count: number;
+//         views_count: number;
+//       }
+//     | number;
+// }
+
+interface IResult {
+  // '19.09.2022': {
+  //   phone_views_count: 0;
+  //   views_count: 0;
+  // };
   [key: string]:
     | {
         phone_views_count: number;
         views_count: number;
       }
-    | number
-    ;
+    | number;
 }
 
 interface ResType {
@@ -56,6 +79,13 @@ interface ResType {
   uv: number;
   pv: number;
   amt: number;
+
+  [key: string]:
+    | {
+        phone_views_count: number;
+        views_count: number;
+      }
+    | number;
 }
 
 const Statistics = ({ result, statistics, setStatictics }: ResultType) => {
@@ -83,7 +113,11 @@ const Statistics = ({ result, statistics, setStatictics }: ResultType) => {
     fetchData();
   }, [result]);
 
-  const renderCustomizedLabel = (props: any) => {
+  const renderCustomizedLabel = (props: {
+    x: number;
+    y: number;
+    index: number;
+  }) => {
     const { x, y, index } = props;
 
     return (
@@ -98,7 +132,6 @@ const Statistics = ({ result, statistics, setStatictics }: ResultType) => {
   const onCloseStatic = () => {
     // toggleStatic(false);
     setStatictics(!statistics);
-    console.log('-------------------');
   };
   return (
     <StatisticsSection>

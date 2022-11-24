@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import {
-  deviceMobileFirst as device,
-  device as DesktopFirst,
-} from '../Theme/Theme';
+// import {
+//   deviceMobileFirst as device,
+//   device as DesktopFirst,
+// } from '../Theme/Theme';
 
 import TransactionsSkeleton from './TransactionsSkeleton';
 
