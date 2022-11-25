@@ -46,7 +46,7 @@ export function SignUpValidate(values: ISignUp) {
     errors.password_confirm = 'Invalid Confirm Password';
   }
   // validation for checkbox
-  if (!values.checked) {
+  if (values.checked == 'false') {
     errors.checked = 'Please Check the Input';
   }
 

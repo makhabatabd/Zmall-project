@@ -22,7 +22,7 @@ import {
   DesktopLink,
   BottonHeaderBody,
 } from './Header.style';
-// import { useLogOutMutation } from '@/store/authSlice';
+import { useLogOutMutation } from '@/store/authSlice';
 import { useRouter } from 'next/router';
 // import { SearchBlock } from './Search';
 // import { Mobile } from './Mobile';
@@ -32,7 +32,7 @@ const Header = () => {
   const [isNavbar, setIsNavbar] = useState<boolean>(true);
   const [activePage, setActivePage] = useState<string>('Объявления');
   const { data: session } = useSession();
-  // const [logOut] = useLogOutMutation();
+  const [logOut] = useLogOutMutation();
   const [userInfo, setUserInfo] = useState({
     refresh: null,
     user: null,
@@ -64,15 +64,19 @@ const Header = () => {
   }
 
   async function userLogOut() {
-    // try {
-    //   await logOut({
-    //     refresh: userInfo?.refresh,
-    //   });
-    //   localStorage.clear();
-    //   setUserInfo({});
-    // } catch (error: typeof error) {
-    //   console.log(error);
-    // }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await logOut({
+      refresh: userInfo?.refresh,
+    });
+    if (response?.data) {
+      localStorage.clear();
+      setUserInfo({
+        refresh: null,
+        user: null,
+      });
+    } else if (response.error) {
+      console.log('error');
+    }
     console.log(1);
   }
 

@@ -13,9 +13,10 @@ const Profile = () => {
   const [activePage, setActivePage] = useState('Мои объявления');
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const { email } =
-    typeof window !== 'undefined' &&
-    localStorage.getItem('currentUser') &&
-    JSON.parse(localStorage.getItem('currentUser') || '');
+    (typeof window !== 'undefined' &&
+      localStorage.getItem('currentUser') &&
+      JSON.parse(localStorage.getItem('currentUser') || '')) ||
+    '';
 
   const links = [
     'Мои объявления',
