@@ -53,7 +53,6 @@ export const Signup = () => {
         })
       );
       formik.resetForm();
-      values.checked = 'false';
       setInfo(true);
       setErr('');
     } else {
