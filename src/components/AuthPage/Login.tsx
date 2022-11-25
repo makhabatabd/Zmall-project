@@ -24,7 +24,7 @@ export const Login = () => {
 
   async function handleGoogleSignin() {
     signIn('google', {
-      callbackUrl: 'https://zmall-project-group.vercel.app',
+      callbackUrl: 'https://zmall-project-group.vercel.app/',
     });
     session &&
       localStorage.setItem(
@@ -37,7 +37,7 @@ export const Login = () => {
 
   async function handleFacebookSignin() {
     signIn('facebook', {
-      callbackUrl: 'https://zmall-project-group.vercel.app',
+      callbackUrl: 'https://zmall-project-group.vercel.app/',
     });
     session &&
       localStorage.setItem(
