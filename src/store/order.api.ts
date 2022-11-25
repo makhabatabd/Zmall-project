@@ -30,4 +30,4 @@ export const orderApi = createApi({
   }),
 });
 
-export const { useOrderPaymentMutation } = orderApi;
+export const { useOrderPaymentMutation, useLazyGetOrderSubscriptionsQuery } = orderApi;

@@ -10,7 +10,7 @@ import TransactionsSkeleton from './TransactionsSkeleton';
 
 export const ProfilesFavorites = () => {
   const [getFavorites, { data }] = useLazyGetFavoritesQuery();
-  console.log('data', data);
+  //console.log('data', data);
 
   useEffect(() => {
     getFavorites();

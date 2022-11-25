@@ -70,7 +70,7 @@ const Header = () => {
       localStorage.clear();
       setUserInfo({});
     } catch (error: typeof error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 

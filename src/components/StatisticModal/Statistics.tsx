@@ -98,7 +98,7 @@ const Statistics = ({ result, statistics, setStatictics }: ResultType) => {
   const onCloseStatic = () => {
     // toggleStatic(false);
     setStatictics(!statistics);
-    console.log('-------------------');
+    //console.log('-------------------');
   };
   return (
     <StatisticsSection>

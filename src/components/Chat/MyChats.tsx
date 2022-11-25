@@ -23,7 +23,7 @@ export const MyChats = () => {
     sender_name: string;
     send_date: number;
   }
-  console.log(data);
+  //console.log(data);
 
   useEffect(() => {
     getMyChats(token);

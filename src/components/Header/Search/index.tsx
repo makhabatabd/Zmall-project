@@ -15,17 +15,20 @@ export const SearchBlock = () => {
   const [isShowSearchResult, setIsShowSearchResult] = useState(false);
   const categories: number[] = [];
   const [searchedGoods, setSearchedGoods] = useState([]);
-  console.log(searchedGoods, 'searched goods');
+  // //console.log(searchedGoods, 'searched goods');
 
   const getGoodsBySearch = async (value: string) => {
-    console.log(value, 'value');
     try {
+      if (value.length < 2) {
+        setSearchedGoods([]);
+        return;
+      }
       const response = await axios(
-        'http://188.225.83.42:8001/api/v1/advertisement/list/'
+        `http://188.225.83.42:8001/api/v1/advertisement/list/?limit=10&offset=10&search=${value}`
       );
       setSearchedGoods(response.data.results);
     } catch (e) {
-      console.log(e, 'error');
+      //console.log(e, 'error');
     }
   };
 
@@ -41,7 +44,10 @@ export const SearchBlock = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useClickOutside(ref, () => {
-    setIsActiveCategories(false);
+    setTimeout(() => {
+      setIsActiveCategories(false);
+      setIsShowSearchResult(false);
+    }, 500);
   });
 
   return (
@@ -87,7 +93,7 @@ export const SearchBlock = () => {
               onClick={() => setIsShowSearchResult(true)}
             />
             <div className={css.searchAdvert}>
-              {isShowSearchResult && value
+              {isShowSearchResult && value && searchedGoods.length > 0
                 ? searchedGoods.map(
                     (
                       item: { id: number; name: string; start_price: number },
@@ -97,7 +103,10 @@ export const SearchBlock = () => {
                         href={`/detail/${item.id}`}
                         className={css.item}
                         key={i}
-                        onClick={() => setValue('')}
+                        onClick={() => {
+                          //console.log('CLICK');
+                          setValue('');
+                        }}
                       >
                         <Image
                           src="/main/good.png"
@@ -112,32 +121,7 @@ export const SearchBlock = () => {
                       </Link>
                     )
                   )
-                : //  (
-                  //   <Link
-                  //     href={`/detail/${72}`}
-                  //     className={css.item}
-                  //     onClick={() => setValue('')}
-                  //   >
-                  //     <div className={css.text}>
-                  //       <p className={css.title}>{'Aidar'}</p>
-                  //       <p className={css.number}>{500000} ₸</p>
-                  //     </div>
-                  //   </Link>
-                  // )
-                  // advertsData?.results.map((item, i) => (
-                  //     <Link
-                  //       href={`/detail/${item.id}`}
-                  //       className={css.item}
-                  //       key={i}
-                  //       onClick={() => setValue('')}
-                  //     >
-                  //       <div className={css.text}>
-                  //         <p className={css.title}>{item.name}</p>
-                  //         <p className={css.number}>{item.start_price} ₸</p>
-                  //       </div>
-                  //     </Link>
-                  //   ))
-                  null}
+                : null}
             </div>
             <button type="submit" className={css.seacrhBtn}>
               <span>найти</span>

@@ -17,8 +17,7 @@ export const Item = styled.div`
   a {
     border-top: 4px solid transparent;
     background-color: ${(props) => `${props ? '#fff' : 'transparent'}`};
-    //border-color: ${(props) => `${props ? '#00ccdb' : 'transparent'}`};
-    // border-color: ${(props) => `${console.log(props)}`};
+    /* border-color: ${(props) => `${props ? '#00ccdb' : 'transparent'}`}; */
     position: relative;
     display: flex;
     align-items: center;

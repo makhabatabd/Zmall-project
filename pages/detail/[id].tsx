@@ -94,14 +94,26 @@ export default function Detail({ data, similar }: DetailsPageProps) {
   return <DetailsPage data={data} similar={similar} />;
 }
 
+const getSimilarGoods = async () => {
+  try {
+    const response = await axios.get<Similar>(
+      `http://188.225.83.42:8001/api/v1/advertisement/simular/${res.data.id}`
+    );
+
+    return response.data;
+  } catch (e) {
+    // throw new Error('No similar goods');
+    console.log(e)
+  }
+};
+
 export async function getServerSideProps(context: { query: { id: number } }) {
   const res = await axios.get<DetailsData>(
     `http://188.225.83.42:8001/api/v1/advertisement/${context.query.id}`
   );
 
-  const similar = await axios.get<Similar>(
-    `http://188.225.83.42:8001/api/v1/advertisement/simular/${res.data.id}`
-  );
+  const similar = await getSimilarGoods();
 
-  return { props: { data: res.data, similar: similar.data } };
+  console.log(similar);
+  return { props: { data: res.data, similar: similar || 0 } };
 }

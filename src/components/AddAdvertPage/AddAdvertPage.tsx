@@ -29,7 +29,6 @@ import {
 import icon from '../../../public/icons/aircraft.svg';
 import arrow from '../../../public/icons/arrow.png';
 
-console.log(arrow);
 
 const AddAdvertPage = () => {
   const [showCategory, setShowCategory] = useState(false);

@@ -10,7 +10,7 @@ export const SelectCategory = ({
   selectedCategory,
   onSelectCategory,
 }: Props) => {
-  console.log(selectedCategory);
+  //console.log(selectedCategory);
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, () => onClose());
 

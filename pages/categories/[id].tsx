@@ -6,7 +6,7 @@ import {ListItem} from "@/components/HorizontalCard/ListItem";
 
 export default function Id() {
     const router = useRouter()
-    console.log(router)
+    // console.log(router)
     return (
         <>
             <CategoryList/>

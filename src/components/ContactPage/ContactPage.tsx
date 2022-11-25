@@ -33,7 +33,7 @@ const ContactPage = () => {
         text: e.response.data.errors.text ? e.response.data.errors.text[0] : '',
       }));
   };
-  console.log(error?.email);
+  //console.log(error?.email);
   return (
     <Wrapper>
       <WrapperInner>
