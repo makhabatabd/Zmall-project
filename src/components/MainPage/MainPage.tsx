@@ -15,7 +15,7 @@ export const MainPage: React.FC<IProps> = ({ result, page, limit }) => {
   const data = useAppSelector(selectMainState);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(addToStore(result.results));
+    dispatch(addToStore(result?.results));
   }, [page]);
 
   const pageHandler = (page: number, limit: number) => {
@@ -24,7 +24,6 @@ export const MainPage: React.FC<IProps> = ({ result, page, limit }) => {
       query: { limit: limit, offset: page },
     });
   };
-
   return (
     <div>
       <Container>

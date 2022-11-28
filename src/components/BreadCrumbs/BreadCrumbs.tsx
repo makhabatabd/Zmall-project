@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useBreadcrumbPath } from '../../utils';
 import { Crumb, MyBreadCrumbs } from './BreadCrumbs.style';
@@ -12,13 +12,10 @@ export const BreadCrumbs = () => {
 
   function titleRussianCase(item: string) {
     if (item === 'Privacy') return 'Политика конфиденциальности';
-    if (item === 'Searchpage') return 'Результаты поиска';
     if (item === 'Add-Advert') return 'Добавление товара';
     if (item === 'Detail') return 'Детали';
     if (item === 'Categories') return 'Категории';
-    if (item === 'About-Us') return 'О нас';
     if (item === 'Help-Page') return 'Помощь';
-    if (item === 'Contact-Page') return 'Контакты';
     return item;
   }
 
@@ -27,8 +24,6 @@ export const BreadCrumbs = () => {
 
   useEffect(() => {
     const id = breadcrumb.at(-1);
-    console.log(id, 'id');
-    console.log(router, 'router');
 
     if (path.includes('detail')) {
       if (id == location.pathname.split('/').at(-1)) {
@@ -59,18 +54,18 @@ export const BreadCrumbs = () => {
     } else if (path.includes('categories')) {
       if (id == location.pathname.split('/').at(-1)) {
         axios
-          .get(
-            `http://188.225.83.42:8001/api/v1/advertisement/categories/${id}`
-          )
+          .get(`http://188.225.83.42:8001/api/v1/advertisement/category/${id}`)
           .then((response) => {
-            console.log(response);
+            const replacement = response?.data?.name;
+            breadcrumb[breadcrumb.length - 1] = replacement;
+            setCrumb(breadcrumb);
           })
           .catch((err) => console.log(err));
-      } else {
-        setCrumb(breadcrumb);
       }
+    } else {
+      setCrumb(breadcrumb);
     }
-  }, []);
+  }, [router.query.id, path]);
 
   return (
     <MyBreadCrumbs>

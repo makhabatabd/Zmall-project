@@ -11,12 +11,15 @@ color: #2A2349;
 display:flex;
 gap:7px;
 align-items: center;
-padding: 36px 47px 27px;
+padding: 36px 0px 27px;
 `
 
 export const Crumb = styled.div`
 display:flex;
 gap:7px;
 align-items: center;
+&:last-child{
+    color:gray;
+}
 
 `

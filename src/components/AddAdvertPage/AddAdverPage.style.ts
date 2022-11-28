@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
 export const AddAdvertSection = styled.section`
   padding: 28px 48px 68px;
@@ -28,8 +29,8 @@ export const AddAdvertForm = styled.form`
 export const AddAdvertInputBox = styled.div`
   display: flex;
   gap: 30px;
-  justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: start;
   margin-bottom: 16px;
 
   width: 100%;
@@ -85,6 +86,61 @@ export const AddAdvertBox = styled.div`
   align-items: center;
 `;
 
+export const AddAdvertBoxPhone = styled(AddAdvertBox)`
+  flex-direction: column;
+`;
+
+export const PhoneWrapper = styled.div`
+  width: 384px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+  position: relative;
+
+  div {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #00ccdb;
+    cursor: pointer;
+
+    display: flex;
+    align-items: start;
+    width: 100%;
+    text-align: start;
+    //border-bottom: 1px dashed #00ccdb;
+  }
+`;
+
+export const Label = styled.label`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 12px;
+  background-color: white;
+  border: 1px solid #e5e6e6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: black;
+  font-style: normal;
+  border-radius: 8px;
+  outline: none;
+  position: relative;
+
+  div {
+    width: 1px;
+    height: 32px;
+    border-right: 1px solid #e0e0e0;
+    margin-left: 14px;
+  }
+`;
+
 export const AddAdvertBtn = styled.button`
   width: 100%;
   padding: 18px 24px;
@@ -95,6 +151,7 @@ export const AddAdvertBtn = styled.button`
   background-color: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+
   span {
     width: 100%;
     font-family: 'Inter', sans-serif;
@@ -166,10 +223,12 @@ export const ListCategory = styled.ul`
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 4%);
+
   ::-webkit-scrollbar-thumb {
     background-color: #373a3a;
     border-radius: 10px;
   }
+
   ::-webkit-scrollbar-track {
     background-color: rgba(248, 248, 248, 0.7);
     border-radius: 10px;
@@ -206,12 +265,16 @@ export const ListSubCategoryItemText = styled.p`
   text-overflow: ellipsis;
   text-align: left;
 `;
-export const AddAdvertInput = styled.input`
+
+export const AddAdvertInput = styled.input<{
+  titleLength: number | 0;
+}>`
   width: 100%;
   height: 48px;
   padding: 0 12px;
   background-color: white;
-  border: 1px solid #e5e6e6;
+  border: ${(props) =>
+    `${props.titleLength >= 100 ? '1px solid red' : '1px solid #e5e6e6'}`};
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -221,6 +284,24 @@ export const AddAdvertInput = styled.input`
   border-radius: 8px;
   outline: none;
 `;
+
+export const AddAdvertInputNumber = styled(AddAdvertInput).attrs(() => ({
+  type: 'number',
+}))`
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  width: unset;
+  border: none;
+`;
+
+// export const AddAdvertInputEmail = styled(AddAdvertInput).attrs(() => ({
+//   type: 'email',
+// }))``;
+
 export const PriceInputBox = styled.div`
   max-width: 550px;
   position: relative;
@@ -233,6 +314,7 @@ export const PriceInputBox = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+
   span {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
@@ -312,18 +394,23 @@ export const AddAdvertAddBtn = styled.label`
   border: 1px solid #d0d9de;
   border-radius: 8px;
   box-shadow: 0 0 2px rgb(0 0 0 / 10%);
+  cursor: pointer;
+
   svg {
     fill: #d0d9de;
   }
+
   p {
     color: #d0d9de;
   }
+
   :hover {
     border-color: #7165ab;
 
     svg {
       fill: #7165ab;
     }
+
     p {
       color: #7165ab;
     }
@@ -331,4 +418,35 @@ export const AddAdvertAddBtn = styled.label`
 `;
 export const AddAdvertAddPhotoInput = styled.input`
   display: none;
+`;
+
+export const ImageWrapper = styled.div`
+  position: relative;
+`;
+
+export const ImageDelete = styled(Image)`
+  position: absolute;
+  top: -11px;
+  right: -10px;
+  transform: rotate(0deg);
+  cursor: pointer;
+`;
+
+export const PublishAds = styled.button`
+  width: 284px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #00ccdb;
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-top: 24px;
 `;

@@ -6,12 +6,10 @@ import Benefits from './AboutUsComponents/Benefits/Benefits';
 import PersonalBusinessPage from './AboutUsComponents/PresonalBusinessPage/PersonalBusinessPage';
 import Contacts from './AboutUsComponents/Contacts/Contacts';
 import { AboutUsSection } from './AboutUsComponents/Prewiev/AboutUsPreview.style';
-import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
 
 const AboutUsPage = () => {
   return (
     <AboutUsSection>
-      <BreadCrumbs />
       <AboutUsPreview />
       <Search />
       <Packages />
