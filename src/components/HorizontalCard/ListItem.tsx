@@ -30,6 +30,8 @@ interface IProps {
 
 export const ListItem = ({ sub, id }: IProps) => {
   const data = useAppSelector(selectMainState);
+  console.log('SUB', typeof sub);
+  console.log(data);
   const [isActive, setIsActive] = useState(true);
   const [isList, setIsList] = useState(true);
   const [pageCount, setPageCount] = useState<number>(16);
@@ -45,6 +47,8 @@ export const ListItem = ({ sub, id }: IProps) => {
     setPageCount(isList ? 10 : 16);
   };
   const router = useRouter();
+  console.log(router.asPath);
+  const { asPath } = router;
   const [filter, setFilter] = useState({
     price: 0,
     max_price: 0,
@@ -58,6 +62,8 @@ export const ListItem = ({ sub, id }: IProps) => {
       pathname: `${router.pathname}`,
       query: {
         id: id,
+        // limit: 10,
+        // offset: 0,
         price: filter.price,
         max_price: filter.max_price,
         cities: filter.cities.map((item) => item).join(','),
@@ -111,10 +117,10 @@ export const ListItem = ({ sub, id }: IProps) => {
       <div style={{ display: 'flex' }}>
         <div>
           <ListTitle>
-            {sub
-              ? data?.results[0]?.child_category
-              : data?.results[0]?.category}
-            <span>{data?.results?.length} объявление</span>
+            {/*{sub*/}
+            {/*  ? data?.results?.results[0]?.category*/}
+            {/*  : data?.results?.results[0]?.child_category}*/}
+            <span>{data?.results?.count} объявление</span>
           </ListTitle>
           <ListSort>
             <StyledItem>

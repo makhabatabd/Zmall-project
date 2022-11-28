@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { mainSlice } from './mainSlice';
+import { addAdvertising } from '@/store/addAdvertising/addAdvertising.api';
 
 const makeStore = () =>
   configureStore({
     reducer: {
       [mainSlice.name]: mainSlice.reducer,
+      [addAdvertising.reducerPath]: addAdvertising.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(addAdvertising.middleware),
     devTools: true,
   });
 

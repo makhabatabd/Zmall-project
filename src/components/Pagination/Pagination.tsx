@@ -13,13 +13,18 @@ interface IProps {
 
 function Pagination({ data, pageCount }: IProps) {
   const router = useRouter();
+  console.log(router);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageHandler = (page: number, limit: number, current: number) => {
     const { id } = router.query;
     setCurrentPage(current);
     router.push({
       pathname: router.pathname,
-      query: { limit: limit, offset: page, id: id },
+      query: {
+        id: id,
+        limit: limit,
+        offset: page,
+      },
     });
     // window.scroll(0, 0);
   };

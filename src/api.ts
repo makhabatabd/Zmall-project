@@ -40,25 +40,40 @@ export async function getCategory({
   cities: string;
   has_image: boolean;
 }) {
+  console.log('CITIES', cities);
+
+  if (price !== '0') {
+    const response = await instance.get(
+      `list/?offset=${offset}&category_id=${id}${
+        price !== '0' ? `&price=${price}` : '0'
+      }${max_price !== '0' ? `&max_price=${max_price}` : '0'}${
+        cities !== '0' ? `&cities=${cities}` : '0'
+      }${has_image && `&has_image=${has_image}`}`
+    );
+    return response.data;
+  }
+
   const response = await instance.get(
     `list/?offset=${offset}&category_id=${id}`
   );
   return response.data;
 }
 
+// has_image && `&has_image=${has_image}`
+// !!Number(price) ? null : +`&price=${price}`
+// !!Number(max_price) ? null : +`&max_price=${max_price}`
+// !!Number(cities) ? null : +`&cities=${cities}`
+// Number(has_image) ? null : +`&has_image=${has_image}`
+
 export async function getResults({
   sub = '1',
   id = '1',
-}: // offset = '10',
-// limit = '10',
-{
+}: {
   sub: string;
   id: string;
-  offset: string;
-  limit: string;
 }) {
   const response = await instance.get(
-    `list/?child_category_id=${sub}&category_id=${id}`
+    `list/?child_category_id=${sub}&category_id=${id} `
   );
   return response.data;
 }
