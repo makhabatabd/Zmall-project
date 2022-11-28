@@ -32,7 +32,7 @@ const ContactPage = () => {
         subject,
         text,
       })
-      .then((data) => (window.location.pathname = '/success'))
+      .then(() => (window.location.pathname = '/success'))
       .catch((e) =>
         setError({
           email: e.response.data.errors.email

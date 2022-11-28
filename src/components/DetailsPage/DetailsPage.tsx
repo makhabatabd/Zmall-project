@@ -13,6 +13,8 @@ import {
 } from './Details.style';
 
 const DetailsPage = ({ data, similar }: DetailsPageProps) => {
+  //useeffect
+  // dispatch(setBreadcrumbs(data.category, id, pathname(details)))
   return (
     <>
       <BreadCrumbs />

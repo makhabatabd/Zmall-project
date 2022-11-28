@@ -29,22 +29,24 @@ export const Signup = () => {
       password_confirm: '',
       lastName: '',
       phone: '',
-      checked: false,
+      checked: 'false',
     },
     validate: SignUpValidate,
     onSubmit,
   });
 
   async function registerUser(values: ISignUp) {
-    try {
-      await register({
-        email: values.email,
-        first_name: values.username,
-        last_name: values.lastName,
-        phone_number: values.phone,
-        password: values.password,
-        password_confirm: values.password_confirm,
-      }).unwrap();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await register({
+      email: values.email,
+      first_name: values.username,
+      last_name: values.lastName,
+      phone_number: values.phone,
+      password: values.password,
+      password_confirm: values.password_confirm,
+      checked: 'true',
+    });
+    if (response?.data) {
       localStorage.setItem(
         'currentUser',
         JSON.stringify({
@@ -53,19 +55,27 @@ export const Signup = () => {
       );
       formik.resetForm();
       setInfo(true);
-      values.checked = false;
       setErr('');
-      console.log(values, 'eferf');
-    } catch (error: typeof error) {
-      error?.data?.errors &&
-        Object.values(error?.data?.errors).map((item) => setErr(item));
+    } else {
+      const error = Object.values(response?.error?.data?.errors)[0] as [];
+      error.map((item: string) => setErr(item));
     }
   }
 
   async function onSubmit(values: ISignUp) {
     registerUser(values);
-    console.log(values, 'submit');
+    console.log(values);
   }
+
+  function checkSomeCondition() {
+    if (formik.values.checked === 'false') {
+      return false;
+    } else if (formik.values.checked === 'true') {
+      return true;
+    }
+  }
+
+  const checked = checkSomeCondition();
   return (
     <SignupForm>
       <Form
@@ -153,6 +163,7 @@ export const Signup = () => {
           <input
             type="checkbox"
             name="checked"
+            checked={checked}
             value={formik.values.checked}
             onChange={formik.handleChange}
           />

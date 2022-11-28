@@ -23,17 +23,53 @@ export async function getCategories() {
 }
 
 export async function getHelp() {
-  const response = await axios("http://188.225.83.42:8001/api/v1/site/help-category/")
-  return response.data
-
+  const response = await axios(
+    'http://188.225.83.42:8001/api/v1/site/help-category/'
+  );
+  return response.data;
 }
 
-export async function getOneHelp( id: number) {
-  const response = await axios(`http://188.225.83.42:8001/api/v1/site/help-category/?limit=1&offset=${id}`)
-  return response.data
+export async function getOneHelp(id: number) {
+  const response = await axios(
+    `http://188.225.83.42:8001/api/v1/site/help-category/?limit=1&offset=${id}`
+  );
+  return response.data;
 }
 
-export async function getHelpDetail( id : number | any) {
-  const response = await axios(`http://188.225.83.42:8001/api/v1/site/help/${id}/`)
-  return response.data
+export async function getHelpDetail(id: string | number) {
+  const response = await axios(
+    `http://188.225.83.42:8001/api/v1/site/help/${id}/`
+  );
+  return response.data;
+}
+
+export async function getAdminComplains(token: { token: string }) {
+  console.log(token, 'api');
+  try {
+    const response = await axios.get(
+      `http://188.225.83.42:8001/api/v1/admin/feedback/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token?.token,
+        },
+      }
+    );
+    return response.data;
+  } catch (e) {
+    console.log('huy');
+    return { huy: 'huy' };
+  }
+}
+export async function getUsersData(token: { token: string }) {
+  const response = await axios.get(
+    `http://188.225.83.42:8001/api/v1/admin/users`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token?.token,
+      },
+    }
+  );
+  return response.data;
 }

@@ -23,6 +23,12 @@ export const StyledImage = styled.img`
 export const ListWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+
+  img {
+    max-width: -webkit-fill-available;
+    display: block;
+    margin: 0 auto;
+  }
   @media${device.tablet} {
     flex-direction: column;
   }

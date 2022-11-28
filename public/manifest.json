@@ -1,0 +1,9 @@
+{
+  "name": "ZMall",
+  "short_name": "ZMall",
+  "theme_color": "#3a1a86",
+  "background_color": "#1a4f79",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/"
+}

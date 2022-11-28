@@ -5,25 +5,27 @@ import { Authbutton } from '@/ui/auth/button/Authbutton';
 import { AuthLink, Form, LoginForm, Subtitle } from './AuthPage.style';
 import { signIn, useSession } from 'next-auth/react';
 import { useFormik } from 'formik';
-import { IValues } from '@/types';
+import { ISignUp, IValues } from '@/types';
 import { useRouter } from 'next/router';
 import { LogInValidate } from '@/validation';
 import { useGetTokenMutation, useUserLoginMutation } from '@/store/authSlice';
 import { useLazyGetMyChannelQuery } from '@/store/Chat.api';
 import { useDispatch } from 'react-redux';
-import { getChannel } from '@/store/ChatSlice';
+import { setChannel } from '@/store/ChatSlice';
 
 export const Login = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [userLogin] = useUserLoginMutation();
   const [getToken] = useGetTokenMutation();
-  const [getMyChannel, { data: channel }] = useLazyGetMyChannelQuery();
+  const [getMyChannel] = useLazyGetMyChannelQuery();
   const [err, setErr] = useState('');
   const dispatch = useDispatch();
 
   async function handleGoogleSignin() {
-    signIn('google', { callbackUrl: 'http://localhost:3000' });
+    signIn('google', {
+      callbackUrl: 'https://zmall-project-group.vercel.app/',
+    });
     session &&
       localStorage.setItem(
         'currentUser',
@@ -34,7 +36,9 @@ export const Login = () => {
   }
 
   async function handleFacebookSignin() {
-    signIn('facebook', { callbackUrl: 'http://localhost:3000' });
+    signIn('facebook', {
+      callbackUrl: 'https://zmall-project-group.vercel.app/',
+    });
     session &&
       localStorage.setItem(
         'currentUser',
@@ -54,54 +58,65 @@ export const Login = () => {
   });
 
   const handleGetToken = async (values: IValues) => {
-    try {
-      const response = await getToken({
-        email: values.email,
-        password: values.password,
-      }).unwrap();
-      await getMyChannel(response.access);
-      dispatch(getChannel(channel));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await getToken({
+      email: values.email,
+      password: values.password,
+    });
+    if (response?.data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const chat: any = await getMyChannel(response.data.access);
+      dispatch(setChannel(chat?.data?.channel.split('-').at(-1)));
       localStorage.setItem(
         'my-channel',
         JSON.stringify({
-          channel: channel,
+          channel: chat?.data?.channel.split('-').at(-1),
         })
       );
       localStorage.setItem(
         'auth',
         JSON.stringify({
-          token: response.access,
-          refresh: response.refresh,
+          token: response.data.access,
+          refresh: response.data.refresh,
         })
       );
-    } catch (error: typeof error) {
-      error?.data?.errors?.error.map((item: string) => setErr(item));
+    } else {
+      const error = Object.values(response?.error?.data?.errors)[0] as [];
+      error.map((item: string) => setErr(item));
     }
   };
 
-  const handleLogIn = async (values: IValues) => {
-    try {
-      await userLogin({
-        email: values.email,
-        password: values.password,
-      }).unwrap();
+  async function registerUser(values: ISignUp) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await userLogin({
+      email: values.email,
+      first_name: values.username,
+      last_name: values.lastName,
+      phone_number: values.phone,
+      password: values.password,
+      password_confirm: values.password_confirm,
+    });
+    if (response?.data) {
       await handleGetToken(values);
-
       localStorage.setItem(
         'currentUser',
         JSON.stringify({
           email: values.email,
         })
       );
+      setErr('');
+      formik.resetForm();
       router.push('/');
-    } catch (error: typeof error) {
-      error?.data?.errors?.error.map((item: string) => setErr(item));
+    } else {
+      const error = Object.values(response?.error?.data?.errors)[0] as [];
+      error.map((item: string) => setErr(item));
     }
-  };
-
-  async function onSubmit(values: IValues) {
-    handleLogIn(values);
   }
+
+  function onSubmit(values: ISignUp) {
+    registerUser(values);
+  }
+
   return (
     <LoginForm>
       <Form

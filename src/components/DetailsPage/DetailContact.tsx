@@ -1,10 +1,13 @@
 import { DetailsPageProps } from '@/../pages/detail/[id]';
+import { useAppSelector } from '@/hooks';
+import { selectChatChannel } from '@/store/ChatSlice';
 import {
   useAddFavoritesMutation,
   useDeleteFavoritesMutation,
   useLazyGetFavoritesQuery,
 } from '@/store/favoritesSlice';
 import { IResult } from '@/types';
+import { useLocalStorage } from '@/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -35,6 +38,9 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
   const [deleteFavorites, { isLoading: gui }] = useDeleteFavoritesMutation();
   const [trigger, { data: result }] = useLazyGetFavoritesQuery();
   const [isProdFav, setIsProdFav] = useState(false);
+  const channel = useAppSelector(selectChatChannel);
+  const currentUser = useLocalStorage('currentUser', {});
+  const currentUserEmail = currentUser.map((item) => item?.email);
 
   useEffect(() => {
     trigger();
@@ -159,36 +165,36 @@ export const DetailContact = ({ data }: DetailsPageProps) => {
               </ClientNumber>
             </ClientNumbers>
           </ClientContact>
-          <WriteButton>
-            <Image
-              src="/details/write-icon.svg"
-              width={26}
-              height={32}
-              alt="icon"
-            />
-            <Link
-              href={`https://wa.me/${data?.whatsapp_number}`}
-              target={'_blank'}
-              rel="noreferrer"
-            >
-              написать продавцу
-            </Link>
-          </WriteButton>
-          <TextButton>
-            <Image
-              src="/details/white-wa.svg"
-              width={26}
-              height={32}
-              alt="icon"
-            />
-            <a
-              href={`https://wa.me/${data?.whatsapp_number}`}
-              target={'_blank'}
-              rel="noreferrer"
-            >
-              написать на whatsapp
-            </a>
-          </TextButton>
+          {data?.owner.email !== currentUserEmail[0] && (
+            <>
+              <WriteButton>
+                <Image
+                  src="/details/write-icon.svg"
+                  width={26}
+                  height={32}
+                  alt="icon"
+                />
+                <Link href={`/chat/${data?.id}-${channel?.channel}`}>
+                  написать продавцу
+                </Link>
+              </WriteButton>
+              <TextButton>
+                <Image
+                  src="/details/white-wa.svg"
+                  width={26}
+                  height={32}
+                  alt="icon"
+                />
+                <a
+                  href={`https://wa.me/${data?.whatsapp_number}`}
+                  target={'_blank'}
+                  rel="noreferrer"
+                >
+                  написать на whatsapp
+                </a>
+              </TextButton>
+            </>
+          )}
         </Client>
       </RightBlock>
     </div>

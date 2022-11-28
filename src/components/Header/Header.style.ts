@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-import { deviceMobileFirst as device } from '../Theme/Theme';
+import {
+  deviceMobileFirst as device,
+  // device as DesktopFirst,
+} from '../Theme/Theme';
 
 export const TopHeader = styled.div`
   background-color: ${(props) => `${props.theme.colors.purple}`};
@@ -37,6 +40,13 @@ export const Location = styled(Profile)<{ desktop?: boolean }>`
   }
 `;
 
+export const BottonHeaderBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+`;
+
 export const Favorites = styled(Profile)``;
 
 export const Messages = styled(Profile)``;
@@ -62,7 +72,7 @@ export const MobileNavbar = styled.div<{ isNavbar?: boolean }>`
   bottom: 0;
   right: ${(props) => (props.isNavbar ? '100%' : ' 0')};
   opacity: ${(props) => (props.isNavbar ? '0' : ' 1')};
-  z-index: 10;
+  z-index: 10000;
   transition: all 0.3s;
 
   @media ${device.tablet} {
@@ -112,9 +122,9 @@ export const DesktopLink = styled.li<{ desktop?: boolean }>`
   height: 48px;
   padding: 10px 20px;
   position: relative;
+  white-space: nowrap;
 
-  background-color: ${(props) =>
-    props.desktop ? 'white' : props.theme.colors.purple};
+  background-color: ${(props) => (props.desktop ? 'white' : 'transparent')};
   color: ${(props) => (props.desktop ? props.theme.colors.purple : 'white')};
 
   &::before {
@@ -127,13 +137,17 @@ export const DesktopLink = styled.li<{ desktop?: boolean }>`
     width: 100%;
     transition: background-color 0.3s;
     background-color: ${(props) =>
-      props.desktop ? props.theme.colors.cyan : props.theme.colors.purple};
+      props.desktop ? props.theme.colors.cyan : 'transparent'};
   }
 
   &:hover {
     background-color: white;
     color: ${(props) => props.theme.colors.purple};
   }
+`;
+
+export const ProfileLink = styled(DesktopLink)`
+  color: ${(props) => (props.desktop ? props.theme.colors.purple : '#706D7A')};
 `;
 
 export const MobileNavigation = styled.nav`
@@ -259,7 +273,7 @@ export const Burger = styled.div`
 `;
 
 export const Logo = styled.div<{ mobile?: boolean }>`
-  display: flex;
+  display: ${(props) => (props.mobile ? 'flex' : 'none')};
   justify-items: center;
   align-items: center;
   gap: 10px;
@@ -274,6 +288,6 @@ export const Logo = styled.div<{ mobile?: boolean }>`
   line-height: 100%;
 
   @media ${device.tablet} {
-    display: ${(props) => props.mobile && 'none'};
+    display: ${(props) => (props.mobile ? 'none' : 'block')};
   }
 `;

@@ -3,7 +3,6 @@ import React from 'react';
 import { Close, Container, Line, Title, Wrapper } from './AuthPage.style';
 import { Login } from './Login';
 import { Signup } from './SignUp';
-
 export const AuthPage = () => {
   return (
     <Container>

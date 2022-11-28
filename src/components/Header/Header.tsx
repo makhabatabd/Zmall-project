@@ -2,7 +2,6 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Container } from '../Styles/sharedstyles';
 import { signOut, useSession } from 'next-auth/react';
-// import { TopHeader, TopHeaderBody } from './Header.style';
 import {
   BottomHedaer,
   Burger,
@@ -21,9 +20,12 @@ import {
   DesktopNavigation,
   User,
   DesktopLink,
+  BottonHeaderBody,
 } from './Header.style';
 import { useLogOutMutation } from '@/store/authSlice';
 import { useRouter } from 'next/router';
+// import { SearchBlock } from './Search';
+// import { Mobile } from './Mobile';
 
 const Header = () => {
   const router = useRouter();
@@ -37,10 +39,11 @@ const Header = () => {
   });
   function getUser() {
     const token =
-      localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'));
+      localStorage.getItem('auth') &&
+      JSON.parse(localStorage.getItem('auth') || '');
     const user =
       localStorage.getItem('currentUser') &&
-      JSON.parse(localStorage.getItem('currentUser'));
+      JSON.parse(localStorage.getItem('currentUser') || '');
     if (token && user)
       setUserInfo({ refresh: token.refresh, user: user.email });
   }
@@ -61,15 +64,20 @@ const Header = () => {
   }
 
   async function userLogOut() {
-    try {
-      await logOut({
-        refresh: userInfo?.refresh,
-      });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await logOut({
+      refresh: userInfo?.refresh,
+    });
+    if (response?.data) {
       localStorage.clear();
-      setUserInfo({});
-    } catch (error: typeof error) {
-      console.log(error);
+      setUserInfo({
+        refresh: null,
+        user: null,
+      });
+    } else if (response.error) {
+      console.log('error');
     }
+    console.log(1);
   }
 
   return (
@@ -77,17 +85,30 @@ const Header = () => {
       <TopHeader>
         <Container>
           <TopHeaderBody>
-            <Logo mobile>Zmall</Logo>
+            <Logo
+              mobile
+              onClick={() => {
+                router.push('/');
+              }}
+            >
+              Zmall
+            </Logo>
 
             <MobileNavbar isNavbar={isNavbar}>
-              <Profile onClick={() => setIsNavbar(!isNavbar)}>
+              <Profile
+                onClick={() => {
+                  setIsNavbar(!isNavbar);
+                  userInfo?.user
+                    ? router.push('/profile')
+                    : router.push('/auth');
+                }}
+              >
                 <Image
                   alt="Profile"
                   src="/header/user.svg"
                   width={30}
                   height={30}
                 />
-                {/* on click or enter plase send him to the Auth Page */}
                 {userInfo ? <Name>{userInfo?.user}</Name> : <Name>Вход</Name>}
               </Profile>
               <MobileNavigation>
@@ -147,16 +168,20 @@ const Header = () => {
               </DesktopNavigation>
 
               <User>
-                <Profile>
+                <Profile
+                  onClick={() => {
+                    userInfo?.user
+                      ? router.push('/profile')
+                      : router.push('/auth');
+                  }}
+                >
                   <Image
                     alt="Profile"
                     src="/header/user.svg"
                     width={30}
                     height={30}
                   />
-                  <Name onClick={() => router.push('/auth')} desktop>
-                    {mockData.isAuth || 'Вход'}
-                  </Name>
+                  <Name desktop>{mockData.isAuth || 'Вход'}</Name>
                 </Profile>
 
                 <Favorites>
@@ -201,7 +226,11 @@ const Header = () => {
       </TopHeader>
       <BottomHedaer>
         <Container>
-          <Logo onClick={() => router.push('/')}>Zmall</Logo>
+          <BottonHeaderBody>
+            <Logo onClick={() => router.push('/')}>Zmall</Logo>
+            {/* <SearchBlock /> */}
+            {/* <Mobile /> */}
+          </BottonHeaderBody>
         </Container>
       </BottomHedaer>
     </>

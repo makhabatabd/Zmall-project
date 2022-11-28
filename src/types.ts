@@ -1,4 +1,3 @@
-import { Key } from "react";
 
 interface imageType {
   image: string;
@@ -52,6 +51,31 @@ export interface IServerResponse {
   results: IResult[];
 }
 
+export interface IUsersOrdersResponse {
+  count: number;
+  next: string;
+  previous?: string;
+  results: IUsersOrders[];
+}
+
+export interface IUsersData {
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  phone_number: string;
+}
+
+export interface IUsersOrders {
+  advertisement: null | string;
+  subscription: number;
+  start_date: string;
+  end_date: string;
+  created_at: string;
+  pg_amount: number;
+  is_paid: boolean;
+}
+
 export interface IProps {
   goods: IServerResponse;
 }
@@ -82,6 +106,15 @@ export interface ISignUp {
   lastName?: string;
   phone?: string;
   checked?: string;
+}
+
+export interface IProfileSettingsData {
+  email?: string;
+  password?: string;
+  password_confirm?: string;
+  username?: string;
+  lastName?: string;
+  phone?: string;
 }
 
 export interface IHelpItem {
@@ -125,6 +158,7 @@ interface IChat {
   sender_name: string;
   advertisement_name: string;
   advertisement_price: number;
+  advertisement?: number;
 }
 
 interface IMessage {
@@ -139,58 +173,50 @@ export interface IElem {
   send_date?: string;
 }
 
-
-export interface DetailsData {
-  id: number;
-  name: string;
-  slug: string;
-  price: number;
-  max_price: null;
-  description: string;
-  email: null;
-  phone_numbers: string[];
-  whatsapp_number: string;
-  type: string;
-  views_count: number;
-  phone_view_count: number;
-  created_at: string;
-  modified_at: string;
-  disable_date: null;
-  category: string;
-  childCategory: string;
-  subscribers: ISubscribers[];
-  is_favorite: boolean;
-  owner: Owner;
-  images: IImages[];
-  comments: [];
+export interface IEachMessage {
+  ads_id: number | undefined | string;
+  chat_id: string | string[] | undefined;
+  message: string;
+  file?: null;
 }
 
-interface ISubscribers {
-  id: Key | null | undefined;
-  end_date: string;
-  start_date: string;
-  subscription: string;
-}
-
-export interface IImages {
-  id?: number;
-  image?: string | null | undefined;
-}
-
-export interface Owner {
-  id: number;
-  email: string;
-  phone_number: string;
-  first_name: string;
-  last_name: string;
-}
-
-export interface DetailsPageProps {
-  data?: DetailsData;
-  similar?: Similar;
-}
-
-export interface Similar {
+export interface IChatData {
   count: number;
-  results: DetailsData[];
+  next: null;
+  previous: null;
+  results: Result[];
+}
+
+export interface Result {
+  chat_id: string;
+  advertisement: number | null;
+  advertisement_name?: string;
+  message: Message;
+  unread_count: number;
+}
+
+export interface Message {
+  sender?: string;
+  sender_name?: string;
+  message: string;
+  send_date?: string;
+  is_read: boolean;
+  file: null;
+  type?: string;
+}
+
+export interface IResponseMessageData {
+  key?: number;
+  chat?: string;
+  file?: null;
+  is_read?: boolean;
+  message?: string;
+  send_date?: string;
+  sender?: string;
+  sender_name?: string;
+  type?: string;
+}
+
+export interface IResponseMessage {
+  data?: IResponseMessageData;
 }

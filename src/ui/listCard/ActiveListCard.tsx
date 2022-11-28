@@ -16,13 +16,15 @@ import {
 } from './ListCard.style';
 
 interface IProps {
-  price: string;
+  price: number;
   title: string;
   publication_date: string;
   image: string;
-  contacts: string;
-  views: string;
+  contacts: number;
+  views: number;
   category: string;
+  statistics: boolean;
+  setStatictics: (statistics: boolean) => void;
 }
 
 export const ActiveListCard = ({
@@ -33,12 +35,23 @@ export const ActiveListCard = ({
   category,
   contacts,
   image,
+  setStatictics,
+  statistics,
 }: IProps) => {
   return (
     <Container>
       <ListWrapper>
         <div>
-          <StyledImage src={image} />
+          {image ? (
+            <StyledImage src={image} />
+          ) : (
+            <Image
+              width={248}
+              height={184}
+              src="/main/good.png"
+              alt="goodimage"
+            />
+          )}
         </div>
         <ListItems>
           <ListItem>
@@ -68,7 +81,7 @@ export const ActiveListCard = ({
               />
               <span> Деактивировать</span>
             </p>
-            <p>
+            <p onClick={() => setStatictics(!statistics)}>
               <Image
                 src="/icons/static.svg"
                 alt="edit"

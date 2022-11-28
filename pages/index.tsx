@@ -12,14 +12,17 @@ export interface IProps {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await getData(context.query.offset, context.query.limit);
+  const response = await getData(
+    context.query.offset || '0',
+    context.query.limit || '10'
+  );
   const categories = await getCategories();
 
   return {
     props: {
       result: response,
       data: categories,
-      page: context.query.offset || 10,
+      page: context.query.offset || 0,
       limit: context.query.limit || 10,
     },
   };
