@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const withPWA = require('next-pwa')({
+  dest: "public",
+  register: true,
+  skipWaiting: true
+})
+
+
+const nextConfig = withPWA({
   reactStrictMode: false,
   swcMinify: true,
   compiler: {
@@ -26,6 +34,6 @@ const nextConfig = {
   env: {
     SUPER_ADMIN: process.env.SUPER_ADMIN,
   },
-};
+});
 
 module.exports = nextConfig;
