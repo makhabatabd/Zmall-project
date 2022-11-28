@@ -20,7 +20,7 @@ export const DetailStatistic = styled.div`
     padding-bottom: 20px;
     margin-bottom: 24px;
     margin-top: 32px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #d2cccc;
 `
 
 export const DetailStatisticList = styled.div`

@@ -14,13 +14,14 @@ import {
   HelpOftenQuestionTitle,
 } from '@/components/HelpPage/HelpPage.style';
 import { IHelpData, IHelpDetail, IHelpItem } from '@/types';
+import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
 
 interface IProps {
-  detailData:IHelpDetail
-  category: IHelpData
+  detailData: IHelpDetail;
+  category: IHelpData;
 }
 
-const HelpDetailPage = ({detailData, category} : IProps) => {
+const HelpDetailPage = ({ detailData, category }: IProps) => {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
@@ -29,17 +30,20 @@ const HelpDetailPage = ({detailData, category} : IProps) => {
 
   return (
     <HelpDetailPageSection>
+      <BreadCrumbs />
       <HelpDetailPageTitle>{detailData.title}</HelpDetailPageTitle>
       <HelpDetailPageFlexBox>
         <div>
-          <HelpDetailPageDescription dangerouslySetInnerHTML={{__html: render ? detailData?.text : ""}}/>
+          <HelpDetailPageDescription
+            dangerouslySetInnerHTML={{ __html: render ? detailData?.text : '' }}
+          />
           <HelpDetailPageAnother>
             <HelpItem>
               <HelpItemTitle>Другие вопросы из этого раздела</HelpItemTitle>
               {category?.results[0]?.help?.map((it: IHelpItem) => {
-                return(
+                return (
                   <HelpItemSubtitle key={it?.id}>{it?.title}</HelpItemSubtitle>
-                )
+                );
               })}
             </HelpItem>
           </HelpDetailPageAnother>

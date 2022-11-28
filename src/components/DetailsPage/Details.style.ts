@@ -16,7 +16,6 @@ export const DetailInner = styled.div`
 
 export const LeftBlock = styled.div`
   width: 80%;
-  border: 1px solid #e0e0e0;
   margin-bottom: 43px;
   @media ${device.laptopL} {
     width: 70%;

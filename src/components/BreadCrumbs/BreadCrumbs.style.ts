@@ -11,7 +11,7 @@ color: #2A2349;
 display:flex;
 gap:7px;
 align-items: center;
-
+padding: 36px 47px 27px;
 `
 
 export const Crumb = styled.div`

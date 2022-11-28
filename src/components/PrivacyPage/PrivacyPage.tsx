@@ -1,4 +1,5 @@
 import React from 'react';
+import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
 import {
   PrivacySection,
   PrivacyText,
@@ -8,6 +9,7 @@ import {
 const PrivacyPage = () => {
   return (
     <PrivacySection>
+      <BreadCrumbs />
       <PrivacyTitle>Политика конфиденциальностти</PrivacyTitle>
       <PrivacyText>
         Администрация вправе вносить изменения и/или дополнения в настоящие

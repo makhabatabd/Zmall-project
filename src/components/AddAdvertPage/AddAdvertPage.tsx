@@ -28,6 +28,8 @@ import {
 } from '@/components/AddAdvertPage/AddAdverPage.style';
 import icon from '../../../public/icons/aircraft.svg';
 import arrow from '../../../public/icons/arrow.png';
+import { BreadCrumbs } from '../BreadCrumbs/BreadCrumbs';
+import Image from 'next/image';
 
 console.log(arrow);
 
@@ -38,6 +40,7 @@ const AddAdvertPage = () => {
 
   return (
     <AddAdvertSection>
+      <BreadCrumbs />
       <AddAdvertTitle>Выберите подкатегорию для размещения</AddAdvertTitle>
       <AddAdvertForm>
         <AddAdvertInputBox>
@@ -56,7 +59,7 @@ const AddAdvertPage = () => {
                   <AddAdvertBtnSubtitle>5 084 объявления</AddAdvertBtnSubtitle>
                 </CategoryItemInfo>
               </CategoryItem>
-              <img
+              <Image
                 style={
                   showCategory
                     ? { transform: 'rotate(3.142rad)', transition: '0.2s' }
