@@ -5,6 +5,7 @@ const initialState = {
   status: 'idle',
   error: null,
   goods: [],
+  results: [],
 };
 
 export const mainSlice = createSlice({
@@ -14,15 +15,13 @@ export const mainSlice = createSlice({
     addToStore(state, action) {
       state.goods = action.payload;
     },
-    filterStore(state, action) {
-      state.goods = state.goods.filter(
-        (it: { id: number }) => it.id !== action.payload
-      );
+    addResults(state, action) {
+      state.results = action.payload;
     },
   },
 });
 
-export const { filterStore, addToStore } = mainSlice.actions;
+export const { addToStore, addResults } = mainSlice.actions;
 export const selectMainState = (state: AppState) => state.mainPage;
 
 export default mainSlice.reducer;

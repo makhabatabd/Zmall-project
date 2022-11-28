@@ -25,16 +25,106 @@ import {
   AddAdvertAddBtn,
   AddAdvertAddBtnBox,
   AddAdvertAddPhotoInput,
+  AddAdvertInputNumber,
+  ImageWrapper,
+  ImageDelete,
+  AddAdvertInputEmail,
+  AddAdvertBoxPhone,
+  PhoneWrapper,
+  Label,
+  PublishAds,
 } from '@/components/AddAdvertPage/AddAdverPage.style';
 import icon from '../../../public/icons/aircraft.svg';
 import arrow from '../../../public/icons/arrow.png';
-
-console.log(arrow);
+import {
+  useGetCategoriesQuery,
+  useGetCitiesQuery,
+  useGetSubcategoryQuery,
+} from '@/store/addAdvertising/addAdvertising.api';
+import Image from 'next/image';
 
 const AddAdvertPage = () => {
   const [showCategory, setShowCategory] = useState(false);
   const [showSubCategory, setShowSubCategory] = useState(false);
   const [showCity, setShowCity] = useState(false);
+
+  const [title, setTitle] = useState<string>('');
+  const [price, setPrice] = useState<number>();
+  const [maxPrice, setMaxPrice] = useState<number>();
+  const [message, setMessage] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [city, setCity] = useState<string>('Укажите название города');
+  const [phone, setPhone] = useState({});
+  const [whatsApp, setWhatsApp] = useState('');
+  const [phones, setPhones] = useState<number[]>([]);
+
+  const { data } = useGetCategoriesQuery('');
+  const [category, setCategory] = useState(data?.results[0]);
+  const { data: subcategories } = useGetSubcategoryQuery(category?.id || 1);
+  const { data: cities } = useGetCitiesQuery('');
+  const [subcategory, setSubcategory] = useState(
+    subcategories?.child_category[0]
+  );
+
+  const getBalance = (message) => {
+    return 4000 - message.length;
+  };
+
+  const [image, setImage] = useState<string[]>([]);
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const arr = [...image];
+      arr.push(URL.createObjectURL(e.target.files[0]));
+      setImage(arr);
+    }
+  };
+
+  const deleteImage = (i: number) => {
+    if (i > -1) {
+      const newArr = image.filter((item, index) => index != i);
+      setImage(newArr);
+    }
+  };
+
+  const addExtraPhoneInput = () => {
+    setPhones((prev) => [...prev, prev.length ? prev[prev.length - 1] + 1 : 1]);
+  };
+
+  const deleteExtraPhoneInput = (i: number) => {
+    console.log(phone, i, 'initial');
+    const newPhones = phones.filter((item) => {
+      if (item == i) {
+        delete phone[i];
+        return false;
+      }
+      return true;
+    });
+    setPhones(newPhones);
+  };
+
+  const phoneArray = Object.values(phone);
+  const advertising = {
+    name: title,
+    price: price,
+    max_price: maxPrice,
+    description: message,
+    email: email,
+    phone_numbers: phoneArray,
+    whatsapp_number: whatsApp,
+    city: city?.id,
+    child_category: subcategory?.id,
+  };
+
+  const addAdvertising = (e) => {
+    e.preventDefault();
+    console.log(advertising);
+  };
+
+  const setToPhone = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    const arr: Record<number, string> = { ...phone };
+    arr[id] = e.target.value;
+    setPhone(arr);
+  };
 
   return (
     <AddAdvertSection>
@@ -52,8 +142,10 @@ const AddAdvertPage = () => {
               <CategoryItem>
                 <img src={icon.src} alt="" />
                 <CategoryItemInfo>
-                  <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
-                  <AddAdvertBtnSubtitle>5 084 объявления</AddAdvertBtnSubtitle>
+                  <AddAdvertBtnTitle>{category?.name}</AddAdvertBtnTitle>
+                  <AddAdvertBtnSubtitle>
+                    {category?.ads_count} объявления
+                  </AddAdvertBtnSubtitle>
                 </CategoryItemInfo>
               </CategoryItem>
               <img
@@ -71,50 +163,22 @@ const AddAdvertPage = () => {
             </AddAdvertBtn>
             {showCategory && (
               <ListCategory>
-                <ListCategoryItem>
-                  <CategoryItem>
-                    <img src={icon.src} alt="" />
-                    <CategoryItemInfo>
-                      <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
-                      <AddAdvertBtnSubtitle>
-                        5 084 объявления
-                      </AddAdvertBtnSubtitle>
-                    </CategoryItemInfo>
-                  </CategoryItem>
-                </ListCategoryItem>
-                <ListCategoryItem>
-                  <CategoryItem>
-                    <img src={icon.src} alt="" />
-                    <CategoryItemInfo>
-                      <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
-                      <AddAdvertBtnSubtitle>
-                        5 084 объявления
-                      </AddAdvertBtnSubtitle>
-                    </CategoryItemInfo>
-                  </CategoryItem>
-                </ListCategoryItem>
-                <ListCategoryItem>
-                  <CategoryItem>
-                    <img src={icon.src} alt="" />
-                    <CategoryItemInfo>
-                      <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
-                      <AddAdvertBtnSubtitle>
-                        5 084 объявления
-                      </AddAdvertBtnSubtitle>
-                    </CategoryItemInfo>
-                  </CategoryItem>
-                </ListCategoryItem>
-                <ListCategoryItem>
-                  <CategoryItem>
-                    <img src={icon.src} alt="" />
-                    <CategoryItemInfo>
-                      <AddAdvertBtnTitle>Транспорт</AddAdvertBtnTitle>
-                      <AddAdvertBtnSubtitle>
-                        5 084 объявления
-                      </AddAdvertBtnSubtitle>
-                    </CategoryItemInfo>
-                  </CategoryItem>
-                </ListCategoryItem>
+                {data.results.map((item) => (
+                  <ListCategoryItem
+                    key={item.id}
+                    onClick={() => setCategory(item)}
+                  >
+                    <CategoryItem>
+                      <img src={icon.src} alt="" />
+                      <CategoryItemInfo>
+                        <AddAdvertBtnTitle>{item.name}</AddAdvertBtnTitle>
+                        <AddAdvertBtnSubtitle>
+                          {item.ads_count} объявления
+                        </AddAdvertBtnSubtitle>
+                      </CategoryItemInfo>
+                    </CategoryItem>
+                  </ListCategoryItem>
+                ))}
               </ListCategory>
             )}
           </AddAdvertBox>
@@ -129,7 +193,7 @@ const AddAdvertPage = () => {
               type="button"
               onClick={() => setShowSubCategory(!showSubCategory)}
             >
-              <span>Легковые автомобили</span>
+              <span>{subcategory?.name}</span>
               <img
                 style={
                   showSubCategory
@@ -145,16 +209,18 @@ const AddAdvertPage = () => {
             </AddAdvertBtn>
             {showSubCategory && (
               <ListCategory>
-                <ListCategoryItem>
-                  <ListSubCategoryItem>
-                    <ListSubCategoryItemText>Авто</ListSubCategoryItemText>
-                  </ListSubCategoryItem>
-                </ListCategoryItem>
-                <ListCategoryItem>
-                  <ListSubCategoryItem>
-                    <ListSubCategoryItemText>Запчасти</ListSubCategoryItemText>
-                  </ListSubCategoryItem>
-                </ListCategoryItem>
+                {subcategories?.child_category.map((item) => (
+                  <ListCategoryItem
+                    key={item.id}
+                    onClick={() => setSubcategory(item)}
+                  >
+                    <ListSubCategoryItem>
+                      <ListSubCategoryItemText>
+                        {item.name}
+                      </ListSubCategoryItemText>
+                    </ListSubCategoryItem>
+                  </ListCategoryItem>
+                ))}
               </ListCategory>
             )}
           </AddAdvertBox>
@@ -165,7 +231,12 @@ const AddAdvertPage = () => {
             Название товара<span>*</span>
           </AddAdvertInputTitle>
           <AddAdvertBox>
-            <AddAdvertInput placeholder="Название" />
+            <AddAdvertInput
+              titleLength={title.length}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Название"
+            />
             <AddAdvertNameHint>
               Название не должно превышать 100 символов
             </AddAdvertNameHint>
@@ -177,9 +248,15 @@ const AddAdvertPage = () => {
             Цена<span>*</span>
           </AddAdvertInputTitle>
           <PriceInputBox>
-            <AddAdvertInput />
+            <AddAdvertInputNumber
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
             <span> До </span>
-            <AddAdvertInput />
+            <AddAdvertInputNumber
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
           </PriceInputBox>
         </AddAdvertInputBox>
 
@@ -188,8 +265,14 @@ const AddAdvertPage = () => {
             Ваше сообщение<span>*</span>
           </AddAdvertInputTitle>
           <AddAdvertTextAreaBox>
-            <AddAdvertTextArea />
-            <AddAdvertTextNameHint>4000 знаков осталось</AddAdvertTextNameHint>
+            <AddAdvertTextArea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <AddAdvertTextNameHint>
+              {getBalance(message) >= 0 ? getBalance(message) : 0} знаков
+              осталось
+            </AddAdvertTextNameHint>
           </AddAdvertTextAreaBox>
         </AddAdvertInputBox>
 
@@ -202,6 +285,25 @@ const AddAdvertPage = () => {
             </AddAdvertInputSubtitle>
           </AddAdvertInputTitle>
           <AddAdvertAddBtnBox>
+            {image?.map((item, i) => (
+              <ImageWrapper key={i}>
+                <Image
+                  width={112}
+                  height={112}
+                  style={{ objectFit: 'cover', borderRadius: 8 }}
+                  src={item}
+                  alt="preview image"
+                />
+                <ImageDelete
+                  onClick={() => deleteImage(i)}
+                  width={22}
+                  height={22}
+                  src="/add-adver-page/delete-icon.svg"
+                  alt="delete"
+                />
+              </ImageWrapper>
+            ))}
+
             <AddAdvertAddBtn>
               <svg
                 width={24}
@@ -217,6 +319,7 @@ const AddAdvertPage = () => {
               </svg>
               <p>Добавить фото</p>
               <AddAdvertAddPhotoInput
+                onChange={onImageChange}
                 id="addPhoto"
                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
                 multiple
@@ -232,7 +335,7 @@ const AddAdvertPage = () => {
           </AddAdvertInputTitle>
           <AddAdvertBox>
             <AddAdvertBtn type="button" onClick={() => setShowCity(!showCity)}>
-              <span>Укажите название города</span>
+              <span>{city?.name ? city?.name : city}</span>
               <img
                 style={
                   showCity
@@ -248,16 +351,15 @@ const AddAdvertPage = () => {
             </AddAdvertBtn>
             {showCity && (
               <ListCategory>
-                <ListCategoryItem>
-                  <ListSubCategoryItem>
-                    <ListSubCategoryItemText>Bishkek</ListSubCategoryItemText>
-                  </ListSubCategoryItem>
-                </ListCategoryItem>
-                <ListCategoryItem>
-                  <ListSubCategoryItem>
-                    <ListSubCategoryItemText>Osh</ListSubCategoryItemText>
-                  </ListSubCategoryItem>
-                </ListCategoryItem>
+                {cities?.results?.map((item) => (
+                  <ListCategoryItem onClick={() => setCity(item)} key={item.id}>
+                    <ListSubCategoryItem>
+                      <ListSubCategoryItemText>
+                        {item.name}
+                      </ListSubCategoryItemText>
+                    </ListSubCategoryItem>
+                  </ListCategoryItem>
+                ))}
               </ListCategory>
             )}
           </AddAdvertBox>
@@ -268,8 +370,81 @@ const AddAdvertPage = () => {
             E-mail адрес<span>*</span>
           </AddAdvertInputTitle>
           <AddAdvertBox>
-            <AddAdvertInput />
+            <AddAdvertInput
+              value={email}
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </AddAdvertBox>
+        </AddAdvertInputBox>
+        <AddAdvertInputBox>
+          <AddAdvertInputTitle>
+            Контактные данные<span>*</span>
+          </AddAdvertInputTitle>
+          <PhoneWrapper>
+            <Label>
+              <Image
+                width={24}
+                height={24}
+                src="/add-adver-page/phone-icon.svg"
+                alt="phone icon"
+              />
+              <div></div>
+              <AddAdvertInputNumber onChange={(e) => setToPhone(e, 0)} />
+            </Label>
+            <div onClick={addExtraPhoneInput}> + еще номер</div>
+            {phones.map((item, i) => (
+              <div key={i} style={{ position: 'relative' }}>
+                {
+                  <>
+                    <Label>
+                      <Image
+                        width={24}
+                        height={24}
+                        src="/add-adver-page/phone-icon.svg"
+                        alt={'phone icon'}
+                      />
+                      <div></div>
+                      <AddAdvertInputNumber
+                        placeholder={'EXTRA'}
+                        value={phone[item]}
+                        onChange={(e) => setToPhone(e, item)}
+                      />
+                    </Label>
+                    <ImageDelete
+                      onClick={() => deleteExtraPhoneInput(item)}
+                      width={24}
+                      height={24}
+                      src={'/add-adver-page/delete-icon.svg'}
+                      alt="delete"
+                    />
+                  </>
+                }
+              </div>
+            ))}
+
+            <Label>
+              <Image
+                width={24}
+                height={24}
+                src="/add-adver-page/whatsApp-icon.svg"
+                alt={'phone icon'}
+              />
+              <div></div>
+              <AddAdvertInputNumber
+                onChange={(e) => setWhatsApp(e.target.value)}
+              />
+            </Label>
+            <PublishAds onClick={addAdvertising}>
+              <Image
+                width={24}
+                height={24}
+                src={'/add-adver-page/add-icon.svg'}
+                alt={'add icon'}
+              />
+              Опубликать объявление
+            </PublishAds>
+          </PhoneWrapper>
         </AddAdvertInputBox>
       </AddAdvertForm>
     </AddAdvertSection>
