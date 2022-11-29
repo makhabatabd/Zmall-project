@@ -42,7 +42,9 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel='manifest' href='/public/manifest.json' />
+          <meta name="theme-color"  content="#3a1a86"/>
+          <link rel="apple-touch-icon" href="../public/manifestIcon/icon-192x192.png"/>
+          <link rel='manifest' href='/manifest.json' />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600&display=swap"

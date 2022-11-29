@@ -15,7 +15,6 @@ export async function getData(
   return response.data;
 }
 
-<<<<<<< HEAD
 export const BASE_URL = 'http://188.225.83.42:8001/api/v1/';
 
 export async function getCategories() {
@@ -24,13 +23,10 @@ export async function getCategories() {
 }
 
 export async function getHelp() {
-  const response = await axios(
-    'http://188.225.83.42:8001/api/v1/site/help-category/'
-=======
-export async function getCategories() {
-  const response = await instance.get(`categories/`);
-  return response.data;
+  const response = await axios('http://188.225.83.42:8001/api/v1/site/help-category/')
+  return response.data
 }
+
 
 export async function getCategoryById(id: number) {
   const response = await instance.get(`category/${id}/`);
@@ -64,15 +60,10 @@ export async function getCategory({
     );
     return response.data;
   }
-
-  const response = await instance.get(
-    `list/?offset=${offset}&category_id=${id}`
->>>>>>> 9161591bc32039e60f123d2d536910bd5236adf3
-  );
+  const response = await instance.get(`list/?offset=${offset}&category_id=${id}`);
   return response.data;
 }
 
-<<<<<<< HEAD
 export async function getOneHelp(id: number) {
   const response = await axios(
     `http://188.225.83.42:8001/api/v1/site/help-category/?limit=1&offset=${id}`
@@ -107,30 +98,23 @@ export async function getAdminComplains(token: { token: string }) {
 }
 export async function getUsersData(token: { token: string }) {
   const response = await axios.get(
-    `http://188.225.83.42:8001/api/v1/admin/users`,
-    {
+    `http://188.225.83.42:8001/api/v1/admin/users`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token?.token,
       },
-    }
-=======
+    })
+  return response.data
+
+}
+
 // has_image && `&has_image=${has_image}`
 // !!Number(price) ? null : +`&price=${price}`
 // !!Number(max_price) ? null : +`&max_price=${max_price}`
 // !!Number(cities) ? null : +`&cities=${cities}`
 // Number(has_image) ? null : +`&has_image=${has_image}`
 
-export async function getResults({
-  sub = '1',
-  id = '1',
-}: {
-  sub: string;
-  id: string;
-}) {
-  const response = await instance.get(
-    `list/?child_category_id=${sub}&category_id=${id} `
->>>>>>> 9161591bc32039e60f123d2d536910bd5236adf3
-  );
+export async function getResults({ sub = '1', id = '1', }: { sub: string; id: string; }) {
+  const response = await instance.get(`list/?child_category_id=${sub}&category_id=${id} `);
   return response.data;
 }
