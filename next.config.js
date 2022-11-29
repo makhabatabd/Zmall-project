@@ -7,7 +7,8 @@ const withPWA = require('next-pwa')({
 })
 
 
-const nextConfig = withPWA({
+
+const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   compiler: {
@@ -34,6 +35,6 @@ const nextConfig = withPWA({
   env: {
     SUPER_ADMIN: process.env.SUPER_ADMIN,
   },
-});
+};
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

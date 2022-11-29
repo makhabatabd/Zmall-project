@@ -28,8 +28,6 @@ import {
   AddAdvertInputNumber,
   ImageWrapper,
   ImageDelete,
-  AddAdvertInputEmail,
-  AddAdvertBoxPhone,
   PhoneWrapper,
   Label,
   PublishAds,

@@ -9,14 +9,21 @@ const instance = axios.create({
 
 export async function getData(
   page?: string | string[] | undefined,
-  limit?: string | string[] | undefined
+  limit?: string | string[] | undefined,
 ) {
   const response = await instance.get(`list/?limit=${limit}&offset=${page}`);
   return response.data;
 }
 
+export const BASE_URL = 'http://188.225.83.42:8001/api/v1/';
+
 export async function getCategories() {
-  const response = await instance.get(`categories/`);
+  const response = await instance.get(`categories`);
+  return response.data;
+}
+
+export async function getHelp() {
+  const response = await axios('http://188.225.83.42:8001/api/v1/site/help-category/');
   return response.data;
 }
 
@@ -25,14 +32,12 @@ export async function getCategoryById(id: number) {
   return response.data;
 }
 
-export async function getCategory({
-  id = '1',
-  offset = '0',
-  price = '0',
-  max_price = '0',
-  cities = '0',
-  has_image = false,
-}: {
+export async function getCategory({ id = '1',
+                                    offset = '0',
+                                    price = '0',
+                                    max_price = '0',
+                                    cities = '0',
+                                    has_image = false, }: {
   id: string;
   offset: string;
   price: string;
@@ -48,14 +53,57 @@ export async function getCategory({
         price !== '0' ? `&price=${price}` : '0'
       }${max_price !== '0' ? `&max_price=${max_price}` : '0'}${
         cities !== '0' ? `&cities=${cities}` : '0'
-      }${has_image && `&has_image=${has_image}`}`
+      }${has_image && `&has_image=${has_image}`}`,
     );
     return response.data;
   }
 
-  const response = await instance.get(
-    `list/?offset=${offset}&category_id=${id}`
+  const response = await instance.get(`list/?offset=${offset}&category_id=${id}`);
+  return response.data;
+}
+
+export async function getOneHelp(id: number) {
+  const response = await axios(
+    `http://188.225.83.42:8001/api/v1/site/help-category/?limit=1&offset=${id}`,
   );
+  return response.data;
+}
+
+export async function getHelpDetail(id: string | number) {
+  const response = await axios(
+    `http://188.225.83.42:8001/api/v1/site/help/${id}/`,
+  );
+  return response.data;
+}
+
+export async function getAdminComplains(token: { token: string }) {
+  console.log(token, 'api');
+  try {
+    const response = await axios.get(
+      `http://188.225.83.42:8001/api/v1/admin/feedback/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token?.token,
+        },
+      },
+    );
+    return response.data;
+  } catch (e) {
+    console.log('huy');
+    return { huy: 'huy' };
+  }
+}
+
+export async function getUsersData(token: { token: string }) {
+  const response = await axios.get(
+    `http://188.225.83.42:8001/api/v1/admin/users`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token?.token,
+      },
+    });
   return response.data;
 }
 
@@ -65,15 +113,10 @@ export async function getCategory({
 // !!Number(cities) ? null : +`&cities=${cities}`
 // Number(has_image) ? null : +`&has_image=${has_image}`
 
-export async function getResults({
-  sub = '1',
-  id = '1',
-}: {
+export async function getResults({ sub = '1', id = '1', }: {
   sub: string;
   id: string;
 }) {
-  const response = await instance.get(
-    `list/?child_category_id=${sub}&category_id=${id} `
-  );
+  const response = await instance.get(`list/?child_category_id=${sub}&category_id=${id} `);
   return response.data;
 }
