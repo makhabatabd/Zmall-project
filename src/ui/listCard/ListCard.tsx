@@ -64,7 +64,7 @@ export const ListCard = ({
     <Container>
       <ListWrapper>
         <div>
-          <StyledImage src={image} />
+          <StyledImage src={image ? image : "/main/good.png"} />
         </div>
         <ListItems>
           <ListItem>
