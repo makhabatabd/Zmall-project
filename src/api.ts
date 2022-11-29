@@ -15,18 +15,6 @@ export async function getData(
   return response.data;
 }
 
-<<<<<<< HEAD
-export const BASE_URL = 'http://188.225.83.42:8001/api/v1/';
-
-export async function getCategories() {
-  const response = await instance.get(`categories`);
-  return response.data;
-}
-
-export async function getHelp() {
-  const response = await axios(
-    'http://188.225.83.42:8001/api/v1/site/help-category/'
-=======
 export async function getCategories() {
   const response = await instance.get(`categories/`);
   return response.data;
@@ -67,54 +55,10 @@ export async function getCategory({
 
   const response = await instance.get(
     `list/?offset=${offset}&category_id=${id}`
->>>>>>> 9161591bc32039e60f123d2d536910bd5236adf3
   );
   return response.data;
 }
 
-<<<<<<< HEAD
-export async function getOneHelp(id: number) {
-  const response = await axios(
-    `http://188.225.83.42:8001/api/v1/site/help-category/?limit=1&offset=${id}`
-  );
-  return response.data;
-}
-
-export async function getHelpDetail(id: string | number) {
-  const response = await axios(
-    `http://188.225.83.42:8001/api/v1/site/help/${id}/`
-  );
-  return response.data;
-}
-
-export async function getAdminComplains(token: { token: string }) {
-  console.log(token, 'api');
-  try {
-    const response = await axios.get(
-      `http://188.225.83.42:8001/api/v1/admin/feedback/`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token?.token,
-        },
-      }
-    );
-    return response.data;
-  } catch (e) {
-    console.log('huy');
-    return { huy: 'huy' };
-  }
-}
-export async function getUsersData(token: { token: string }) {
-  const response = await axios.get(
-    `http://188.225.83.42:8001/api/v1/admin/users`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token?.token,
-      },
-    }
-=======
 // has_image && `&has_image=${has_image}`
 // !!Number(price) ? null : +`&price=${price}`
 // !!Number(max_price) ? null : +`&max_price=${max_price}`
@@ -130,7 +74,6 @@ export async function getResults({
 }) {
   const response = await instance.get(
     `list/?child_category_id=${sub}&category_id=${id} `
->>>>>>> 9161591bc32039e60f123d2d536910bd5236adf3
   );
   return response.data;
 }
