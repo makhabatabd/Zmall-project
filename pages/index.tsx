@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       result: response,
       data: categories,
-      page: context.query.offset || 10,
+      page: context.query.offset || 0,
       limit: context.query.limit || 10,
     },
   };
@@ -44,7 +44,7 @@ const Home = ({ result, data, page, limit }: IProps) => {
   return (
     <>
       <CategoryList data={data} />
-      <MainPage result={result} page={page} limit={limit} />
+      <MainPage result={result} page={page} limit={limit ?? 10} />
     </>
   );
 };

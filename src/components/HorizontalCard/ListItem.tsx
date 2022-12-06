@@ -30,8 +30,6 @@ interface IProps {
 
 export const ListItem = ({ sub, id }: IProps) => {
   const data = useAppSelector(selectMainState);
-  console.log('SUB', typeof sub);
-  console.log(data);
   const [isActive, setIsActive] = useState(true);
   const [isList, setIsList] = useState(true);
   const [pageCount, setPageCount] = useState<number>(16);
@@ -47,8 +45,6 @@ export const ListItem = ({ sub, id }: IProps) => {
     setPageCount(isList ? 10 : 16);
   };
   const router = useRouter();
-  console.log(router.asPath);
-  const { asPath } = router;
   const [filter, setFilter] = useState({
     price: 0,
     max_price: 0,

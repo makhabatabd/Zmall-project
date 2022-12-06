@@ -23,7 +23,7 @@ export const AddAdvertForm = styled.form`
   flex-direction: column;
   justify-content: flex-start;
   align-items: unset;
-  gap: 16px;
+  gap: 25px;
 `;
 
 export const AddAdvertInputBox = styled.div`
@@ -61,6 +61,20 @@ export const AddAdvertNameHint = styled.p`
   line-height: 14.4px;
   color: #828282;
   font-style: normal;
+
+  p {
+    color: red;
+  }
+`;
+
+export const AddAdvertError = styled.p`
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.4px;
+  color: red;
+  font-style: normal;
+  margin-top: 5px;
 `;
 
 export const AddAdvertErrorText = styled.p`
@@ -99,7 +113,6 @@ export const PhoneWrapper = styled.div`
   position: relative;
 
   div {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -111,7 +124,6 @@ export const PhoneWrapper = styled.div`
     align-items: start;
     width: 100%;
     text-align: start;
-    //border-bottom: 1px dashed #00ccdb;
   }
 `;
 
@@ -267,14 +279,14 @@ export const ListSubCategoryItemText = styled.p`
 `;
 
 export const AddAdvertInput = styled.input<{
-  titleLength: number | 0;
+  titleLength?: number;
 }>`
   width: 100%;
   height: 48px;
   padding: 0 12px;
   background-color: white;
   border: ${(props) =>
-    `${props.titleLength >= 100 ? '1px solid red' : '1px solid #e5e6e6'}`};
+    `${props.titleLength ?? 0 >= 100 ? '1px solid red' : '1px solid #e5e6e6'}`};
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -286,7 +298,7 @@ export const AddAdvertInput = styled.input<{
 `;
 
 export const AddAdvertInputNumber = styled(AddAdvertInput).attrs(() => ({
-  type: 'number',
+  type: 'tel',
 }))`
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -352,6 +364,10 @@ export const AddAdvertTextNameHint = styled.p`
   color: #828282;
   font-style: normal;
   padding-top: 5px;
+
+  p {
+    color: red;
+  }
 `;
 export const AddAdvertTextAreaBox = styled.div`
   width: 100%;

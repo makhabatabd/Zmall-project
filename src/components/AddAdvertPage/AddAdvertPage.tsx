@@ -28,35 +28,47 @@ import {
   AddAdvertInputNumber,
   ImageWrapper,
   ImageDelete,
-  AddAdvertInputEmail,
-  AddAdvertBoxPhone,
   PhoneWrapper,
   Label,
   PublishAds,
+  AddAdvertError,
 } from '@/components/AddAdvertPage/AddAdverPage.style';
 import icon from '../../../public/icons/aircraft.svg';
 import arrow from '../../../public/icons/arrow.png';
 import {
+  usePostAdvertisingMutation,
   useGetCategoriesQuery,
   useGetCitiesQuery,
   useGetSubcategoryQuery,
 } from '@/store/addAdvertising/addAdvertising.api';
 import Image from 'next/image';
+import * as yup from 'yup';
 
 const AddAdvertPage = () => {
   const [showCategory, setShowCategory] = useState(false);
   const [showSubCategory, setShowSubCategory] = useState(false);
   const [showCity, setShowCity] = useState(false);
 
-  const [title, setTitle] = useState<string>('');
-  const [price, setPrice] = useState<number>();
-  const [maxPrice, setMaxPrice] = useState<number>();
-  const [message, setMessage] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [city, setCity] = useState<string>('Укажите название города');
-  const [phone, setPhone] = useState({});
+  type CityType = {
+    id: number;
+    name: string;
+  };
+
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState<CityType>({
+    id: 1,
+    name: 'Укажите название города',
+  });
+
+  const [phone, setPhone] = useState<{ [key: number]: string }>({});
   const [whatsApp, setWhatsApp] = useState('');
   const [phones, setPhones] = useState<number[]>([]);
+
+  const [postAdvertising] = usePostAdvertisingMutation();
 
   const { data } = useGetCategoriesQuery('');
   const [category, setCategory] = useState(data?.results[0]);
@@ -66,15 +78,16 @@ const AddAdvertPage = () => {
     subcategories?.child_category[0]
   );
 
-  const getBalance = (message) => {
+  const getBalance = (message: string) => {
     return 4000 - message.length;
   };
 
   const [image, setImage] = useState<string[]>([]);
-  const onImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const onImageChange = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
       const arr = [...image];
-      arr.push(URL.createObjectURL(e.target.files[0]));
+      arr.push(URL.createObjectURL(target.files[0]));
       setImage(arr);
     }
   };
@@ -91,7 +104,6 @@ const AddAdvertPage = () => {
   };
 
   const deleteExtraPhoneInput = (i: number) => {
-    console.log(phone, i, 'initial');
     const newPhones = phones.filter((item) => {
       if (item == i) {
         delete phone[i];
@@ -102,7 +114,8 @@ const AddAdvertPage = () => {
     setPhones(newPhones);
   };
 
-  const phoneArray = Object.values(phone);
+  const phoneArray = Object.values(phone).map((item) => '+' + item);
+
   const advertising = {
     name: title,
     price: price,
@@ -110,20 +123,62 @@ const AddAdvertPage = () => {
     description: message,
     email: email,
     phone_numbers: phoneArray,
-    whatsapp_number: whatsApp,
+    whatsapp_number: '+' + whatsApp,
     city: city?.id,
     child_category: subcategory?.id,
   };
 
-  const addAdvertising = (e) => {
+  const phoneRegex = /^\+?[0-9]{3}?[0-9]{3}?[0-9]{6}$/;
+  const schema = yup.object().shape({
+    name: yup.string().required('Обязательное поле'),
+    price: yup.string().required('Обязательное поле'),
+    description: yup.string().required('Обязательное поле'),
+    whatsapp_number: yup
+      .string()
+      .required('Обязательное поле')
+      .matches(phoneRegex, 'Не валидный номер'),
+
+    max_price: yup.string(),
+    email: yup.string().email(),
+    phone_numbers: yup.array().of(yup.string()),
+  });
+
+  const [validationErrors, setValidationErrors] = useState<{
+    [key: string]: string | string[];
+  }>({});
+  const addAdvertising = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(advertising);
+    schema
+      .validate(advertising, { abortEarly: false })
+      .then((responseData) => {
+        setValidationErrors({});
+        console.log(responseData);
+        // postAdvertising(responseData);
+      })
+      .catch((err) => {
+        setValidationErrors({});
+        err.inner.forEach(
+          ({ path, message }: { path: string; message: string }) => {
+            setValidationErrors((prev) => ({
+              ...prev,
+              [path]: message,
+            }));
+          }
+        );
+      });
   };
 
   const setToPhone = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    const arr: Record<number, string> = { ...phone };
+    const arr = { ...phone };
     arr[id] = e.target.value;
     setPhone(arr);
+  };
+
+  const onChangeWhatsApp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const re = /^[0-9\b]+$/;
+    if (e.target.value == '' || re.test(e.target.value)) {
+      setWhatsApp(e.target.value);
+    }
   };
 
   return (
@@ -163,7 +218,7 @@ const AddAdvertPage = () => {
             </AddAdvertBtn>
             {showCategory && (
               <ListCategory>
-                {data.results.map((item) => (
+                {data?.results?.map((item) => (
                   <ListCategoryItem
                     key={item.id}
                     onClick={() => setCategory(item)}
@@ -209,7 +264,7 @@ const AddAdvertPage = () => {
             </AddAdvertBtn>
             {showSubCategory && (
               <ListCategory>
-                {subcategories?.child_category.map((item) => (
+                {subcategories?.child_category?.map((item) => (
                   <ListCategoryItem
                     key={item.id}
                     onClick={() => setSubcategory(item)}
@@ -238,6 +293,7 @@ const AddAdvertPage = () => {
               placeholder="Название"
             />
             <AddAdvertNameHint>
+              <p>{validationErrors.name && validationErrors.name}</p>
               Название не должно превышать 100 символов
             </AddAdvertNameHint>
           </AddAdvertBox>
@@ -247,17 +303,26 @@ const AddAdvertPage = () => {
           <AddAdvertInputTitle>
             Цена<span>*</span>
           </AddAdvertInputTitle>
-          <PriceInputBox>
-            <AddAdvertInputNumber
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-            <span> До </span>
-            <AddAdvertInputNumber
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-            />
-          </PriceInputBox>
+          <div>
+            <PriceInputBox>
+              <AddAdvertInput
+                value={price}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPrice(e.target.value)
+                }
+              />
+              <span> До </span>
+              <AddAdvertInput
+                value={maxPrice}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setMaxPrice(e.target.value)
+                }
+              />
+            </PriceInputBox>
+            <AddAdvertError>
+              {validationErrors.price && validationErrors.price}
+            </AddAdvertError>
+          </div>
         </AddAdvertInputBox>
 
         <AddAdvertInputBox>
@@ -267,9 +332,13 @@ const AddAdvertPage = () => {
           <AddAdvertTextAreaBox>
             <AddAdvertTextArea
               value={message}
+              name="description"
               onChange={(e) => setMessage(e.target.value)}
             />
             <AddAdvertTextNameHint>
+              <p>
+                {validationErrors.description && validationErrors.description}
+              </p>
               {getBalance(message) >= 0 ? getBalance(message) : 0} знаков
               осталось
             </AddAdvertTextNameHint>
@@ -335,7 +404,7 @@ const AddAdvertPage = () => {
           </AddAdvertInputTitle>
           <AddAdvertBox>
             <AddAdvertBtn type="button" onClick={() => setShowCity(!showCity)}>
-              <span>{city?.name ? city?.name : city}</span>
+              <span>{city.name}</span>
               <img
                 style={
                   showCity
@@ -390,7 +459,10 @@ const AddAdvertPage = () => {
                 alt="phone icon"
               />
               <div></div>
-              <AddAdvertInputNumber onChange={(e) => setToPhone(e, 0)} />
+              <AddAdvertInputNumber
+                placeholder="996 555 555555"
+                onChange={(e) => setToPhone(e, 0)}
+              />
             </Label>
             <div onClick={addExtraPhoneInput}> + еще номер</div>
             {phones.map((item, i) => (
@@ -406,7 +478,7 @@ const AddAdvertPage = () => {
                       />
                       <div></div>
                       <AddAdvertInputNumber
-                        placeholder={'EXTRA'}
+                        placeholder="996 555 555555"
                         value={phone[item]}
                         onChange={(e) => setToPhone(e, item)}
                       />
@@ -432,10 +504,20 @@ const AddAdvertPage = () => {
               />
               <div></div>
               <AddAdvertInputNumber
-                onChange={(e) => setWhatsApp(e.target.value)}
+                placeholder="996 555 555555"
+                onChange={onChangeWhatsApp}
               />
             </Label>
-            <PublishAds onClick={addAdvertising}>
+            <AddAdvertError>
+              {validationErrors.whatsapp_number &&
+                validationErrors.whatsapp_number}
+            </AddAdvertError>
+
+            <PublishAds
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                addAdvertising(e)
+              }
+            >
               <Image
                 width={24}
                 height={24}

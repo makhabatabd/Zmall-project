@@ -2,21 +2,29 @@ import styled from 'styled-components';
 
 export const Card = styled.div`
   width: 248px;
+  //height: 296px;
   background: #ffffff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   cursor: pointer;
   position: relative;
+
+  border: 3px solid #00ccdb;
+
+  .image {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const Iconwrap = styled.div`
   position: absolute;
-  bottom: 119px;
+  bottom: 90px;
   right: 20px;
 `;
 
 export const Description = styled.div`
-  padding: 18px 16px;
+  padding: 16px;
 `;
 
 export const Title = styled.h2`
@@ -27,6 +35,9 @@ export const Title = styled.h2`
   font-size: 14px;
   line-height: 17px;
   margin-bottom: 19px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const Price = styled.p`

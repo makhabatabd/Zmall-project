@@ -19,7 +19,13 @@ const Good = ({ item }: IProps) => {
   return (
     <>
       <Card>
-        <Image width={248} height={186} src="/main/good.png" alt="goodimage" />
+        <Image
+          width={247}
+          height={186}
+          src="/main/good.png"
+          alt="goodimage"
+          className={'image'}
+        />
         <Description>
           <Price>{item.price} ₸</Price>
           <Title>{item.name}</Title>

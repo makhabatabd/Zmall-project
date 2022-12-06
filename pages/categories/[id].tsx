@@ -8,7 +8,6 @@ import { IResponseCategories } from '../index';
 import { useAppDispatch } from '@/hooks';
 import { addResults } from '@/store/mainSlice';
 import { IServerResponse } from '@/types';
-// import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

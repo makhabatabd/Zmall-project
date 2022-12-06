@@ -20,7 +20,7 @@ export async function getCategories() {
   return response.data;
 }
 
-export async function getCategoryById(id: number) {
+export async function getCategoryById(id: string | undefined) {
   const response = await instance.get(`category/${id}/`);
   return response.data;
 }

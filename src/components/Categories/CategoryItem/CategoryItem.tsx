@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React from 'react';
-import Image from 'next/image';
 import { Item, Title } from './CategoryItem.style';
 import { useRouter } from 'next/router';
 
@@ -12,6 +11,7 @@ interface IProps {
 interface IObject {
   name: string;
   id: number;
+  icon: string;
 }
 
 const CategoryItem = ({ item, active }: IProps) => {
@@ -25,7 +25,7 @@ const CategoryItem = ({ item, active }: IProps) => {
             params !== undefined ? `?${params}` : ''
           }`}
         >
-          <Image src="/main/building.svg" alt="icon" width={48} height={48} />
+          <img src={item.icon} alt="icon" />
           <Title>{item.name}</Title>
         </Link>
       </Item>
